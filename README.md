@@ -6,3 +6,5 @@ Scripts for the field work
 * Data
 * Scripts
 * Figures
+
+Scripts **must** be executed from root folder
