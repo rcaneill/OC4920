@@ -1,3 +1,7 @@
 *~
+<<<<<<< HEAD
 *.pyc
 ETOPO1_Ice_g_gmt4.grd
+=======
+*.pyc
+>>>>>>> 3ada16b177f509eee5d927e571200796ab668d55
