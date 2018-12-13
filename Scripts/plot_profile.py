@@ -8,6 +8,8 @@ from load_data import load_nc
 import os, sys
 import pandas as pd
 import cartopy.crs as ccrs
+from cartopy.mpl.ticker import LongitudeFormatter, LatitudeFormatter
+
 
 plt.style.use('seaborn')
 rcParams['text.usetex'] = True
@@ -66,6 +68,8 @@ def stations(datadir):
     plot station locations
     """
     #load bathymetry data
+    ax = plt.axes(projection=ccrs.PlateCarree(central_longitude=11))
+    ax.set_extent([11.0, 12, 57.8, 58],ccrs.PlateCarree())
     etopo=xr.open_dataset(datadir+'etopo1_bedrock.nc')
     dfT1=pd.read_csv(datadir+'ctd_files/TB20181210_meta.csv',header=[0])
     dfT2=pd.read_csv(datadir+'ctd_files/TB20181211_meta.csv',header=[0])
@@ -73,11 +77,10 @@ def stations(datadir):
     ax=plt.axes(projection=ccrs.PlateCarree())
     levels=np.arange(-140,230,20)
     etopo.Band1.plot.contourf(ax=ax,levels=levels,transform=ccrs.PlateCarree())
-
-
     ax.scatter(dfT1.lon,dfT1.lat,s=2,transform=ccrs.PlateCarree())
     ax.scatter(dfT2.lon,dfT2.lat,s=2,transform=ccrs.PlateCarree())
     ax.scatter(dfS.lon,dfS.lat,s=2,transform=ccrs.PlateCarree())
+    ax.gridlines()
     plt.show()
     plt.savefig('Figures/Raw/stations.png')
     plt.savefig('Figures/Raw/stations.pdf')
@@ -132,7 +135,8 @@ if __name__ == '__main__':
     elif sys.argv[1] == 'ts':
         ts('Data/ctd_files/')
     elif sys.argv[1] == 'stations':
-        stations(datadir='~/Documents/observing_the_ocean/analysis/Data/')
+        stations('/home/wizard/Documents/observing_the_ocean/analysis/Data/')
+
     elif sys.argv[1] == 'section':
         data_all = []
         for filename in os.listdir('Data/ctd_files'):
