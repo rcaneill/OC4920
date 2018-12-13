@@ -70,12 +70,15 @@ def stations(datadir):
     #load bathymetry data
     etopo=xr.open_dataset(datadir+'etopo1_bedrock.nc')
 
-    # raise(NotImplementedError)
-    ax = plt.axes(projection=ccrs.PlateCarree(central_longitude=11))
-    ax.set_extent([11.2, 11.8, 58.1, 58.5],ccrs.PlateCarree())
+    #load station lat and lons
     dfT1=pd.read_csv(datadir+'ctd_files/TB20181210_meta.csv',header=[0])
     dfT2=pd.read_csv(datadir+'ctd_files/TB20181211_meta.csv',header=[0])
     dfS=xr.open_dataset(datadir+'ctd_files/meta_SK.nc')
+
+    #define axes
+    ax = plt.axes(projection=ccrs.PlateCarree(central_longitude=11))
+    ax.set_extent([11.2, 11.8, 58.1, 58.5],ccrs.PlateCarree())
+
     levels=np.arange(-140,230,20)
     etopo.Band1.plot.contourf(ax=ax,levels=levels,transform=ccrs.PlateCarree())
     ax.scatter(dfT1.lon,dfT1.lat,s=3,transform=ccrs.PlateCarree())
@@ -125,7 +128,23 @@ def section(data_tot,meta):
     ax[1].invert_yaxis()
     plt.show()
 
-    
+def ship_calib(datadir,filename_arr):
+    """
+    Create subplots of ship calibration casts
+    filename_arr: Array of calibration files
+    """
+    ### Load calibration files
+    SK1=xr.open_dataset(os.path.join(datadir,filename_arr[0]))
+    SK2=xr.open_dataset(os.path.join(datadir,filename_arr[1]))
+    TB1=xr.open_dataset(os.path.join(datadir,filename_arr[2]))
+    # TB2=xr.open_dataset(os.path.join(datadir,filename[3]))
+   
+    fig,axes=plt.subplots(1,2,figsize=([10,6]))
+    # #plot density
+    axes[0].plot((SK1.density-1000.),label='SK')
+    axes[0].plot(TB1.sigma_t,label='TB')
+    pl.legend()
+    plt.show()
 
 
     
@@ -148,4 +167,6 @@ if __name__ == '__main__':
         meta=pd.read_csv('Data/Trygve/TB20181210_meta_edit.csv',header=[0])
         section(data_all[:4], meta)    
         
-
+    elif sys.argv[1] == 'ship_calib':
+        filename_arr=['SK_20181210_Calibration_gridd.nc','SK_20181211_01_gridd.nc','TB_2018121cal_down_gridd.nc' ]
+        ship_calib('/home/wizard/Documents/observing_the_ocean/analysis/Data/ctd_files/gridded/',filename_arr)
