@@ -97,7 +97,7 @@ def gridd_all(datadir, MAXDEPTH=120):
 def gridd(datadir, filename, MAXDEPTH=120):
     """
     Regridding of all data along the same depth grid on *datadir*.
-    The grid will be range(1,MAXDEPTH+1)
+    The grid will be range(0,MAXDEPTH+1)
 
     The data should not have higher depth than MAXDEPTH
 
@@ -127,7 +127,7 @@ def gridd(datadir, filename, MAXDEPTH=120):
     for key in keys_tot:
         line = data[key]
         line_new = np.zeros(MAXDEPTH) * np.NaN
-        line_new[int(data_mind)-1:line.shape[0]+int(data_mind)-1] = line
+        line_new[int(data_mind):line.shape[0]+int(data_mind)] = line
         datanew[key] = ('DEPTH', line_new)
     #print(datanew)
     datanew.to_netcdf(os.path.join(datadir, filename[:-3]+'_grid.nc'))
@@ -136,4 +136,4 @@ if __name__ == '__main__':
     #Has been done
     #add_coordinates('Data/ctd_files/', 'Data/Trygve/TB20181210_meta_edit.csv')
     #save_ascii2nc('Data/Skagerak/SK20181210/SK20181210_CTD/SK20181210_Processed_data')
-    gridd_all('Data/ctd_files/Trygve')
+    gridd_all('Data/ctd_files/Skagerak')
