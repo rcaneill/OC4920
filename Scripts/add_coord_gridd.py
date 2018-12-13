@@ -136,4 +136,4 @@ if __name__ == '__main__':
     #Has been done
     #add_coordinates('Data/ctd_files/', 'Data/Trygve/TB20181210_meta_edit.csv')
     #save_ascii2nc('Data/Skagerak/SK20181210/SK20181210_CTD/SK20181210_Processed_data')
-    gridd_all('Data/ctd_files/Skagerak')
+    gridd_all('.')
