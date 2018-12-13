@@ -1,19 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
-<<<<<<< HEAD
 from matplotlib.colors import Colormap
-=======
->>>>>>> 3ada16b177f509eee5d927e571200796ab668d55
 import xarray as xr
 import gsw
 from matplotlib import rcParams
 from load_data import load_nc
-<<<<<<< HEAD
 import os, sys
 import pandas as pd
 import cartopy.crs as ccrs
-=======
->>>>>>> 3ada16b177f509eee5d927e571200796ab668d55
 
 plt.style.use('seaborn')
 rcParams['text.usetex'] = True
@@ -47,24 +41,13 @@ def prof(filename):
         axe.invert_yaxis()
         axe.legend()
         axe.set_ylabel('Depth (m)')
-<<<<<<< HEAD
-        axe.set_ylim(125,0)
-    axe0.set_xlabel('Salinity (psu)')
-    axe0.set_xlim(9,35)
-    axe2.set_xlabel(u'Temperature ($^{\circ}$C)')
-    axe2.set_xlim(3,11)
-    axe1.set_xlabel(u'Density anomaly $kg/m^3$')
-    axe1.set_xlim(5,30)
-=======
     axe0.set_xlabel('Salinity (psu)')
     axe2.set_xlabel(u'Temperature ($^{\circ}$C)')
     axe1.set_xlabel(u'Density anomaly $kg/m^3$')
->>>>>>> 3ada16b177f509eee5d927e571200796ab668d55
     fig.savefig('Figures/Profiles/profile_' + name + '.pdf')
     fig.savefig('Figures/Profiles/profile_' + name + '.png')
     plt.close()
 
-<<<<<<< HEAD
 def ts(datadir):
     """
     Plot T S for all files
@@ -150,7 +133,4 @@ if __name__ == '__main__':
         print(len(data_all))
         meta=pd.read_csv('Data/Trygve/TB20181210_meta_edit.csv',header=[0])
         section(data_all[:4], meta)        
-=======
-if __name__ == '__main__':
-    prof('TB_20181210_03_down.nc')
->>>>>>> 3ada16b177f509eee5d927e571200796ab668d55
+
