@@ -41,8 +41,9 @@ def sort_coords(datadir):
 
 def read_ascii(datadir,filename):
     df=pd.read_csv(os.path.join(datadir,filename),sep='\s+',header=None)
+    df=df.loc[:,:9]
     df.columns=['timeS','lon','lat','TEMP','PRES','Flr','density',
-               'depth','o2','psal']
+                'DEPTH','o2','PSAL']
     return df
     
 def save_ascii2nc(datadir):
@@ -89,6 +90,7 @@ def gridd_all(datadir, MAXDEPTH=120):
     ls = [i for i in ls if i[-3:] == '.nc']
     ls.sort()
     for filename in ls:
+        print('Gridding ' + filename)
         gridd(datadir, filename)
 
         
@@ -106,9 +108,8 @@ def gridd(datadir, filename, MAXDEPTH=120):
     """
     #raise(NotImplementedError)
     data =  xr.open_dataset(os.path.join(datadir,filename))
-    if MAXDEPTH < data.DEPTH.max():
-        raise(ValueError('Data have a depth that is higher than MAXDEPTH'))
     datanew = data.copy()
+    datanew = datanew.drop('DEPTH')
     if 'LATITUDE' in str(data.data_vars.keys):
         datanew = datanew.rename({'LATITUDE':'lat'})
     if 'LONGITUDE' in str(data.data_vars.keys):
@@ -116,7 +117,9 @@ def gridd(datadir, filename, MAXDEPTH=120):
     for old_str in ['scan', 'index']:
         if old_str in str(data.data_vars.keys):
             datanew=datanew.rename({old_str:'DEPTH'})
-    datanew = datanew.drop('DEPTH')
+    if MAXDEPTH < datanew.DEPTH.max():
+        print('Skiping data, depth is higher than MAXDEPTH')
+        return 0
     datanew=datanew.rename({'DEPTH':'DEPTH_old'})
     keys_tot = [i for i in datanew.keys() if i!='DEPTH_old']
     for key in keys_tot:
@@ -129,8 +132,5 @@ def gridd(datadir, filename, MAXDEPTH=120):
 if __name__ == '__main__':
     #Has been done
     #add_coordinates('Data/ctd_files/', 'Data/Trygve/TB20181210_meta_edit.csv')
-<<<<<<< HEAD
-    save_ascii2nc()
-=======
-    gridd_all('Data/ctd_files/')
->>>>>>> branchB
+    #save_ascii2nc('Data/Skagerak/SK20181210/SK20181210_CTD/SK20181210_Processed_data')
+    gridd_all('Data/ctd_files/Skagerak')
