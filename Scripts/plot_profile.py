@@ -82,12 +82,13 @@ def stations(datadir):
     """
     plot station locations
     """
-    
+    #load bathymetry data
+    etopo=xr.open_dataset(datadir+'etopo1.nc')
     df=pd.read_csv(datadir+'Trygve/TB20181210_meta_edit.csv',header=[0])
     ax=plt.axes(projection=ccrs.PlateCarree())
     ax.scatter(df.lon,df.lat,transform=ccrs.PlateCarree())
-    ax.coastlines()
-    #plt.show()
+    ax.etopo.Band1.contour()
+    plt.show()
     plt.savefig('Figures/Raw/stations.png')
     plt.savefig('Figures/Raw/stations.pdf')
     
