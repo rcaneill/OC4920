@@ -32,5 +32,5 @@ def bin_av(datadir,filename):
 
 if __name__ == '__main__':
     "Has been done now"
-    #bin_av('Data/ctd_files/','TB_20181210_05_down.nc')
+    bin_av('Data/ctd_files/Trygve/TB_20181211_old','TB_20181211_01_down.nc')
     pass

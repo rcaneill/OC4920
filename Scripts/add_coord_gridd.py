@@ -117,7 +117,9 @@ def gridd(datadir, filename, MAXDEPTH=120):
     for old_str in ['scan', 'index']:
         if old_str in str(data.data_vars.keys):
             datanew=datanew.rename({old_str:'DEPTH'})
-    if MAXDEPTH < datanew.DEPTH.max():
+    data_maxd = data.DEPTH.max()
+    data_mind = data.DEPTH.min()
+    if MAXDEPTH < data_maxd:
         print('Skiping data, depth is higher than MAXDEPTH')
         return 0
     datanew=datanew.rename({'DEPTH':'DEPTH_old'})
@@ -125,12 +127,13 @@ def gridd(datadir, filename, MAXDEPTH=120):
     for key in keys_tot:
         line = data[key]
         line_new = np.zeros(MAXDEPTH) * np.NaN
-        line_new[:line.shape[0]] = line
+        line_new[int(data_mind)-1:line.shape[0]+int(data_mind)-1] = line
         datanew[key] = ('DEPTH', line_new)
-    datanew.to_netcdf(os.path.join(datadir, filename[:-3]+'_gridd.nc'))
+    #print(datanew)
+    datanew.to_netcdf(os.path.join(datadir, filename[:-3]+'_grid.nc'))
     
 if __name__ == '__main__':
     #Has been done
     #add_coordinates('Data/ctd_files/', 'Data/Trygve/TB20181210_meta_edit.csv')
     #save_ascii2nc('Data/Skagerak/SK20181210/SK20181210_CTD/SK20181210_Processed_data')
-    gridd_all('Data/ctd_files/Skagerak')
+    gridd_all('Data/ctd_files/Trygve')
