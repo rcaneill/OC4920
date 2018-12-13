@@ -68,20 +68,23 @@ def stations(datadir):
     plot station locations
     """
     #load bathymetry data
-    ax = plt.axes(projection=ccrs.PlateCarree(central_longitude=11))
-    ax.set_extent([11.0, 12, 57.8, 58],ccrs.PlateCarree())
     etopo=xr.open_dataset(datadir+'etopo1_bedrock.nc')
+
+    # raise(NotImplementedError)
+    ax = plt.axes(projection=ccrs.PlateCarree(central_longitude=11))
+    ax.set_extent([11.2, 11.8, 58.1, 58.5],ccrs.PlateCarree())
     dfT1=pd.read_csv(datadir+'ctd_files/TB20181210_meta.csv',header=[0])
     dfT2=pd.read_csv(datadir+'ctd_files/TB20181211_meta.csv',header=[0])
     dfS=xr.open_dataset(datadir+'ctd_files/meta_SK.nc')
-    ax=plt.axes(projection=ccrs.PlateCarree())
     levels=np.arange(-140,230,20)
     etopo.Band1.plot.contourf(ax=ax,levels=levels,transform=ccrs.PlateCarree())
-    ax.scatter(dfT1.lon,dfT1.lat,s=2,transform=ccrs.PlateCarree())
-    ax.scatter(dfT2.lon,dfT2.lat,s=2,transform=ccrs.PlateCarree())
-    ax.scatter(dfS.lon,dfS.lat,s=2,transform=ccrs.PlateCarree())
-    ax.gridlines()
-    plt.show()
+    ax.scatter(dfT1.lon,dfT1.lat,s=3,transform=ccrs.PlateCarree())
+    ax.scatter(dfT2.lon,dfT2.lat,s=3,transform=ccrs.PlateCarree())
+    ax.scatter(dfS.lon,dfS.lat,s=3,transform=ccrs.PlateCarree())
+    gl=ax.gridlines(crs=ccrs.PlateCarree(),draw_labels=True)
+    gl.xlabels_top=False
+    gl.ylabels_right=False
+    # plt.show()
     plt.savefig('Figures/Raw/stations.png')
     plt.savefig('Figures/Raw/stations.pdf')
     
