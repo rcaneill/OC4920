@@ -58,6 +58,30 @@ def save_ascii2nc(datadir):
             # raise(NotImplementedError)
             ds.to_netcdf(os.path.join(datadir,filename))
 
+def extract_meta_from_nc(datadir):
+    ls = os.listdir(datadir)
+    ls.sort()
+    lat=[]
+    lon=[]
+    station=[]
+    for filename in ls:
+        if filename[-2:] == 'nc':
+            data=xr.open_dataset(os.path.join(datadir,filename))
+            if 'LATITUDE' in str(data.data_vars.keys):
+                data=data.rename({'LATITUDE':'lat'})
+                data=data.rename({'LONGITUDE':'lon'})
+            lat.append(data.lat[0])
+            lon.append(data.lon[0])
+            station.append(filename)
+    lon=np.asarray(lon)
+    lat=np.asarray(lat)
+    station=np.asarray(station)
+    meta={'station':station,'lon':lon,'lat':lat}
+    df=pd.DataFrame(data=meta)
+    ds=df.to_xarray()
+    #save to nc
+    ds.to_netcdf('meta_SK.nc')
+
 
 
 
@@ -70,4 +94,4 @@ def gridd(datadir, MAXDEPTH=120):
 if __name__ == '__main__':
     #Has been done
     #add_coordinates('Data/ctd_files/', 'Data/Trygve/TB20181210_meta_edit.csv')
-    save_ascii2nc('/home/wizard/Documents/observing_the_ocean/analysis/Data/Skagerak/SK20181210/SK20181210_CTD/SK20181210_Processed_data/')
+    save_ascii2nc()

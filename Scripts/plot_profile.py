@@ -66,11 +66,18 @@ def stations(datadir):
     plot station locations
     """
     #load bathymetry data
-    etopo=xr.open_dataset(datadir+'etopo1.nc')
-    df=pd.read_csv(datadir+'Trygve/TB20181210_meta_edit.csv',header=[0])
+    etopo=xr.open_dataset(datadir+'etopo1_bedrock.nc')
+    dfT1=pd.read_csv(datadir+'ctd_files/TB20181210_meta.csv',header=[0])
+    dfT2=pd.read_csv(datadir+'ctd_files/TB20181211_meta.csv',header=[0])
+    dfS=xr.open_dataset(datadir+'ctd_files/meta_SK.nc')
     ax=plt.axes(projection=ccrs.PlateCarree())
-    ax.scatter(df.lon,df.lat,transform=ccrs.PlateCarree())
-    ax.etopo.Band1.contour()
+    levels=np.arange(-140,230,20)
+    etopo.Band1.plot.contourf(ax=ax,levels=levels,transform=ccrs.PlateCarree())
+
+
+    ax.scatter(dfT1.lon,dfT1.lat,s=2,transform=ccrs.PlateCarree())
+    ax.scatter(dfT2.lon,dfT2.lat,s=2,transform=ccrs.PlateCarree())
+    ax.scatter(dfS.lon,dfS.lat,s=2,transform=ccrs.PlateCarree())
     plt.show()
     plt.savefig('Figures/Raw/stations.png')
     plt.savefig('Figures/Raw/stations.pdf')
@@ -125,12 +132,13 @@ if __name__ == '__main__':
     elif sys.argv[1] == 'ts':
         ts('Data/ctd_files/')
     elif sys.argv[1] == 'stations':
-        stations(datadir='Data/')
+        stations(datadir='~/Documents/observing_the_ocean/analysis/Data/')
     elif sys.argv[1] == 'section':
         data_all = []
         for filename in os.listdir('Data/ctd_files'):
             data_all.append(load_nc(filename))
         print(len(data_all))
         meta=pd.read_csv('Data/Trygve/TB20181210_meta_edit.csv',header=[0])
-        section(data_all[:4], meta)        
+        section(data_all[:4], meta)    
+        
 
