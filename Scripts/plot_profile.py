@@ -100,9 +100,9 @@ def stations(datadir):
     etopo=xr.open_dataset(datadir+'etopo1_bedrock.nc')
 
     #load station lat and lons
-    dfT1=pd.read_csv(datadir+'ctd_files/TB20181210_meta.csv',header=[0])
-    dfT2=pd.read_csv(datadir+'ctd_files/TB20181211_meta.csv',header=[0])
-    dfS=xr.open_dataset(datadir+'ctd_files/meta_SK.nc')
+    dfT1=pd.read_csv(datadir+'ctd_files/meta/TB20181210_meta.csv',header=[0])
+    dfT2=pd.read_csv(datadir+'ctd_files/meta/TB20181211_meta.csv',header=[0])
+    dfS=xr.open_dataset(datadir+'ctd_files/meta/meta_SK.nc')
 
     #define axes
     ax = plt.axes(projection=ccrs.PlateCarree(central_longitude=11))
@@ -191,7 +191,7 @@ if __name__ == '__main__':
         ts('Data/ctd_files/gridded')
 
     elif sys.argv[1] == 'stations':
-        stations('/home/wizard/Documents/observing_the_ocean/analysis/Data/')
+        stations('Data/')
 
     elif sys.argv[1] == 'section':
         data_all = []
