@@ -54,8 +54,16 @@ def ts(datadir):
     """
     Plot T S for all files
     """
-    all=xr.open_mfdataset(datadir+'*.nc')
-    scatt = plt.scatter(all.PSAL,all.TEMP,c=all.DEPTH,s=3,cmap='viridis_r')
+    temp = []
+    sal = []
+    depth = []
+    for filename in os.listdir(datadir):
+        data = xr.open_dataset(os.path.join(datadir,filename))
+        for (t,s,d) in zip(data.TEMP.values, data.PSAL.values, data.DEPTH.values):
+            temp.append(t)
+            sal.append(s)
+            depth.append(d)
+    scatt = plt.scatter(sal,temp,c=depth,s=3,cmap='viridis_r')
     cb = plt.colorbar(scatt)
     cb.set_label('Depth (m)')
     plt.xlabel('Practical salinity (psu)')
@@ -154,8 +162,10 @@ if __name__ == '__main__':
         for filename in all_names:
             #prof('TB_20181210_03_down.nc')
             prof(filename)
+            
     elif sys.argv[1] == 'ts':
-        ts('Data/ctd_files/')
+        ts('Data/ctd_files/gridded')
+
     elif sys.argv[1] == 'stations':
         stations('/home/wizard/Documents/observing_the_ocean/analysis/Data/')
 
