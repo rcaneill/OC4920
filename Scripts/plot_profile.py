@@ -50,6 +50,27 @@ def prof(filename):
     fig.savefig('Figures/Profiles/profile_' + name + '.png')
     plt.close()
 
+def all_prof(datadir):
+    """
+    Plot profile of all data on the sqme plot
+    """
+    fig,ax = plt.subplots(1,2,sharey=True)
+    for filename in os.listdir(datadir):
+        data = xr.open_dataset(os.path.join(datadir,filename))
+        ax[0].plot(data.PSAL, data.DEPTH, 'k', linewidth=0.5)
+        ax[1].plot(data.TEMP, data.DEPTH, 'k', linewidth=0.5)
+    ax[0].set_title('Salinity')
+    ax[1].set_title('Temperature')
+    ax[0].set_ylabel('Depth (m)')
+    ax[0].set_xlabel('Salinity (psu)')
+    ax[1].set_xlabel(u'Temperature ($^{\circ}$C)')
+    for axe in ax:
+        #axe.invert_yaxis()
+        axe.set_ylim(120,0)
+    fig.savefig('Figures/Raw/profileTot.pdf')
+    fig.savefig('Figures/Raw/profileTot.png')
+    plt.show()
+    
 def ts(datadir):
     """
     Plot T S for all files
@@ -162,6 +183,9 @@ if __name__ == '__main__':
         for filename in all_names:
             #prof('TB_20181210_03_down.nc')
             prof(filename)
+
+    elif sys.argv[1] == 'all_prof':
+        all_prof('Data/ctd_files/gridded')
             
     elif sys.argv[1] == 'ts':
         ts('Data/ctd_files/gridded')
