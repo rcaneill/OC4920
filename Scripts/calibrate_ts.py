@@ -54,8 +54,12 @@ def corr_coef(datadir,SK_filename,TB_filename):
     plt.savefig('Figures/Calib/sal.pdf')
     plt.close()
 
+    np.savetxt('Data/calib_ts.txt', [a_temp, b_temp, a_sal, b_sal], \
+               header="[a_temp, b_temp, a_sal, b_sal]")
+    return (a_temp, b_temp, a_sal, b_sal)
+
 if __name__ == "__main__":
     corr_coef('Data/ctd_files/gridded', 'SK_20181210_Calibration_grid.nc', \
               'TB_2018121cal_down_grid.nc')
-    #corr_coef('Data/ctd_files/gridded', 'SK_20181211_01_grid.nc', \
-    #          'TB_20181211_cal_down_grid.nc')
+    corr_coef('Data/ctd_files/gridded', 'SK_20181211_01_grid.nc', \
+              'TB_20181211_cal_down_grid.nc')
