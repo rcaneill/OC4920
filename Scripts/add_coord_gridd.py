@@ -129,6 +129,7 @@ def gridd(datadir, filename, MAXDEPTH=120):
         if old_str in datanew.dims:
             datanew=datanew.rename({old_str:'DEPTH'})
             print('renaming scan/index')
+    data['DEPTH'] = np.round(data['DEPTH']) # being sure that depth are integer meters
     data_maxd = data.DEPTH.max()
     data_mind = data.DEPTH.min()
     if MAXDEPTH < data_maxd:
@@ -161,4 +162,4 @@ if __name__ == '__main__':
     #Has been done
     #add_coordinates('Data/ctd_files/processed2nc','Data/ctd_files/meta/TB20181210_meta.csv')
     #save_ascii2nc('Data/Skagerak/SK20181210/SK20181210_CTD/SK20181210_Processed_data')
-    gridd_all('Data/ctd_files/processed2nc/Trygve')
+    gridd_all('Data/ctd_files/processed2nc/Skagerak')

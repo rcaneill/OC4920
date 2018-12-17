@@ -26,11 +26,11 @@ def bin_av(datadir,filename):
     #print(datanew)
     print('Bin averaging finished')
     print('overwriting data')
-    os.remove(os.path.join(datadir,filename))
+    os.rename(os.path.join(datadir,filename),os.path.join(datadir,filename+'.bak'))
     datanew.to_netcdf(os.path.join(datadir,filename))
      
 
 if __name__ == '__main__':
     "Has been done now"
-    bin_av('Data/ctd_files/Trygve/TB_20181211_old','TB_20181211_01_down.nc')
-    pass
+    bin_av('Data/ctd_files/processed2nc/Skagerak','SK_20181210_13.nc')
+    

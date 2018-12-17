@@ -171,17 +171,40 @@ def ship_calib(datadir,filename_arr):
     SK1=xr.open_dataset(os.path.join(datadir,filename_arr[0]))
     SK2=xr.open_dataset(os.path.join(datadir,filename_arr[1]))
     TB1=xr.open_dataset(os.path.join(datadir,filename_arr[2]))
-    # TB2=xr.open_dataset(os.path.join(datadir,filename[3]))
-   
+    TB2=xr.open_dataset(os.path.join(datadir,filename_arr[3]))
+
+    # temp
+    fig,axes=plt.subplots(1,2,figsize=([10,6]))
+    axes[0].plot(SK2.TEMP,SK2.DEPTH,label='SK day2 temp')
+    axes[0].plot(TB2.TEMP,TB2.DEPTH,label='TB day2 temp')
+    axes[1].plot(SK1.TEMP,SK1.DEPTH,label='SK day1 temp')
+    axes[1].plot(TB1.TEMP,TB1.DEPTH,label='TB day1 temp')
+    axes[1].invert_yaxis()
+    axes[0].invert_yaxis()
+    axes[1].legend()
+    axes[0].legend()
+    plt.savefig('Figures/Calib/profile_temp.png')
+    plt.savefig('Figures/Calib/profile_temp.pdf')
+    plt.show()
+    plt.close()
+
+    # sal
+    
     fig,axes=plt.subplots(1,2,figsize=([10,6]))
     # #plot density
-    #axes[0].plot((SK1.density-1000.),label='SK')
-    #axes[0].plot(TB1.sigma_t,label='TB')
-    axes[0].scatter(TB1.PSAL,SK1.PSAL)
-    axes[1].plot((SK1.TEMP),label='SK')
-    axes[1].plot(TB1.TEMP,label='TB')
-    plt.legend()
+    axes[0].plot(SK2.PSAL,SK2.DEPTH,label='SK day2 sal')
+    axes[0].plot(TB2.PSAL,TB2.DEPTH,label='TB day2 sal')
+    #axes[0].scatter(TB1.PSAL,SK1.PSAL)
+    axes[1].plot(SK1.PSAL,SK1.DEPTH,label='SK day1 sal')
+    axes[1].plot(TB1.PSAL,TB1.DEPTH,label='TB day1 sal')
+    axes[1].invert_yaxis()
+    axes[0].invert_yaxis()
+    axes[1].legend()
+    axes[0].legend()
+    plt.savefig('Figures/Calib/profile_sal.png')
+    plt.savefig('Figures/Calib/profile_sal.pdf')
     plt.show()
+    plt.close()
 
 
     
@@ -210,5 +233,8 @@ if __name__ == '__main__':
         section(data_all[:4], meta)    
         
     elif sys.argv[1] == 'ship_calib':
-        filename_arr=['SK_20181210_Calibration_grid.nc','SK_20181211_01_grid.nc','TB_2018121cal_down_grid.nc' ]
+        filename_arr=['SK_20181210_Calibration_grid.nc', \
+                      'SK_20181211_01_grid.nc', \
+                      'TB_2018121cal_down_grid.nc', \
+                      'TB_20181211_cal_down_grid.nc']
         ship_calib('Data/ctd_files/gridded/',filename_arr)
