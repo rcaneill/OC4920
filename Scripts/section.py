@@ -77,6 +77,44 @@ def plot_sec(datadir, filenames, coord_type='lon'):
     fig.savefig('Figures/Transect/transect.png')
     plt.show()
 
+def first_non_nan(array):
+    """
+    return first non nan element of an array
+    """
+    i=0
+    value=np.nan
+    while np.isnan(value) and i<len(array):
+        value=array[i]
+        i+=1
+    return value
+    
+def plot_surface(datadir):
+    """
+    plot surface properties
+
+    Experimental, not finished...
+    """
+    temp=[]
+    sal = []
+    lon=[]
+    lat=[]
+    filenames = [i for i in os.listdir(datadir) if i not in ['TB_20181210_15_down_grid.nc',\
+                                                             'TB_20181210b_down_grid.nc',\
+                                                             'TB_2018121cal_down_grid.nc',\
+                                                             'TB_20181211_cal_down_grid.nc',
+                                                             'SK_20181210_01_grid.nc']]
+    for i in filenames:
+        #print(i)
+        d = xr.open_dataset(os.path.join(datadir,i))
+        temp.append(first_non_nan(d.TEMP.values))
+        sal.append(first_non_nan(d.PSAL.values))
+        lon.append(first_non_nan(d.lon.values))
+        lat.append(first_non_nan(d.lat.values))
+    plt.scatter(lon,lat,c=temp,s=50,cmap='jet')
+    plt.show()
+    plt.scatter(sal,temp)
+    plt.show()
+    
 if __name__ == '__main__':
     datadir = 'Data/ctd_files/gridded'
     filenames = ['TB_20181210_15b_down_grid.nc', \
@@ -111,3 +149,4 @@ if __name__ == '__main__':
                  'TB_20181211_09_down_grid.nc']
     print('LONG TRANSECT')
     plot_sec(datadir, filenames, 'lon')
+    #plot_surface(datadir)
