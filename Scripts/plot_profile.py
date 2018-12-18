@@ -16,6 +16,7 @@ import cmocean as cm
 plt.style.use('seaborn')
 rcParams['text.usetex'] = True
 
+
 def prof(filename):
     """
     plot profile of the data.
@@ -128,7 +129,18 @@ def stations(datadir):
     gl.ylabels_right=False
     plt.savefig('Figures/Raw/stations.png')
     plt.savefig('Figures/Raw/stations.pdf')
-    #plt.show()
+    # add labels with the cast names
+    #print(dfT1)
+    for label, x, y in zip(dfT1.filename, dfT1.lon, dfT1.lat):
+        #print(label)
+        ax.text(x,y,str(label).replace('_',' '), transform=ccrs.PlateCarree())
+    for label, x, y in zip(dfT2.filename, dfT2.lon, dfT2.lat):
+        #print(label)
+        ax.text(x,y,str(label).replace('_',' '), transform=ccrs.PlateCarree())
+    for label, x, y in zip(dfS.station.values, dfS.lon, dfS.lat):
+        #print(label)
+        ax.text(x,y,str(label).replace('_',' '), transform=ccrs.PlateCarree())
+    plt.show()
     
 def section(data_tot,meta):
     """
