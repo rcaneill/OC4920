@@ -10,6 +10,8 @@ import pandas as pd
 import cartopy.crs as ccrs
 from cartopy.mpl.ticker import LongitudeFormatter, LatitudeFormatter
 from cartopy.io import shapereader
+import cmocean as cm
+
 
 plt.style.use('seaborn')
 rcParams['text.usetex'] = True
@@ -99,6 +101,7 @@ def stations(datadir):
     """
     #load bathymetry data
     etopo=xr.open_dataset(datadir+'etopo1_bedrock.nc')
+    
     test = shapereader.Reader(datadir+'coastline.shp')
 
     #load station lat and lons
@@ -113,12 +116,14 @@ def stations(datadir):
     for geometry in geometries:
         ax.add_geometries([geometry], ccrs.PlateCarree(), facecolor='lightgray',
                           edgecolor='black',zorder=2)
-    levels=np.linspace(-140,0,3)
-    etopo.Band1.plot.contourf(ax=ax,levels=levels,transform=ccrs.PlateCarree(),zorder=0)
-    gl=ax.gridlines(crs=ccrs.PlateCarree(),draw_labels=True,zorder=1)
-    ax.scatter(dfT1.lon,dfT1.lat,s=3,transform=ccrs.PlateCarree())
-    ax.scatter(dfT2.lon,dfT2.lat,s=3,transform=ccrs.PlateCarree())
-    ax.scatter(dfS.lon,dfS.lat,s=3,transform=ccrs.PlateCarree())
+    levels=np.linspace(-140,0,8)
+#    etopo.Band1.plot.contourf(ax=ax,levels=levels,transform=ccrs.PlateCarree(),zorder=0,cbar_kwargs={'label':'Bathymetry (m)'})
+    etopo.Band1.plot.pcolormesh(ax=ax,vmin=-60,vmax=20,transform=ccrs.PlateCarree(),cmap=cm.cm.solar,zorder=0,cbar_kwargs={'label':'Bathymetry (m)'})
+    
+    gl=ax.gridlines(crs=ccrs.PlateCarree(),draw_labels=True,alpha=0.2,zorder=1)
+    ax.scatter(dfT1.lon,dfT1.lat,s=5,c='w',transform=ccrs.PlateCarree())
+    ax.scatter(dfT2.lon,dfT2.lat,s=5,c='w',transform=ccrs.PlateCarree())
+    ax.scatter(dfS.lon,dfS.lat,s=5,c='w',transform=ccrs.PlateCarree())
     gl.xlabels_top=False
     gl.ylabels_right=False
     plt.savefig('Figures/Raw/stations.png')
