@@ -119,7 +119,7 @@ def stations(datadir):
                           edgecolor='black',zorder=2)
     levels=np.linspace(-140,0,8)
 #    etopo.Band1.plot.contourf(ax=ax,levels=levels,transform=ccrs.PlateCarree(),zorder=0,cbar_kwargs={'label':'Bathymetry (m)'})
-    etopo.Band1.plot.pcolormesh(ax=ax,vmin=-60,vmax=20,transform=ccrs.PlateCarree(),cmap=cm.cm.solar,zorder=0,cbar_kwargs={'label':'Bathymetry (m)'})
+    etopo.Band1.plot.pcolormesh(ax=ax,vmin=-60,vmax=20,transform=ccrs.PlateCarree(),cmap=cm.cm.solar,zorder=0,cbar_kwargs={'label':'Bathymetry (m)','fraction':0.035})
     
     gl=ax.gridlines(crs=ccrs.PlateCarree(),draw_labels=True,alpha=0.2,zorder=1)
     ax.scatter(dfT1.lon,dfT1.lat,s=5,c='w',transform=ccrs.PlateCarree())
@@ -223,6 +223,38 @@ def ship_calib(datadir,filename_arr):
     plt.show()
     plt.close()
 
+def calibrated_profs(datadir):
+    """
+    plot of calibrated profiles
+    """
+    TK1=xr.open_dataset(os.path.join(datadir,'TB_2018121cal_down_grid.nc'))
+    SK1=xr.open_dataset(os.path.join(datadir,'SK_20181210_Calibration_grid.nc'))
+    SK2=xr.open_dataset(os.path.join(datadir,'SK_20181211_01_grid.nc'))
+    TB2=xr.open_dataset(os.path.join(datadir,'TB_20181211_cal_down_grid.nc'))
+
+    fig,ax=plt.subplots(1,2)
+    ax[0].plot(TK1.TEMP)
+    ax[0].plot(SK1.TEMP)
+    ax[1].plot(TK1.t_corrected)
+    ax[1].plot(SK1.TEMP)
+
+    plt.savefig('Figures/Calib/profile_temp_calib.png')
+    plt.savefig('Figures/Calib/profile_temp_calib.pdf')
+    plt.show()
+    plt.close()
+
+
+    fig,ax=plt.subplots(1,2)
+    ax[0].plot(TB2.TEMP)
+    ax[0].plot(SK2.TEMP)
+    ax[1].plot(TB2.t_corrected)
+    ax[1].plot(SK2.TEMP)
+
+    plt.savefig('Figures/Calib/profile_temp_calib_day2.png')
+    plt.savefig('Figures/Calib/profile_temp_calib_day2.pdf')
+    plt.show()
+    plt.close()
+
 
     
 if __name__ == '__main__':
@@ -255,3 +287,7 @@ if __name__ == '__main__':
                       'TB_2018121cal_down_grid.nc', \
                       'TB_20181211_cal_down_grid.nc']
         ship_calib('Data/ctd_files/gridded/',filename_arr)
+    
+    elif sys.argv[1] == 'calibrated_profs':
+        datadir='Data/ctd_files/gridded_correlated'
+        calibrated_profs(datadir)
