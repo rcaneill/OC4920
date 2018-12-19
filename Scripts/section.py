@@ -134,7 +134,8 @@ if __name__ == '__main__':
                  'SK_20181210_04_grid.nc',\
                  'SK_20181210_05_grid.nc']
     # long transect in the middle of the fjord
-    filenames = ['SK_20181210_16_grid.nc',\
+    filenames = ['SK_20181210_05_grid.nc',\
+                 'SK_20181210_16_grid.nc',\
                  'SK_20181210_13_grid.nc',\
                  'SK_20181210_10_grid.nc',\
                  'SK_20181210_07_grid.nc',\
