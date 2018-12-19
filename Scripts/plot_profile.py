@@ -227,19 +227,31 @@ def calibrated_profs(datadir):
     """
     plot of calibrated profiles
     """
-    TK1=xr.open_dataset(os.path.join(datadir,'TB_2018121cal_down_grid.nc'))
+    TB1=xr.open_dataset(os.path.join(datadir,'TB_2018121cal_down_grid.nc'))
     SK1=xr.open_dataset(os.path.join(datadir,'SK_20181210_Calibration_grid.nc'))
     SK2=xr.open_dataset(os.path.join(datadir,'SK_20181211_01_grid.nc'))
     TB2=xr.open_dataset(os.path.join(datadir,'TB_20181211_cal_down_grid.nc'))
 
     fig,ax=plt.subplots(1,2)
-    ax[0].plot(TK1.TEMP)
+    ax[0].plot(TB1.TEMP)
     ax[0].plot(SK1.TEMP)
-    ax[1].plot(TK1.t_corrected)
+    ax[1].plot(TB1.t_corrected)
     ax[1].plot(SK1.TEMP)
 
     plt.savefig('Figures/Calib/profile_temp_calib.png')
     plt.savefig('Figures/Calib/profile_temp_calib.pdf')
+    plt.show()
+    plt.close()
+
+
+    fig,ax=plt.subplots(1,2)
+    ax[0].plot(TB1.PSAL)
+    ax[0].plot(SK1.PSAL)
+    ax[1].plot(TB1.s_corrected)
+    ax[1].plot(SK1.PSAL)
+
+    plt.savefig('Figures/Calib/profile_salt_calib.png')
+    plt.savefig('Figures/Calib/profile_salt_calib.pdf')
     plt.show()
     plt.close()
 
@@ -254,6 +266,18 @@ def calibrated_profs(datadir):
     plt.savefig('Figures/Calib/profile_temp_calib_day2.pdf')
     plt.show()
     plt.close()
+
+    fig,ax=plt.subplots(1,2)
+    ax[0].plot(TB2.PSAL)
+    ax[0].plot(SK2.PSAL)
+    ax[1].plot(TB2.s_corrected)
+    ax[1].plot(SK2.PSAL)
+
+    plt.savefig('Figures/Calib/profile_salt_calib_day2.png')
+    plt.savefig('Figures/Calib/profile_salt_calib_day2.pdf')
+    plt.show()
+    plt.close()
+
 
 
     

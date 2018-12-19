@@ -29,6 +29,7 @@ def corr_coef(datadir,SK_filename,TB_filename):
     #print(SK.TEMP)
     # Temp
     (a_temp, b_temp, r_value, p_value, std_err) = linregress(TB.TEMP[15:],SK.TEMP[15:])
+    print(a_temp,b_temp)
     plt.scatter(TB.TEMP[15:],SK.TEMP[15:])
     plt.plot([np.nanmin(SK.TEMP),np.nanmax(SK.TEMP)], \
              [a_temp*np.nanmin(TB.TEMP[:])+b_temp,a_temp*np.nanmax(TB.TEMP[:])+b_temp], \
@@ -55,7 +56,7 @@ def corr_coef(datadir,SK_filename,TB_filename):
     plt.savefig('Figures/Calib/sal_20181211.pdf')
     plt.close()
 
-    np.savetxt('Data/calib_ts_20181210.txt',np.c_[a_temp, b_temp, a_sal, b_sal], \
+    np.savetxt('Data/calib_ts_20181211.txt',np.c_[a_temp, b_temp, a_sal, b_sal], \
                header="a_temp b_temp a_sal b_sal",comments='')
     return (a_temp, b_temp, a_sal, b_sal)
 
@@ -68,11 +69,11 @@ def correct_ts(datadir,filename,corr_coeff_filename):
     ls = os.listdir(datadir)
     ls.sort()
     for filename in ls:
-        if filename[:11] == 'TB_20181211':
+        if filename[:11] == 'TB_20181210':
             # print(filename)
             data =  xr.open_dataset(os.path.join(datadir,filename))
-            data['t_corrected']=(coeffs.a_temp.values*data.TEMP)
-            data['s_corrected']=(coeffs.a_sal.values*data.PSAL)
+            data['t_corrected']=(coeffs.a_temp.values*data.TEMP+(coeffs.b_temp.values))
+            data['s_corrected']=(coeffs.a_sal.values*data.PSAL+(coeffs.b_sal.values))
             data.to_netcdf(os.path.join('Data/ctd_files/gridded_correlated',filename))
     
     # Trygve_new = a_temp*Trygve + b_temp
@@ -82,5 +83,5 @@ if __name__ == "__main__":
     #           'TB_2018121cal_down_grid.nc')
     #  corr_coef('Data/ctd_files/gridded', 'SK_20181211_01_grid.nc', \
     #        'TB_20181211_cal_down_grid.nc')
-    correct_ts('Data/ctd_files/gridded','TB_20181211*.nc','Data/calib_ts_20181211.txt')
+    correct_ts('Data/ctd_files/gridded','TB_20181210*.nc','Data/calib_ts_20181210.txt')
 
