@@ -7,6 +7,10 @@ from matplotlib import rcParams, cm
 import os, sys
 import pandas as pd
 from matplotlib.image import NonUniformImage
+from scipy.interpolate import griddata
+from cartopy.io import shapereader
+import cartopy.crs as ccrs
+from cartopy.mpl.ticker import LongitudeFormatter, LatitudeFormatter
 
 plt.style.use('seaborn')
 rcParams['text.usetex'] = True
@@ -132,9 +136,29 @@ def plot_surface(datadir):
         sal.append(first_non_nan(d.PSAL.values))
         lon.append(first_non_nan(d.lon.values))
         lat.append(first_non_nan(d.lat.values))
-    plt.scatter(lon,lat,c=temp,s=50,cmap='jet')
-    plt.show()
-    plt.scatter(sal,temp)
+    # compute gridding of data
+    grid_lon, grid_lat = np.mgrid[11.2:11.8:200j, 58.1:58.5:200j]
+    points = [[i,j] for (i,j) in zip(lon,lat)]
+    values = temp
+    grid_temp = griddata(points, values, (grid_lon, grid_lat), method='linear')
+    #define axes
+    axe = plt.axes(projection=ccrs.PlateCarree(central_longitude=11))
+    axe.set_extent([11.2, 11.8, 58.1, 58.5],ccrs.PlateCarree())
+    cf = axe.contourf(grid_lon, grid_lat, \
+                 grid_temp, cmap='viridis', transform=ccrs.PlateCarree(),levels=20)
+    cb=plt.colorbar(cf)
+    cb.set_label(u'Temperature ($^{\circ}C$)')
+    #axe.scatter(grid_lon.flatten(), grid_lat.flatten(), \
+    #            c=grid_temp.flatten(), cmap='jet', transform=ccrs.PlateCarree())
+    #axe.scatter(lon,lat,c=temp,s=50,cmap='jet', transform=ccrs.PlateCarree())
+    coast = shapereader.Reader('Data/topo/coastline.shp')
+    geometries = [i for i in coast.geometries()]
+    for geometry in geometries:
+        axe.add_geometries([geometry], ccrs.PlateCarree(), facecolor='lightgray',\
+                           edgecolor='black')
+    plt.title('Surface temperature')
+    plt.savefig('Figures/Surface/surf_temp.png')
+    plt.savefig('Figures/Surface/surf_temp.pdf')
     plt.show()
 
 def load_filenames_section(N, sec_datadir='Data/sections'):
@@ -150,5 +174,5 @@ def load_filenames_section(N, sec_datadir='Data/sections'):
 if __name__ == '__main__':
     datadir = 'Data/ctd_files/gridded_calibrated'
     section_meta = load_filenames_section(0, 'Data/sections')
-    plot_sec(datadir, section_meta[1:], desc=section_meta[0], coord_type='lon')
-    #plot_surface(datadir)
+    #plot_sec(datadir, section_meta[1:], desc=section_meta[0], coord_type='lon')
+    plot_surface(datadir)

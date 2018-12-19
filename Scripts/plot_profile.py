@@ -12,7 +12,6 @@ from cartopy.mpl.ticker import LongitudeFormatter, LatitudeFormatter
 from cartopy.io import shapereader
 import cmocean as cm
 
-
 # plt.style.use('seaborn')
 rcParams['text.usetex'] = True
 
@@ -132,14 +131,15 @@ def ts(datadir):
     plt.savefig('Figures/Raw/ts.png')
     plt.savefig('Figures/Raw/ts.pdf')
     # plt.show()
+
+    
 def stations(datadir):
     """
     plot station locations
     """
     #load bathymetry data
-    etopo=xr.open_dataset(datadir+'etopo1_bedrock.nc')
-    
-    test = shapereader.Reader(datadir+'coastline.shp')
+    etopo=xr.open_dataset('Data/topo/etopo1_bedrock.nc')
+    coast = shapereader.Reader('Data/topo/coastline.shp')
 
     #load station lat and lons
     dfT1=pd.read_csv(datadir+'ctd_files/meta/TB20181210_meta.csv',header=[0])
@@ -149,13 +149,15 @@ def stations(datadir):
     #define axes
     ax = plt.axes(projection=ccrs.PlateCarree(central_longitude=11))
     ax.set_extent([11.2, 11.8, 58.1, 58.5],ccrs.PlateCarree())
-    geometries = [i for i in test.geometries()]
+    geometries = [i for i in coast.geometries()]
     for geometry in geometries:
-        ax.add_geometries([geometry], ccrs.PlateCarree(), facecolor='lightgray',
+        ax.add_geometries([geometry], ccrs.PlateCarree(), facecolor='lightgray', \
                           edgecolor='black',zorder=2)
     levels=np.linspace(-140,0,8)
 #    etopo.Band1.plot.contourf(ax=ax,levels=levels,transform=ccrs.PlateCarree(),zorder=0,cbar_kwargs={'label':'Bathymetry (m)'})
-    etopo.Band1.plot.pcolormesh(ax=ax,vmin=-60,vmax=20,transform=ccrs.PlateCarree(),cmap=cm.cm.solar,zorder=0,cbar_kwargs={'label':'Bathymetry (m)','fraction':0.035})
+    etopo.Band1.plot.pcolormesh(ax=ax,vmin=-60,vmax=20,transform=ccrs.PlateCarree(), \
+                                cmap=cm.cm.solar,zorder=0, \
+                                cbar_kwargs={'label':'Bathymetry (m)','fraction':0.035})
     
     gl=ax.gridlines(crs=ccrs.PlateCarree(),draw_labels=True,alpha=0.2,zorder=1)
     ax.scatter(dfT1.lon,dfT1.lat,s=5,c='w',transform=ccrs.PlateCarree())
