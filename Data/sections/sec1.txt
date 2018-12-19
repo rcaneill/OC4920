@@ -1,0 +1,7 @@
+#First line is the name of the section
+Offshore section
+SK_20181210_01_grid.nc
+SK_20181210_02_grid.nc
+SK_20181210_03_grid.nc
+SK_20181210_04_grid.nc
+SK_20181210_05_grid.nc

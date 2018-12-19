@@ -1,0 +1,16 @@
+#First line is the name of the section
+Section along the fjord
+SK_20181210_05_grid.nc
+SK_20181210_16_grid.nc
+SK_20181210_13_grid.nc
+SK_20181210_10_grid.nc
+SK_20181210_07_grid.nc
+TB_20181210_17_down_grid.nc
+TB_20181210_13_down_grid.nc
+TB_20181210_10_down_grid.nc
+SK_20181211_01_grid.nc
+TB_20181210_04_down_grid.nc
+TB_20181211_02_down_grid.nc
+SK_20181211_03_grid.nc
+TB_20181211_05_down_grid.nc
+TB_20181211_09_down_grid.nc
