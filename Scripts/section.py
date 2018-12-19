@@ -58,6 +58,7 @@ def plot_sec(datadir, filenames, coord_type='lon'):
     depth = []
     pdens = []
     for i in filenames:
+        print(i)
         d = xr.open_dataset(os.path.join(datadir, i))
         lat.append(np.nanmean(d.lat.values))
         lon.append(np.nanmean(d.lon.values))
@@ -75,7 +76,7 @@ def plot_sec(datadir, filenames, coord_type='lon'):
     sal = np.array(sal)
     pdens= np.array(pdens)
     
-    sl = np.array([compute_surface_layer(x,depth) for x in temp])
+    #sl = np.array([compute_surface_layer(x,depth) for x in temp])
 
     fig,ax = plt.subplots(2,2, sharey=True)
     cb_temp = sec_show(coord, depth, temp, ax[0,0], coord_type=coord_type)
@@ -134,7 +135,7 @@ def plot_surface(datadir):
     plt.show()
     
 if __name__ == '__main__':
-    datadir = 'Data/ctd_files/gridded'
+    datadir = 'Data/ctd_files/gridded_calibrated'
     filenames = ['TB_20181210_15b_down_grid.nc', \
                  'TB_20181210_16_down_grid.nc', \
                  'TB_20181210_17_down_grid.nc', \
@@ -146,7 +147,7 @@ if __name__ == '__main__':
                                                              'TB_2018121cal_down_grid.nc',\
                                                              'TB_20181211_cal_down_grid.nc']]
     # offshore transect
-    filenames = ['SK_20181210_01_grid.nc',\
+    filenames_offshore = ['SK_20181210_01_grid.nc',\
                  'SK_20181210_02_grid.nc',\
                  'SK_20181210_03_grid.nc',\
                  'SK_20181210_04_grid.nc',\
@@ -166,6 +167,6 @@ if __name__ == '__main__':
                  'SK_20181211_03_grid.nc',\
                  'TB_20181211_05_down_grid.nc',\
                  'TB_20181211_09_down_grid.nc']
-    print('LONG TRANSECT')
-    plot_sec(datadir, filenames, 'lon')
+    #print('LONG TRANSECT')
+    plot_sec(datadir, filenames_offshore, 'lon')
     #plot_surface(datadir)
