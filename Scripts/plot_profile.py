@@ -13,7 +13,7 @@ from cartopy.io import shapereader
 import cmocean as cm
 
 
-plt.style.use('seaborn')
+# plt.style.use('seaborn')
 rcParams['text.usetex'] = True
 
 
@@ -56,7 +56,7 @@ def prof(filename):
 
 def all_prof(datadir):
     """
-    Plot profile of all data on the sqme plot
+    Plot profile of all data on the same plot
     """
     fig,ax = plt.subplots(1,2,sharey=True)
     for filename in os.listdir(datadir):
@@ -82,20 +82,56 @@ def ts(datadir):
     temp = []
     sal = []
     depth = []
+    # pdens = []
     for filename in os.listdir(datadir):
         data = xr.open_dataset(os.path.join(datadir,filename))
         for (t,s,d) in zip(data.TEMP.values, data.PSAL.values, data.DEPTH.values):
             temp.append(t)
             sal.append(s)
             depth.append(d)
+            # pdens.append(gsw.rho(s,t,d))
+    
+    #save lists as arrays
+    temp=np.asarray(temp)
+    sal=np.asarray(sal)
+    depth=np.asarray(depth)
+
+
+    #### Generate density contours
+    smin = np.nanmin(sal) - (0.01 * np.nanmin(sal))
+    smax = np.nanmax(sal) + (0.01 * np.nanmax(sal))
+    tmin = np.nanmin(temp) - (0.1 * np.nanmin(temp))
+    tmax = np.nanmax(temp) + (0.1 * np.nanmax(temp))
+    
+    # Calculate how many gridcells we need in the x and y dimensions
+    xdim =int(round((smax-smin)/0.1+1,0))
+    ydim = int(round((tmax-tmin)+1,0))
+    # Create empty grid of zeros
+    dens = np.zeros((ydim,xdim))
+    
+    # # Create temp and salt vectors of appropriate dimensions
+    ti = np.linspace(0,ydim-1,ydim)+tmin
+    si = np.linspace(0,xdim-1,xdim)*0.1+smin
+    # print(si)
+    # # Loop to fill in grid with densities
+    for j in range(0,int(ydim)):
+        for i in range(0, int(xdim)):
+            dens[j,i]=gsw.rho(si[i],ti[j],0)
+
+    dens=dens-1000.
+    # print(dens)
     scatt = plt.scatter(sal,temp,c=depth,s=3,cmap='viridis_r')
     cb = plt.colorbar(scatt)
     cb.set_label('Depth (m)')
+    CS = plt.contour(si,ti,dens, linestyles='dashed', colors='Gray',alpha=0.6)
+    plt.clabel(CS, fontsize=12, inline=1, fmt='%1.0f') # Label every second level
+    
+    
     plt.xlabel('Practical salinity (psu)')
     plt.ylabel(u'Temperature ($^{\circ}$C)')
     plt.savefig('Figures/Raw/ts.png')
     plt.savefig('Figures/Raw/ts.pdf')
-
+    # plt.show()
 def stations(datadir):
     """
     plot station locations
@@ -283,7 +319,7 @@ if __name__ == '__main__':
         all_prof('Data/ctd_files/gridded')
             
     elif sys.argv[1] == 'ts':
-        ts('Data/ctd_files/gridded')
+        ts('Data/ctd_files/gridded_calibrated')
 
     elif sys.argv[1] == 'stations':
         stations('Data/')
