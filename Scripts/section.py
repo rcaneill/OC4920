@@ -14,7 +14,7 @@ rcParams['text.usetex'] = True
 def sec_show(coord, depth, data, axe, cmap='viridis', coord_type='lon'):
     """
     plot data on the axe, mix between imshow and contour
-    retuirn the colorbar, so user can add a label
+    return the colorbar, so user can add a label
     """
     depth = - np.abs(depth) # to be sure that depth is negative
     im = NonUniformImage(axe, interpolation='nearest', \
@@ -35,13 +35,13 @@ def sec_show(coord, depth, data, axe, cmap='viridis', coord_type='lon'):
     #axe.set_yticklabels(np.abs([int(i) for i in axe.get_yticks()]))
     return cb
 
-def compute_mld(var,depth=10,threshold=0.03):
+def compute_mld(var,depth,ref_depth=4,threshold=0.08):
     """
     Function to compute MLD
     Select temperature or density as your variable,
     Adjust threshold and ref depth accordingly
     """
-    return depth[(abs((var-var[depth]))>=threshold)].min()
+    return depth[(abs((var-var[ref_depth]))>=threshold)].min()
 
 def plot_sec(datadir, filenames, coord_type='lon'):
     """
@@ -56,12 +56,14 @@ def plot_sec(datadir, filenames, coord_type='lon'):
     temp = []
     sal = []
     depth = []
+    pdens = []
     for i in filenames:
         d = xr.open_dataset(os.path.join(datadir, i))
         lat.append(np.nanmean(d.lat.values))
         lon.append(np.nanmean(d.lon.values))
         temp.append(d.TEMP.values)
         sal.append(d.PSAL.values)
+        pdens.append(gsw.rho(d.PSAL.values,d.TEMP.values,d.DEPTH.values))
     depth = -np.abs(d.DEPTH.values)
     if coord_type == 'lon':
         coord = lon
@@ -71,9 +73,13 @@ def plot_sec(datadir, filenames, coord_type='lon'):
         raise ValueError("coord must be 'lon' or 'lat'")
     temp = np.array(temp)
     sal = np.array(sal)
+    pdens= np.array(pdens)
+    
+    mld = np.array([compute_mld(x,depth) for x in pdens])
     fig,ax = plt.subplots(2,2, sharey=True)
     cb_temp = sec_show(coord, depth, temp, ax[0,0], coord_type=coord_type)
     cb_temp.set_label(u'Temperature ($^{\circ}C$)')
+    
     ax[0,1].plot(temp.T,depth)
     ax[0,1].set_xlabel(u'Temperature ($^{\circ}C$)')
     cb_sal = sec_show(coord, depth, sal, ax[1,0], coord_type=coord_type, cmap='viridis_r')
@@ -81,8 +87,11 @@ def plot_sec(datadir, filenames, coord_type='lon'):
     ax[1,1].plot(sal.T,depth)
     ax[1,1].set_xlabel('Salinity (psu)')
     fig.tight_layout()
-    fig.savefig('Figures/Transect/transect.pdf')
-    fig.savefig('Figures/Transect/transect.png')
+    # fig.savefig('Figures/Transect/transect.pdf')
+    # fig.savefig('Figures/Transect/transect.png')
+    
+    plt.show()
+    plt.plot(mld)
     plt.show()
 
 def first_non_nan(array):
