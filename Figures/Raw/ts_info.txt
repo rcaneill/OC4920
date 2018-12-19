@@ -1,0 +1,15 @@
+###Some info about the TS diagram
+
+Gullmar Fjord is separated into two different water types:
+
+A: water with salinities ranging 24-27
+B: water with salinities ranging 32-33
+
+These water types correspond with the typical water masses found outside the fjord: 
+
+Kattegat: Salinities range 20-25
+Skagerak: Surface salinities 33-35 (with depth)
+
+Natural separation between the two water types is the 28 isohaline
+
+Ref: Arneborg, L. 2004. Turnover times for the water above sill level in Gullmar Fjord
