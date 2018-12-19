@@ -35,7 +35,7 @@ def sec_show(coord, depth, data, axe, cmap='viridis', coord_type='lon'):
     #axe.set_yticklabels(np.abs([int(i) for i in axe.get_yticks()]))
     return cb
 
-def compute_surface_layer(var,depth,ref_depth=5,threshold=1.6):
+def compute_surface_layer(var,depth,ref_depth=5,threshold=0.6):
     """
     Function to compute winter water surface layer
     Select temperature or density as your variable,
@@ -43,12 +43,14 @@ def compute_surface_layer(var,depth,ref_depth=5,threshold=1.6):
     """
     return depth[(abs((var-var[ref_depth]))>=threshold)].min()
 
-def plot_sec(datadir, filenames, coord_type='lon'):
+
+
+def plot_sec(datadir, filenames, desc='', coord_type='lon'):
     """
     Plot a section.
 
     filenames is an array containing names of all data that will be plotted
-
+    desc : description of the section
     coord : 'lat' or 'lon' coordinate along which we do the transect
     """
     lon = []
@@ -58,7 +60,7 @@ def plot_sec(datadir, filenames, coord_type='lon'):
     depth = []
     pdens = []
     for i in filenames:
-        print(i)
+        #print(i)
         d = xr.open_dataset(os.path.join(datadir, i))
         lat.append(np.nanmean(d.lat.values))
         lon.append(np.nanmean(d.lon.values))
@@ -76,7 +78,7 @@ def plot_sec(datadir, filenames, coord_type='lon'):
     sal = np.array(sal)
     pdens= np.array(pdens)
     
-    #sl = np.array([compute_surface_layer(x,depth) for x in temp])
+    sl = np.array([compute_surface_layer(x,depth) for x in temp])
 
     fig,ax = plt.subplots(2,2, sharey=True)
     cb_temp = sec_show(coord, depth, temp, ax[0,0], coord_type=coord_type)
@@ -88,10 +90,11 @@ def plot_sec(datadir, filenames, coord_type='lon'):
     cb_sal.set_label('Salinity (psu)')
     ax[1,1].plot(sal.T,depth)
     ax[1,1].set_xlabel('Salinity (psu)')
-    fig.tight_layout()
+    test=fig.suptitle(desc)
+    test.set_fontsize(test.get_fontsize()+3)
+    fig.tight_layout(rect=[0, 0.03, 1, 0.95])
     # fig.savefig('Figures/Transect/transect.pdf')
     # fig.savefig('Figures/Transect/transect.png')
-    
     plt.show()
     plt.plot(sl)
     plt.show()
@@ -133,40 +136,19 @@ def plot_surface(datadir):
     plt.show()
     plt.scatter(sal,temp)
     plt.show()
+
+def load_filenames_section(N, sec_datadir='Data/sections'):
+    """
+    load and return the filenames + decription of the section
+
+    data must be on a txt file like: secN.txt
+    N must be replaced with the section number (e.g. 'sec1.txt', 'sec5.txt')
+    """
+    return np.loadtxt(os.path.join(sec_datadir, 'sec'+str(N)+'.txt'), \
+                      dtype=str, delimiter='\n')
     
 if __name__ == '__main__':
     datadir = 'Data/ctd_files/gridded_calibrated'
-    filenames = ['TB_20181210_15b_down_grid.nc', \
-                 'TB_20181210_16_down_grid.nc', \
-                 'TB_20181210_17_down_grid.nc', \
-                 'TB_20181210_18_down_grid.nc', \
-                 'TB_20181210_19_down_grid.nc']
-    # all data except calibration and data with problems
-    filenames = [i for i in os.listdir(datadir) if i not in ['TB_20181210_15_down_grid.nc',\
-                                                             'TB_20181210b_down_grid.nc',\
-                                                             'TB_2018121cal_down_grid.nc',\
-                                                             'TB_20181211_cal_down_grid.nc']]
-    # offshore transect
-    filenames_offshore = ['SK_20181210_01_grid.nc',\
-                 'SK_20181210_02_grid.nc',\
-                 'SK_20181210_03_grid.nc',\
-                 'SK_20181210_04_grid.nc',\
-                 'SK_20181210_05_grid.nc']
-    # long transect in the middle of the fjord
-    filenames = ['SK_20181210_05_grid.nc',\
-                 'SK_20181210_16_grid.nc',\
-                 'SK_20181210_13_grid.nc',\
-                 'SK_20181210_10_grid.nc',\
-                 'SK_20181210_07_grid.nc',\
-                 'TB_20181210_17_down_grid.nc',\
-                 'TB_20181210_13_down_grid.nc',\
-                 'TB_20181210_10_down_grid.nc',\
-                 'SK_20181211_01_grid.nc',\
-                 'TB_20181210_04_down_grid.nc',\
-                 'TB_20181211_02_down_grid.nc',\
-                 'SK_20181211_03_grid.nc',\
-                 'TB_20181211_05_down_grid.nc',\
-                 'TB_20181211_09_down_grid.nc']
-    #print('LONG TRANSECT')
-    plot_sec(datadir, filenames_offshore, 'lon')
+    section_meta = load_filenames_section(0, 'Data/sections')
+    plot_sec(datadir, section_meta[1:], desc=section_meta[0], coord_type='lon')
     #plot_surface(datadir)
