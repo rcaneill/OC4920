@@ -35,9 +35,9 @@ def sec_show(coord, depth, data, axe, cmap='viridis', coord_type='lon'):
     #axe.set_yticklabels(np.abs([int(i) for i in axe.get_yticks()]))
     return cb
 
-def compute_mld(var,depth,ref_depth=4,threshold=0.08):
+def compute_surface_layer(var,depth,ref_depth=5,threshold=1.6):
     """
-    Function to compute MLD
+    Function to compute winter water surface layer
     Select temperature or density as your variable,
     Adjust threshold and ref depth accordingly
     """
@@ -75,7 +75,8 @@ def plot_sec(datadir, filenames, coord_type='lon'):
     sal = np.array(sal)
     pdens= np.array(pdens)
     
-    mld = np.array([compute_mld(x,depth) for x in pdens])
+    sl = np.array([compute_surface_layer(x,depth) for x in temp])
+
     fig,ax = plt.subplots(2,2, sharey=True)
     cb_temp = sec_show(coord, depth, temp, ax[0,0], coord_type=coord_type)
     cb_temp.set_label(u'Temperature ($^{\circ}C$)')
@@ -91,7 +92,7 @@ def plot_sec(datadir, filenames, coord_type='lon'):
     # fig.savefig('Figures/Transect/transect.png')
     
     plt.show()
-    plt.plot(mld)
+    plt.plot(sl)
     plt.show()
 
 def first_non_nan(array):
