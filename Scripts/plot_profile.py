@@ -141,7 +141,8 @@ def stations(datadir):
         #print(label)
         ax.text(x,y,str(label).replace('_',' '), transform=ccrs.PlateCarree())
     plt.show()
-    
+
+
 def section(data_tot,meta):
     """
     plot temp, salt, density contours overlain, sections across fjord
@@ -240,9 +241,6 @@ def calibrated_profs(datadir):
 
     plt.savefig('Figures/Calib/profile_temp_calib.png')
     plt.savefig('Figures/Calib/profile_temp_calib.pdf')
-    plt.show()
-    plt.close()
-
 
     fig,ax=plt.subplots(1,2)
     ax[0].plot(TB1.PSAL)
@@ -252,9 +250,6 @@ def calibrated_profs(datadir):
 
     plt.savefig('Figures/Calib/profile_salt_calib.png')
     plt.savefig('Figures/Calib/profile_salt_calib.pdf')
-    plt.show()
-    plt.close()
-
 
     fig,ax=plt.subplots(1,2)
     ax[0].plot(TB2.TEMP)
@@ -264,8 +259,6 @@ def calibrated_profs(datadir):
 
     plt.savefig('Figures/Calib/profile_temp_calib_day2.png')
     plt.savefig('Figures/Calib/profile_temp_calib_day2.pdf')
-    plt.show()
-    plt.close()
 
     fig,ax=plt.subplots(1,2)
     ax[0].plot(TB2.PSAL)
@@ -275,8 +268,6 @@ def calibrated_profs(datadir):
 
     plt.savefig('Figures/Calib/profile_salt_calib_day2.png')
     plt.savefig('Figures/Calib/profile_salt_calib_day2.pdf')
-    plt.show()
-    plt.close()
 
 
 
@@ -313,5 +304,5 @@ if __name__ == '__main__':
         ship_calib('Data/ctd_files/gridded/',filename_arr)
     
     elif sys.argv[1] == 'calibrated_profs':
-        datadir='Data/ctd_files/gridded_correlated'
+        datadir='Data/ctd_files/gridded_calibrated'
         calibrated_profs(datadir)

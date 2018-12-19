@@ -35,6 +35,14 @@ def sec_show(coord, depth, data, axe, cmap='viridis', coord_type='lon'):
     #axe.set_yticklabels(np.abs([int(i) for i in axe.get_yticks()]))
     return cb
 
+def compute_mld(var,depth=10,threshold=0.03):
+    """
+    Function to compute MLD
+    Select temperature or density as your variable,
+    Adjust threshold and ref depth accordingly
+    """
+    return depth[(abs((var-var[depth]))>=threshold)].min()
+
 def plot_sec(datadir, filenames, coord_type='lon'):
     """
     Plot a section.
