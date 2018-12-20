@@ -145,13 +145,13 @@ def plot_surface(datadir):
     values = temp
     #values = depth
     grid_temp = griddata(points, values, (grid_lon, grid_lat), method='linear')
-    #define axes
+    # #define axes
     axe = plt.axes(projection=ccrs.PlateCarree(central_longitude=11))
     axe.set_extent([11.2, 11.8, 58.1, 58.5],ccrs.PlateCarree())
     cf = axe.contourf(grid_lon, grid_lat, \
-                 grid_temp, cmap='viridis', transform=ccrs.PlateCarree(),levels=20)
+                 grid_temp, cmap='viridis', transform=ccrs.PlateCarree())
     cb=plt.colorbar(cf)
-    cb.set_label(u'Temperature ($^{\circ}C$)')
+    cb.set_label(u'Potential Temperature ($^{\circ}C$)')
     #axe.scatter(grid_lon.flatten(), grid_lat.flatten(), \
     #            c=grid_temp.flatten(), cmap='jet', transform=ccrs.PlateCarree())
     #axe.scatter(lon,lat,c=temp,s=50,cmap='jet', transform=ccrs.PlateCarree())
@@ -160,9 +160,35 @@ def plot_surface(datadir):
     for geometry in geometries:
         axe.add_geometries([geometry], ccrs.PlateCarree(), facecolor='lightgray',\
                            edgecolor='black')
+    gl=axe.gridlines(crs=ccrs.PlateCarree(),draw_labels=True,alpha=0.1,zorder=1)
+    gl.xlabels_top=False
+    gl.ylabels_right=False
     plt.title('Temperature at 1m depth')
     plt.savefig('Figures/Surface/surf_temp.png')
     plt.savefig('Figures/Surface/surf_temp.pdf')
+    plt.show()
+
+    values = sal
+    grid_sal = griddata(points, values, (grid_lon, grid_lat), method='linear')
+    # #define axes
+    axe = plt.axes(projection=ccrs.PlateCarree(central_longitude=11))
+    axe.set_extent([11.2, 11.8, 58.1, 58.5],ccrs.PlateCarree())
+    cf = axe.contourf(grid_lon, grid_lat, \
+                 grid_sal, cmap='viridis', transform=ccrs.PlateCarree())
+    cb=plt.colorbar(cf)
+    cb.set_label(u'Absolute Salinity')
+    
+    coast = shapereader.Reader('Data/topo/coastline.shp')
+    geometries = [i for i in coast.geometries()]
+    for geometry in geometries:
+        axe.add_geometries([geometry], ccrs.PlateCarree(), facecolor='lightgray',\
+                           edgecolor='black')
+    gl=axe.gridlines(crs=ccrs.PlateCarree(),draw_labels=True,alpha=0.1,zorder=1)
+    gl.xlabels_top=False
+    gl.ylabels_right=False
+    plt.title('Surface Salinity')
+    plt.savefig('Figures/Surface/surf_salt.png')
+    plt.savefig('Figures/Surface/surf_salt.pdf')
     plt.show()
 
 def load_filenames_section(N, sec_datadir='Data/sections'):
@@ -176,7 +202,7 @@ def load_filenames_section(N, sec_datadir='Data/sections'):
                       dtype=str, delimiter='\n')
     
 if __name__ == '__main__':
-    datadir = 'Data/ctd_files/gridded_calibrated'
+    datadir = 'Data/ctd_files/gridded_calibrated_updated'
     section_meta = load_filenames_section(0, 'Data/sections')
     #plot_sec(datadir, section_meta[1:], desc=section_meta[0], coord_type='lon')
     plot_surface(datadir)

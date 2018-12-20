@@ -158,8 +158,25 @@ def gridd(datadir, filename, MAXDEPTH=120):
     #print(datanew.DEPTH)
     datanew.to_netcdf(os.path.join(datadir, filename[:-3]+'_grid.nc'))
     
+
+
+def fix_left_out_files(datadir,filename,lon,lat):
+    data =  xr.open_dataset(os.path.join(datadir,filename))
+    data['lat'] = ('scan',np.ones(data.DEPTH.shape) * lat)
+    data['lon'] = ('scan',np.ones(data.DEPTH.shape) * lon)
+    print('Moving {0} to {0}.bak'.format(filename))
+    os.rename(os.path.join(datadir,filename), \
+    os.path.join(datadir,filename+'.bak'))
+    print('Saving file {}'.format(filename))
+    data.to_netcdf(os.path.join(datadir,filename))
+
 if __name__ == '__main__':
     #Has been done
     #add_coordinates('Data/ctd_files/processed2nc','Data/ctd_files/meta/TB20181210_meta.csv')
     #save_ascii2nc('Data/Skagerak/SK20181210/SK20181210_CTD/SK20181210_Processed_data')
-    gridd_all('Data/ctd_files/processed2nc/Skagerak')
+    gridd_all('Data/ctd_files/processed2nc/Trygve')
+
+    # fix_left_out_files('Data/ctd_files/processed2nc/Trygve','TB_20181211_cal_down.nc',11.543796,58.319344)
+    # fix_left_out_files('Data/ctd_files/processed2nc/Trygve','TB_2018121cal_down.nc',11.332095, 58.250534)
+    # fix_left_out_files('Data/ctd_files/processed2nc/Trygve','SK_20181210_01.nc',11.543796,58.319344)
+    # fix_left_out_files('Data/ctd_files/processed2nc/Trygve','TB_20181210b_down.nc',11.261770,  58.207741)

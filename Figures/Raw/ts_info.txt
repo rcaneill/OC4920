@@ -13,3 +13,6 @@ Skagerak: Surface salinities 33-35 (with depth)
 Natural separation between the two water types is the 28 isohaline
 
 Ref: Arneborg, L. 2004. Turnover times for the water above sill level in Gullmar Fjord. Continental Shelf Research. 24: 443-460
+
+
+
