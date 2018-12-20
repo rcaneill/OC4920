@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy.optimize as so
 import xarray as xr
+import os
 
 def calc_fit(depth, var):
     """
@@ -9,6 +10,11 @@ def calc_fit(depth, var):
 
     uses the function *multi_linear* for the fit
     """
+    depth = np.array(depth)
+    var = np.array(var)
+    NAN = np.isnan(depth) | np.isnan(var)
+    depth = depth[~NAN]
+    var = var[~NAN]
     #p0 is the a priori fit for temperature
     p0=[0,20,60,80,5,10,9,7]
     popt, pcov = so.curve_fit(multi_linear_fjord, depth, var, p0=p0)
@@ -17,6 +23,7 @@ def calc_fit(depth, var):
     plt.plot(depth,var,'o')
     plt.plot(depth, [multi_linear(d, popt) for d in depth])
     plt.show()
+    return popt
 
 
 def multi_linear_fjord(d_tot, d0, d1, d2, d3, v0, v1, v2, v3):
@@ -78,6 +85,18 @@ def multi_linear_ex():
     plt.ylim(d_tot[-1], d_tot[0])
     plt.show()
 
+def fit_all_prof(datadir):
+    """
+    Fit all temperature profile of data in datadir
+    save the data on the same netcdf file, with new attributes:
+    data.TEMP_f : for the fit of temperature
+    data.layers_d : the depth of the different layers
+    data.layers_t : the temperature at the different depth of layers
+    """
+    for filename in os.listdir(datadir):
+        data = xr.open_dataset(os.path.join(datadir, filename))
+        layers = calc_fit(data.DEPTH.values, data.TEMP.values)
+    
 if __name__ == '__main__':
     data = xr.open_dataset('Data/ctd_files/gridded_calibrated/TB_20181210_10_down_grid.nc')
     depth=data.DEPTH.values
@@ -85,5 +104,6 @@ if __name__ == '__main__':
     NAN = np.isnan(temp) | np.isnan(depth)
     depth = depth[~NAN]
     temp = temp[~NAN]
-    calc_fit(depth, temp)
-    # multi_linear_ex()
+    #calc_fit(depth, temp)
+    #multi_linear_ex()
+    fit_all_prof('Data/ctd_files/fitted')
