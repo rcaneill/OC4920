@@ -86,4 +86,4 @@ if __name__ == '__main__':
     depth = depth[~NAN]
     temp = temp[~NAN]
     calc_fit(depth, temp)
-    #multi_linear_ex()
+    # multi_linear_ex()

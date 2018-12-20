@@ -5,6 +5,7 @@ import scipy.stats as ss
 import os
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
+import gsw
 
 plt.style.use('seaborn')
 rcParams['text.usetex'] = True
@@ -60,10 +61,32 @@ def corr_coef(datadir,SK_filename,TB_filename):
                header="a_temp b_temp a_sal b_sal",comments='')
     return (a_temp, b_temp, a_sal, b_sal)
 
+def convert_ts(datadir,filename):
+    """
+    Function to convert Practical salinity to Absolute salinity 
+    and Conservative Temperature to potential temperature
+    """
+    ls = os.listdir(datadir)
+    ls.sort()
+    for filename in ls:
+        if filename[:11] == 'SK_20181211':
+            # print(filename)
+            data =  xr.open_dataset(os.path.join(datadir,filename))
+            print(filename)
+            data['ab_sal']=gsw.SA_from_SP(data.PSAL,data.DEPTH,data.lon.values,data.lat.values)
+            data['ptemp']=gsw.pt_from_CT(data.ab_sal,data.TEMP)
+
+
+            data.to_netcdf(os.path.join('Data/ctd_files/gridded_calibrated_updated',filename))
+
+
+
 def correct_ts(datadir,filename,corr_coeff_filename):
     """
     Corrects TB Temp and salinity according to correlation coefficients and adds corrected 
-    var to nc
+    var to ncfile
+    Also converts practical salinity to absolute salinity and conservative temperature to 
+    potential temperature
     """
     coeffs=pd.read_csv(corr_coeff_filename,delim_whitespace=True)
     ls = os.listdir(datadir)
@@ -72,9 +95,14 @@ def correct_ts(datadir,filename,corr_coeff_filename):
         if filename[:11] == 'TB_20181210':
             # print(filename)
             data =  xr.open_dataset(os.path.join(datadir,filename))
+            print(filename)
             data['t_corrected']=(coeffs.a_temp.values*data.TEMP+(coeffs.b_temp.values))
             data['s_corrected']=(coeffs.a_sal.values*data.PSAL+(coeffs.b_sal.values))
-            data.to_netcdf(os.path.join('Data/ctd_files/gridded_correlated',filename))
+            data['ab_sal']=gsw.SA_from_SP(data.s_corrected,data.DEPTH,data.lon.values,data.lat.values)
+            data['ptemp']=gsw.pt_from_CT(data.ab_sal,data.TEMP)
+
+
+            data.to_netcdf(os.path.join('Data/ctd_files/gridded_calibrated_updated',filename))
     
     # Trygve_new = a_temp*Trygve + b_temp
 
@@ -83,5 +111,5 @@ if __name__ == "__main__":
     #           'TB_2018121cal_down_grid.nc')
     #  corr_coef('Data/ctd_files/gridded', 'SK_20181211_01_grid.nc', \
     #        'TB_20181211_cal_down_grid.nc')
-    correct_ts('Data/ctd_files/gridded','TB_20181210*.nc','Data/calib_ts_20181210.txt')
-
+    # correct_ts('Data/ctd_files/gridded','TB_20181210*.nc','Data/calib_ts_20181210.txt')
+    convert_ts('Data/ctd_files/gridded','SK_20181211*.nc')

@@ -12,7 +12,6 @@ from cartopy.mpl.ticker import LongitudeFormatter, LatitudeFormatter
 from cartopy.io import shapereader
 import cmocean as cm
 
-
 # plt.style.use('seaborn')
 rcParams['text.usetex'] = True
 
@@ -26,6 +25,8 @@ rcParams['text.usetex'] = True
 def brunt_vaisala(datadir,filenames,desc=''):
 
     #Load required variables
+    lat = []
+    lon = []
     temp = []
     sal = []
     depth = []
@@ -33,24 +34,52 @@ def brunt_vaisala(datadir,filenames,desc=''):
         d = xr.open_dataset(os.path.join(datadir, i))
         temp.append(d.TEMP.values)
         sal.append(d.PSAL.values)
-        
+        lon.append(np.nanmean(d.lon.values))
+        lat.append(np.nanmean(d.lat.values))
+       
     depth = -np.abs(d.DEPTH.values)
-    
+    coords=lon
     #compute alpha and beta
     [rho,alpha,beta]=gsw.rho_alpha_beta(sal,temp,depth)
 
     g=9.8
-    N = np.sqrt(g*(alpha[:,:-1]*(np.diff(temp)/np.diff(depth))
-    -beta[:,:-1]*(np.diff(sal)/np.diff(depth))))
+    N = np.sqrt(g*((alpha[:,:-1]*(np.diff(temp)/np.diff(depth)))
+    -(beta[:,:-1]*(np.diff(sal)/np.diff(depth))))) ##computed this way so that the influence of temperature 
+    #vs salinity can be separated
+    #plot N
+    xx,yy=np.meshgrid(lon,depth[:-1])
+    plt.pcolormesh(xx,yy,N.T)
+    cb=plt.colorbar(extend='both')
+    cb.set_label('N')
     
-    return N
+    #plt.show()
+    
+    plt.savefig('Figures/Transect/transect_N.pdf')
+    plt.savefig('Figures/Transect/transect_N.png')
+    plt.close()
+    return N,depth,lon,lat
 
 def rossby_radii(datadir,filenames,desc=''):
-    N=brunt_vaisala(datadir,filenames,desc='')
-    Lr=(N*80)/(1*np.pi)
+    [N,depth,lon, lat]=brunt_vaisala(datadir,filenames,desc='')
+    #Length scale of rossby radius of deformation 
+    def coriolis_acc(lat,omega=0.729*10**-4):
+        return 2*omega*np.sin(lat/360.*2*np.pi)
+    f=coriolis_acc(np.asarray(lat))
+    Lr=(N*depth[:-1]*-1)/(np.nanmean(f))*0.001
+
+    plt.figure()
+    xx,yy=np.meshgrid(lon,depth[:-1])
+    plt.pcolormesh(xx,yy,Lr.T)
+    cb=plt.colorbar(extend='both')
+    plt.show()
+    # cb.set_label('N')
     print('max:',np.nanmax(Lr))
     print('min:',np.nanmin(Lr))
     print('mean:',np.nanmean(Lr))
+
+    # np.savetxt('Data/rossby_radius_deformation.txt',np.c_[, b_temp, a_sal, b_sal], \
+    #            header="a_temp b_temp a_sal b_sal",comments='')
+
     return Lr
 
 

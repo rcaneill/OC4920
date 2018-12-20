@@ -60,8 +60,9 @@ def all_prof(datadir):
     fig,ax = plt.subplots(1,2,sharey=True)
     for filename in os.listdir(datadir):
         data = xr.open_dataset(os.path.join(datadir,filename))
-        ax[0].plot(data.PSAL, data.DEPTH, 'k', linewidth=0.5)
-        ax[1].plot(data.TEMP, data.DEPTH, 'k', linewidth=0.5)
+        data['dens']=gsw.rho(data.PSAL.values,data.TEMP.values,data.DEPTH.values)
+        ax[0].plot(data.ab_sal, data.DEPTH, 'k', linewidth=0.5)
+        ax[1].plot(data.ptemp, data.DEPTH, 'k', linewidth=0.5)
     ax[0].set_title('Salinity')
     ax[1].set_title('Temperature')
     ax[0].set_ylabel('Depth (m)')
@@ -318,7 +319,7 @@ if __name__ == '__main__':
             prof(filename)
 
     elif sys.argv[1] == 'all_prof':
-        all_prof('Data/ctd_files/gridded')
+        all_prof('Data/ctd_files/gridded_calibrated_updated')
             
     elif sys.argv[1] == 'ts':
         ts('Data/ctd_files/gridded_calibrated')
@@ -342,5 +343,5 @@ if __name__ == '__main__':
         ship_calib('Data/ctd_files/gridded/',filename_arr)
     
     elif sys.argv[1] == 'calibrated_profs':
-        datadir='Data/ctd_files/gridded_calibrated'
+        datadir='Data/ctd_files/gridded_calibrated_updated'
         calibrated_profs(datadir)
