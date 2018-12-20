@@ -69,7 +69,7 @@ def convert_ts(datadir,filename):
     ls = os.listdir(datadir)
     ls.sort()
     for filename in ls:
-        if filename[:11] == 'SK_20181211':
+        if filename[:11] == 'SK_20181210':
             # print(filename)
             data =  xr.open_dataset(os.path.join(datadir,filename))
             print(filename)
@@ -93,7 +93,7 @@ def correct_ts(datadir,filename,corr_coeff_filename):
     ls = os.listdir(datadir)
     ls.sort()
     for filename in ls:
-        if filename[:11] == 'TB_20181210':
+        if filename[:11] == 'TB_20181211':
             # print(filename)
             data =  xr.open_dataset(os.path.join(datadir,filename))
             print(filename)
@@ -113,5 +113,5 @@ if __name__ == "__main__":
     #           'TB_2018121cal_down_grid.nc')
     #  corr_coef('Data/ctd_files/gridded', 'SK_20181211_01_grid.nc', \
     #        'TB_20181211_cal_down_grid.nc')
-    correct_ts('Data/ctd_files/gridded','TB_20181210*.nc','Data/calib_ts_20181210.txt')
-    # convert_ts('Data/ctd_files/gridded','SK_20181211*.nc')
+    # correct_ts('Data/ctd_files/gridded','TB_20181211*.nc','Data/calib_ts_20181211.txt')
+    convert_ts('Data/ctd_files/gridded','SK_20181210*.nc')
