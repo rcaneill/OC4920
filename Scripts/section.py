@@ -124,6 +124,7 @@ def plot_surface(datadir):
     sal = []
     lon=[]
     lat=[]
+    depth = []
     filenames = [i for i in os.listdir(datadir) if i not in ['TB_20181210_15_down_grid.nc',\
                                                              'TB_20181210b_down_grid.nc',\
                                                              'TB_2018121cal_down_grid.nc',\
@@ -132,7 +133,9 @@ def plot_surface(datadir):
     for i in filenames:
         #print(i)
         d = xr.open_dataset(os.path.join(datadir,i))
-        temp.append(first_non_nan(d.TEMP.values))
+        #temp.append(first_non_nan(d.TEMP.values))
+        temp.append(d.TEMP.values[1])
+        depth.append(d.DEPTH.values[~np.isnan(d.TEMP.values)][0])
         sal.append(first_non_nan(d.PSAL.values))
         lon.append(first_non_nan(d.lon.values))
         lat.append(first_non_nan(d.lat.values))
@@ -140,6 +143,7 @@ def plot_surface(datadir):
     grid_lon, grid_lat = np.mgrid[11.2:11.8:200j, 58.1:58.5:200j]
     points = [[i,j] for (i,j) in zip(lon,lat)]
     values = temp
+    #values = depth
     grid_temp = griddata(points, values, (grid_lon, grid_lat), method='linear')
     #define axes
     axe = plt.axes(projection=ccrs.PlateCarree(central_longitude=11))
@@ -156,7 +160,7 @@ def plot_surface(datadir):
     for geometry in geometries:
         axe.add_geometries([geometry], ccrs.PlateCarree(), facecolor='lightgray',\
                            edgecolor='black')
-    plt.title('Surface temperature')
+    plt.title('Temperature at 1m depth')
     plt.savefig('Figures/Surface/surf_temp.png')
     plt.savefig('Figures/Surface/surf_temp.pdf')
     plt.show()

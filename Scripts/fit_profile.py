@@ -4,11 +4,13 @@ import scipy.optimize as so
 import xarray as xr
 import os
 
-def calc_fit(depth, var):
+def calc_fit(depth, var, plotBool=False):
     """
     computes the fit of the variable var along depth
 
     uses the function *multi_linear* for the fit
+
+    Set to NaN all parameters that are extrapolated from where there are no data
     """
     depth = np.array(depth)
     var = np.array(var)
@@ -16,13 +18,35 @@ def calc_fit(depth, var):
     depth = depth[~NAN]
     var = var[~NAN]
     #p0 is the a priori fit for temperature
-    p0=[0,20,60,80,5,10,9,7]
-    popt, pcov = so.curve_fit(multi_linear_fjord, depth, var, p0=p0)
+    p0=np.array([0,20,60,80,5,10,9,7])
+    # bounds are set by looking at all transects and estimate by eye
+    # first 4, values are depth, last 4 values are temp
+    bounds_low = [0, 4, 55, 65, 2, 9, 9, 6]
+    bounds_up = [6, 30, 65, 80, 7, 11, 10, 7.5]
+    bounds = (bounds_low, bounds_up)
+    #bounds=(-np.inf,np.inf)
+    try:
+        popt, pcov = so.curve_fit(multi_linear_fjord, depth, var, p0=p0, bounds=bounds)
+        layer_d = popt[:int(len(popt)/2)]
+        layer_v = popt[int(len(popt)/2):]
+        # putting NaN where data were extrapolated, for depth deeper than max cast depth
+        bool_d = layer_d > np.nanmax(depth)
+        layer_d[bool_d] = np.ones((np.sum(bool_d)))*np.NaN
+        layer_v[bool_d] = np.ones((np.sum(bool_d)))*np.NaN
+        popt = np.concatenate((layer_d,layer_v))
+        print('Resulting values for layer depth and temperature')
+        print(layer_d)
+        print(layer_v)
+    except RuntimeError:
+        print("Fit cannot be computed, all layer values set to NaN")
+        return p0*np.NaN
     #print([0,10,50,70,5,10,11,7])
     #print(popt)
-    plt.plot(depth,var,'o')
-    plt.plot(depth, [multi_linear(d, popt) for d in depth])
-    plt.show()
+    if plotBool:
+        plt.plot(var, depth,'o')
+        plt.plot([multi_linear(d, popt) for d in depth], depth)
+        plt.ylim(119,0)
+        plt.show()
     return popt
 
 
@@ -49,6 +73,13 @@ def multi_linear(d, layer):
     
     layer_depth=np.array(layer[:int(len(layer)/2)])
     layer_value=np.array(layer[int(len(layer)/2):])
+    # removing NaN
+    NAN = np.isnan(layer_depth) | np.isnan(layer_value)
+    # if only NaN, we return NaN
+    if NAN.all():
+        return np.nan
+    layer_depth = layer_depth[~NAN]
+    layer_value = layer_value[~NAN]
     # sorting to get depth increasing
     layer_value = layer_value.ravel()[layer_depth.argsort(axis=None).reshape(layer_depth.shape)]
     layer_depth.sort()
@@ -90,12 +121,23 @@ def fit_all_prof(datadir):
     Fit all temperature profile of data in datadir
     save the data on the same netcdf file, with new attributes:
     data.TEMP_f : for the fit of temperature
-    data.layers_d : the depth of the different layers
-    data.layers_t : the temperature at the different depth of layers
+    data.layer_d : the depth of the different layers
+    data.layer_t : the temperature at the different depth of layers
     """
     for filename in os.listdir(datadir):
+        print(filename)
         data = xr.open_dataset(os.path.join(datadir, filename))
-        layers = calc_fit(data.DEPTH.values, data.TEMP.values)
+        layer = calc_fit(data.DEPTH.values, data.TEMP.values, plotBool=True)
+        layer_d = layer[:int(len(layer)/2)]
+        layer_v = layer[int(len(layer)/2):]
+        TEMP_f = [multi_linear(d, layer) for d in data.DEPTH.values]
+        data['TEMP_f'] = ('DEPTH', TEMP_f)
+        data['layer_d'] = layer_d
+        data['layer_v'] = layer_v
+        #data.to_netcdf(os.path.join(datadir, filename))
+        
+        
+        
     
 if __name__ == '__main__':
     data = xr.open_dataset('Data/ctd_files/gridded_calibrated/TB_20181210_10_down_grid.nc')
