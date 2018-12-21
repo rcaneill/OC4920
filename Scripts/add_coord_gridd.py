@@ -46,13 +46,29 @@ def read_ascii(datadir,filename):
     df.columns=['timeS','lon','lat','TEMP','PRES','Flr','density',
                 'DEPTH','o2','PSAL']
     return df
+
+def read_ascii_sk(datadir,filename):
+    df=pd.read_csv(os.path.join(datadir,filename),skiprows=[0],sep='\t')
+    df=df.iloc[:,:17]
+    df.columns=['lat','lon','pres','T090C','Flr','TimeS','TimeJ','DepSM','Sal00','Potemp090C','Density00','sigma0','sigma-t',
+    'Sbeox0ML_L','Sbeoc0PS','OxsolML_L','OxsatML_L']
+    # print(df.keys())
+    return df
+
+def read_ascii_tb(datadir,filename):
+    df=pd.read_csv(os.path.join(datadir,filename),skiprows=[0],sep='\t')
+    df=df.iloc[:,:17]
+    df.columns=['PrDM','T090C','WetStar','FISP','SeaTurbMtr','TimeS','TimeJ','DepSM','Sal00','Potemp090C','Density00','sigma0','sigma-t',
+    'Sbeox0ML_L','Sbeoc0PS','OxsolML_L','OxsatML_L']
+    # print(df.keys())
+    return df
     
 def save_ascii2nc(datadir):
     ls = os.listdir(datadir)
     ls.sort()
     for filename in ls:
         if filename[-3:] == 'asc':
-            data=read_ascii(datadir,filename)
+            data=read_ascii_tb(datadir,filename)
             ds=data.to_xarray()
             filename=filename[:-3]+'nc'
             print('Saving file {}'.format(filename))
@@ -173,8 +189,10 @@ def fix_left_out_files(datadir,filename,lon,lat):
 if __name__ == '__main__':
     #Has been done
     #add_coordinates('Data/ctd_files/processed2nc','Data/ctd_files/meta/TB20181210_meta.csv')
-    #save_ascii2nc('Data/Skagerak/SK20181210/SK20181210_CTD/SK20181210_Processed_data')
-    gridd_all('Data/ctd_files/processed2nc/Trygve')
+    save_ascii2nc('Data/unprocessed_data/reprocessed/trygvre')
+    # read_ascii_new('Data/unprocessed_data/reprocessed/')
+
+    # gridd_all('Data/ctd_files/processed2nc/reprocessed')
 
     # fix_left_out_files('Data/ctd_files/processed2nc/Trygve','TB_20181211_cal_down.nc',11.543796,58.319344)
     # fix_left_out_files('Data/ctd_files/processed2nc/Trygve','TB_2018121cal_down.nc',11.332095, 58.250534)
