@@ -144,7 +144,7 @@ def plot_surface(datadir):
     # #define axes
     axe = plt.axes(projection=ccrs.PlateCarree(central_longitude=11))
     axe.set_extent([11.2, 11.8, 58.1, 58.5],ccrs.PlateCarree())
-    cf = axe.contourf(grid_lon, grid_lat, \
+    cf = axe.pcolormesh(grid_lon, grid_lat, \
                  grid_temp, cmap='viridis', transform=ccrs.PlateCarree())
     cb=plt.colorbar(cf)
     cb.set_label(u'Potential Temperature ($^{\circ}C$)')
@@ -169,7 +169,7 @@ def plot_surface(datadir):
     # #define axes
     axe = plt.axes(projection=ccrs.PlateCarree(central_longitude=11))
     axe.set_extent([11.2, 11.8, 58.1, 58.5],ccrs.PlateCarree())
-    cf = axe.contourf(grid_lon, grid_lat, \
+    cf = axe.pcolormesh(grid_lon, grid_lat, \
                  grid_sal, cmap='viridis', transform=ccrs.PlateCarree())
     cb=plt.colorbar(cf)
     cb.set_label(u'Absolute Salinity')
