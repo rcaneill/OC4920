@@ -2,6 +2,7 @@
 
 ## fitted
 Contains gridded, calibrated data that have been fitted in temperature
+Only fjord data, no offshore
 
 ## gridded
 Contains gridded data
