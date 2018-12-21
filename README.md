@@ -9,7 +9,7 @@ Scripts for the field work
 
 Scripts **must** be executed from root folder
 
-# Logbok of work + future work
+# Logbook of work + future work
 ## Romain
 ### Evening 11 december
 * I added the coordinates to the .nc files for TB (day1)
@@ -21,6 +21,6 @@ Scripts **must** be executed from root folder
 * I will focus on depth of the different layers
 
 ## Idea
-I just thaught for the surface temperature: for the offshore cast, even if with only have temperature at 4m, the thermocline has a smaller gradient than the thermocline in the fjord => temperature at 4m is not so far from temperature at 1m
+I just thought for the surface temperature: for the offshore cast, even if with only have temperature at 4m, the thermocline has a smaller gradient than the thermocline in the fjord => temperature at 4m is not so far from temperature at 1m
 
 See if there is a small mixed layer offshore => temeprature at 4m is ~ than temp at surface
