@@ -12,11 +12,13 @@ def add_coordinates(datadir, metafilename):
     ls.sort()
     for filename in ls:
         if filename[-2:] == 'nc':
+            print(filename)
             data =  xr.open_dataset(os.path.join(datadir,filename))
             meta_data = meta[meta['filename'] == filename]
+            print(meta_data)
             if not meta_data.empty:
-                data['lat'] = ('scan',np.ones(data.DEPTH.shape) * meta_data.lat.values[0])
-                data['lon'] = ('scan',np.ones(data.DEPTH.shape) * meta_data.lon.values[0])
+                data['lat'] = ('index',np.ones(data.PrDM.shape) * meta_data.lat.values[0])
+                data['lon'] = ('index',np.ones(data.PrDM.shape) * meta_data.lon.values[0])
                 print('Moving {0} to {0}.bak'.format(filename))
                 os.rename(os.path.join(datadir,filename), \
                           os.path.join(datadir,filename+'.bak'))
@@ -188,8 +190,8 @@ def fix_left_out_files(datadir,filename,lon,lat):
 
 if __name__ == '__main__':
     #Has been done
-    #add_coordinates('Data/ctd_files/processed2nc','Data/ctd_files/meta/TB20181210_meta.csv')
-    save_ascii2nc('Data/unprocessed_data/reprocessed/trygvre')
+    add_coordinates('Data/ctd_files/processed2nc/reprocessed/tb2','Data/ctd_files/meta/TB20181211_meta.csv')
+    # save_ascii2nc('Data/unprocessed_data/reprocessed/trygvre')
     # read_ascii_new('Data/unprocessed_data/reprocessed/')
 
     # gridd_all('Data/ctd_files/processed2nc/reprocessed')
