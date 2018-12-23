@@ -1,20 +1,4 @@
-# Explanation of the different folders
+Here are the data that Marcus reprocessed.
 
-## fitted
-Contains gridded, calibrated data that have been fitted in temperature
-Only fjord data, no offshore
-
-## gridded
-Contains gridded data
-
-## gridded_calibrated
-Contains gridded data, which Trygve calibrated to Skagerak
-
-## meta
-Meta data (lat, lon) for the ctd casts
-
-## processed2nc
-Raw data, but in netcdf format
-
-## timeries
-Morring data
+Only TEMP, PSAL, lat, lon and DEPTH are kept in gridded* data.
+All variables are present in processed2nc/ folder
