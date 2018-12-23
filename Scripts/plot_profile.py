@@ -12,7 +12,7 @@ from cartopy.mpl.ticker import LongitudeFormatter, LatitudeFormatter
 from cartopy.io import shapereader
 import cmocean as cm
 
-# plt.style.use('seaborn')
+#plt.style.use('seaborn')
 rcParams['text.usetex'] = True
 
 
@@ -25,30 +25,32 @@ def prof(filename):
         filename: name of the file, string
             Assumes data are in 'Data/ctd_files/gridded
     """
+    plt.style.use('seaborn')
     name = filename[:-3]
-    datadir = "Data/ctd_files/gridded"
+    datadir = "Data/ctd_files/gridded_calibrated_updated"
     data = xr.open_dataset(os.path.join(datadir,filename))
     fig,ax = plt.subplots(1,2,sharey=True)
-    temp = data['TEMP']
-    psal = data['PSAL']
+    temp = data['ptemp']
+    psal = data['ab_sal']
     depth = data['DEPTH']
-    #sigma_t = data['sigma_t']
+    sigma_t = data['Gsw_sigma0A0']
 
     axe0 = ax[0]
     axe1 = ax[1]
     axe2 = axe0.twiny()
     axe0.plot(psal, depth, 'r', label='Practical salinity')
     axe2.plot(temp, depth, 'b', label='Temperature')
-    #axe1.plot(sigma_t, depth, 'g', label=u'$\sigma_t$')
+    axe1.plot(sigma_t, depth, 'g', label=u'$\sigma_t$')
     fig.suptitle(name.replace('_',' '))
     for axe in (axe0, axe1, axe2):
         #axe.invert_yaxis()
         axe.legend()
         axe.set_ylabel('Depth (m)')
         axe.set_ylim(120,0)
-    axe0.set_xlabel('Salinity (psu)')
-    axe2.set_xlabel(u'Temperature ($^{\circ}$C)')
+    axe0.set_xlabel('Absolute Salinity')
+    axe2.set_xlabel(u'Potential Temperature ($^{\circ}$C)')
     axe1.set_xlabel(u'Density anomaly $kg/m^3$')
+    fig.tight_layout()
     fig.savefig('Figures/Profiles/profile_' + name + '.pdf')
     fig.savefig('Figures/Profiles/profile_' + name + '.png')
     plt.close()
@@ -57,6 +59,7 @@ def all_prof(datadir):
     """
     Plot profile of all data on the same plot
     """
+    plt.style.use('seaborn')
     fig,ax = plt.subplots(1,2,sharey=True)
     for filename in os.listdir(datadir):
         data = xr.open_dataset(os.path.join(datadir,filename))
@@ -313,7 +316,7 @@ def calibrated_profs(datadir):
     
 if __name__ == '__main__':
     if sys.argv[1] == 'profile':
-        all_names = os.listdir('Data/ctd_files/gridded')
+        all_names = os.listdir('Data/ctd_files/gridded_calibrated_updated')
         for filename in all_names:
             #prof('TB_20181210_03_down.nc')
             prof(filename)

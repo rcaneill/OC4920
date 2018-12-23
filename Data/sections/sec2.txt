@@ -1,7 +1,7 @@
 #First line is the name of the section
 Long section accross the fjord
-TB_20181210_15b_down_grid.nc
-TB_20181210_16_down_grid.nc
-TB_20181210_17_down_grid.nc
-TB_20181210_18_down_grid.nc
-TB_20181210_19_down_grid.nc
+TB_20181210_15b_grid.nc
+TB_20181210_16_grid.nc
+TB_20181210_17_grid.nc
+TB_20181210_18_grid.nc
+TB_20181210_19_grid.nc

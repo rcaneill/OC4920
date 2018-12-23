@@ -49,13 +49,16 @@ def compute_surface_layer(var,depth,ref_depth=5,threshold=0.6):
 
 
 
-def plot_sec(datadir, filenames, desc='', coord_type='lon'):
+def plot_sec(datadir, filenames, desc='', coord_type='lon', N=None):
     """
     Plot a section.
 
+    Coord must be increasing between the data
+    
     filenames is an array containing names of all data that will be plotted
     desc : description of the section
     coord : 'lat' or 'lon' coordinate along which we do the transect
+    N : number of the section
     """
     lon = []
     lat = []
@@ -82,10 +85,9 @@ def plot_sec(datadir, filenames, desc='', coord_type='lon'):
     sal = np.array(sal)
     pdens= np.array(pdens)
     
-    sl = np.array([compute_surface_layer(x,depth) for x in temp])
-
+    #sl = np.array([compute_surface_layer(x,depth) for x in temp])
     fig,ax = plt.subplots(2,2, sharey=True)
-    cb_temp = sec_show(coord, depth, temp, ax[0,0], coord_type=coord_type)
+    cb_temp = sec_show(coord, depth, temp, ax[0,0], coord_type=coord_type, cmap='jet')
     cb_temp.set_label(u'Temperature ($^{\circ}C$)')
     
     ax[0,1].plot(temp.T,depth)
@@ -97,11 +99,11 @@ def plot_sec(datadir, filenames, desc='', coord_type='lon'):
     test=fig.suptitle(desc)
     test.set_fontsize(test.get_fontsize()+3)
     fig.tight_layout(rect=[0, 0.03, 1, 0.95])
-    # fig.savefig('Figures/Transect/transect.pdf')
-    # fig.savefig('Figures/Transect/transect.png')
+    fig.savefig('Figures/Transect/transect_{}.pdf'.format(N))
+    fig.savefig('Figures/Transect/transect_{}.png'.format(N))
     plt.show()
-    plt.plot(sl)
-    plt.show()
+    #plt.plot(sl)
+    #plt.show()
 
 def first_non_nan(array):
     """
@@ -114,12 +116,13 @@ def first_non_nan(array):
         i+=1
     return value
     
-def plot_surface(datadir):
+def plot_surface(datadir, surf_depth=3):
     """
     plot surface properties
 
     Experimental, not finished...
     """
+    #surf_depth ref depth for plotting
     temp=[]
     sal = []
     lon=[]
@@ -130,13 +133,16 @@ def plot_surface(datadir):
                                                              'TB_2018121cal_down_grid.nc',\
                                                              'TB_20181211_cal_down_grid.nc',
                                                              'SK_20181210_01_grid.nc']]
+    filename = os.listdir(datadir)
     for i in filenames:
         #print(i)
         d = xr.open_dataset(os.path.join(datadir,i))
         #temp.append(first_non_nan(d.TEMP.values))
-        temp.append(d.TEMP.values[1])
+        temp.append(d.ptemp.values[surf_depth])
         depth.append(d.DEPTH.values[~np.isnan(d.TEMP.values)][0])
-        sal.append(first_non_nan(d.PSAL.values))
+        #print(i,d.DEPTH.values[~np.isnan(d.TEMP.values)][0])
+        #sal.append(first_non_nan(d.PSAL.values))
+        sal.append(d.ab_sal.values[surf_depth])
         lon.append(first_non_nan(d.lon.values))
         lat.append(first_non_nan(d.lat.values))
     # compute gridding of data
@@ -149,7 +155,7 @@ def plot_surface(datadir):
     axe = plt.axes(projection=ccrs.PlateCarree(central_longitude=11))
     axe.set_extent([11.2, 11.8, 58.1, 58.5],ccrs.PlateCarree())
     cf = axe.contourf(grid_lon, grid_lat, \
-                 grid_temp, cmap='viridis', transform=ccrs.PlateCarree())
+                      grid_temp, cmap='jet', transform=ccrs.PlateCarree(), levels=20)
     cb=plt.colorbar(cf)
     cb.set_label(u'Potential Temperature ($^{\circ}C$)')
     #axe.scatter(grid_lon.flatten(), grid_lat.flatten(), \
@@ -163,9 +169,9 @@ def plot_surface(datadir):
     gl=axe.gridlines(crs=ccrs.PlateCarree(),draw_labels=True,alpha=0.1,zorder=1)
     gl.xlabels_top=False
     gl.ylabels_right=False
-    plt.title('Temperature at 1m depth')
-    plt.savefig('Figures/Surface/surf_temp.png')
-    plt.savefig('Figures/Surface/surf_temp.pdf')
+    plt.title('Temperature at {} m depth'.format(surf_depth))
+    plt.savefig('Figures/Surface/{}_temp.png'.format(surf_depth))
+    plt.savefig('Figures/Surface/{}_temp.pdf'.format(surf_depth))
     plt.show()
 
     values = sal
@@ -174,7 +180,7 @@ def plot_surface(datadir):
     axe = plt.axes(projection=ccrs.PlateCarree(central_longitude=11))
     axe.set_extent([11.2, 11.8, 58.1, 58.5],ccrs.PlateCarree())
     cf = axe.contourf(grid_lon, grid_lat, \
-                 grid_sal, cmap='viridis', transform=ccrs.PlateCarree())
+                      grid_sal, cmap='viridis_r', transform=ccrs.PlateCarree(), levels=20)
     cb=plt.colorbar(cf)
     cb.set_label(u'Absolute Salinity')
     
@@ -186,9 +192,9 @@ def plot_surface(datadir):
     gl=axe.gridlines(crs=ccrs.PlateCarree(),draw_labels=True,alpha=0.1,zorder=1)
     gl.xlabels_top=False
     gl.ylabels_right=False
-    plt.title('Surface Salinity')
-    plt.savefig('Figures/Surface/surf_salt.png')
-    plt.savefig('Figures/Surface/surf_salt.pdf')
+    plt.title('Salinity at {} m depth'.format(surf_depth))
+    plt.savefig('Figures/Surface/{}_salt.png'.format(surf_depth))
+    plt.savefig('Figures/Surface/{}_salt.pdf'.format(surf_depth))
     plt.show()
 
 def load_filenames_section(N, sec_datadir='Data/sections'):
@@ -203,6 +209,7 @@ def load_filenames_section(N, sec_datadir='Data/sections'):
     
 if __name__ == '__main__':
     datadir = 'Data/ctd_files/gridded_calibrated_updated'
-    section_meta = load_filenames_section(0, 'Data/sections')
-    #plot_sec(datadir, section_meta[1:], desc=section_meta[0], coord_type='lon')
-    plot_surface(datadir)
+    N=1 #section number
+    section_meta = load_filenames_section(N, 'Data/sections')
+    plot_sec(datadir, section_meta[1:], desc=section_meta[0], coord_type='lat', N=N)
+    #plot_surface(datadir, surf_depth=40)

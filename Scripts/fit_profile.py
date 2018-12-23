@@ -116,7 +116,7 @@ def multi_linear_ex():
     plt.ylim(d_tot[-1], d_tot[0])
     plt.show()
 
-def fit_all_prof(datadir):
+def fit_all_prof(datadir, plotBool=False):
     """
     Fit all temperature profile of data in datadir
     save the data on the same netcdf file, with new attributes:
@@ -127,20 +127,21 @@ def fit_all_prof(datadir):
     for filename in os.listdir(datadir):
         print(filename)
         data = xr.open_dataset(os.path.join(datadir, filename))
-        layer = calc_fit(data.DEPTH.values, data.TEMP.values, plotBool=True)
+        layer = calc_fit(data.DEPTH.values, data.ptemp.values, plotBool=plotBool)
         layer_d = layer[:int(len(layer)/2)]
         layer_v = layer[int(len(layer)/2):]
         TEMP_f = [multi_linear(d, layer) for d in data.DEPTH.values]
         data['TEMP_f'] = ('DEPTH', TEMP_f)
         data['layer_d'] = layer_d
         data['layer_v'] = layer_v
-        #data.to_netcdf(os.path.join(datadir, filename))
+        os.remove(os.path.join(datadir, filename))
+        data.to_netcdf(os.path.join(datadir, filename))
         
         
         
     
 if __name__ == '__main__':
-    data = xr.open_dataset('Data/ctd_files/gridded_calibrated/TB_20181210_10_down_grid.nc')
+    data = xr.open_dataset('Data/ctd_files/gridded_calibrated_updated/TB_20181210_10_grid.nc')
     depth=data.DEPTH.values
     temp=data.TEMP.values
     NAN = np.isnan(temp) | np.isnan(depth)
@@ -148,4 +149,4 @@ if __name__ == '__main__':
     temp = temp[~NAN]
     #calc_fit(depth, temp)
     #multi_linear_ex()
-    fit_all_prof('Data/ctd_files/fitted')
+    fit_all_prof('Data/ctd_files/fitted', plotBool=False)
