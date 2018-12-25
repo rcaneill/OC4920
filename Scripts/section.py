@@ -1,9 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import Colormap
-import xarray as xr
 import gsw
-from matplotlib import rcParams, cm
+from matplotlib import rcParams
 import os, sys
 import pandas as pd
 from matplotlib.image import NonUniformImage
