@@ -153,8 +153,13 @@ def plot_surface(datadir, surf_depth=3):
     # #define axes
     axe = plt.axes(projection=ccrs.PlateCarree(central_longitude=11))
     axe.set_extent([11.2, 11.8, 58.1, 58.5],ccrs.PlateCarree())
+<<<<<<< HEAD
     cf = axe.contourf(grid_lon, grid_lat, \
                       grid_temp, cmap='jet', transform=ccrs.PlateCarree(), levels=20)
+=======
+    cf = axe.pcolormesh(grid_lon, grid_lat, \
+                 grid_temp, cmap='viridis', transform=ccrs.PlateCarree())
+>>>>>>> cc156df797c70d58e2ce5396e7b3be9075bb6273
     cb=plt.colorbar(cf)
     cb.set_label(u'Potential Temperature ($^{\circ}C$)')
     #axe.scatter(grid_lon.flatten(), grid_lat.flatten(), \
@@ -178,8 +183,13 @@ def plot_surface(datadir, surf_depth=3):
     # #define axes
     axe = plt.axes(projection=ccrs.PlateCarree(central_longitude=11))
     axe.set_extent([11.2, 11.8, 58.1, 58.5],ccrs.PlateCarree())
+<<<<<<< HEAD
     cf = axe.contourf(grid_lon, grid_lat, \
                       grid_sal, cmap='viridis_r', transform=ccrs.PlateCarree(), levels=20)
+=======
+    cf = axe.pcolormesh(grid_lon, grid_lat, \
+                 grid_sal, cmap='viridis', transform=ccrs.PlateCarree())
+>>>>>>> cc156df797c70d58e2ce5396e7b3be9075bb6273
     cb=plt.colorbar(cf)
     cb.set_label(u'Absolute Salinity')
     

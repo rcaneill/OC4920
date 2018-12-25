@@ -12,11 +12,13 @@ def add_coordinates(datadir, metafilename):
     ls.sort()
     for filename in ls:
         if filename[-2:] == 'nc':
+            print(filename)
             data =  xr.open_dataset(os.path.join(datadir,filename))
             meta_data = meta[meta['filename'] == filename]
+            print(meta_data)
             if not meta_data.empty:
-                data['lat'] = ('scan',np.ones(data.DEPTH.shape) * meta_data.lat.values[0])
-                data['lon'] = ('scan',np.ones(data.DEPTH.shape) * meta_data.lon.values[0])
+                data['lat'] = ('index',np.ones(data.PrDM.shape) * meta_data.lat.values[0])
+                data['lon'] = ('index',np.ones(data.PrDM.shape) * meta_data.lon.values[0])
                 print('Moving {0} to {0}.bak'.format(filename))
                 os.rename(os.path.join(datadir,filename), \
                           os.path.join(datadir,filename+'.bak'))
@@ -46,6 +48,7 @@ def read_ascii(datadir,filename):
     df.columns=['timeS','lon','lat','TEMP','PRES','Flr','density',
                 'DEPTH','o2','PSAL']
     return df
+
 
 def read_ascii_reprocessed_ctd(datadir,filename):
     print('Loading ' + filename)
@@ -78,6 +81,23 @@ def read_ascii_reprocessed_ctd(datadir,filename):
     meter=df[(df.DEPTH % 1) == 0]
     meter.loc[half_new.index] = (meter.loc[half_new.index]+half_new)/2
     return meter
+
+def read_ascii_sk(datadir,filename):
+    df=pd.read_csv(os.path.join(datadir,filename),skiprows=[0],sep='\t')
+    df=df.iloc[:,:17]
+    df.columns=['lat','lon','pres','T090C','Flr','TimeS','TimeJ','DepSM','Sal00','Potemp090C','Density00','sigma0','sigma-t',
+    'Sbeox0ML_L','Sbeoc0PS','OxsolML_L','OxsatML_L']
+    # print(df.keys())
+    return df
+
+def read_ascii_tb(datadir,filename):
+    df=pd.read_csv(os.path.join(datadir,filename),skiprows=[0],sep='\t')
+    df=df.iloc[:,:17]
+    df.columns=['PrDM','T090C','WetStar','FISP','SeaTurbMtr','TimeS','TimeJ','DepSM','Sal00','Potemp090C','Density00','sigma0','sigma-t',
+    'Sbeox0ML_L','Sbeoc0PS','OxsolML_L','OxsatML_L']
+    # print(df.keys())
+    return df
+
     
 def save_ascii2nc(datadir, read_func, new_datadir=None):
     if new_datadir==None:
@@ -90,6 +110,7 @@ def save_ascii2nc(datadir, read_func, new_datadir=None):
             filename_new = filename_new.replace(' ','_')
             #be sure to have SK... and not sk...
             data=read_func(datadir,filename)
+            data=read_ascii_tb(datadir,filename)
             ds=data.to_xarray()
             print('Saving file {}'.format(filename_new))
             # raise(NotImplementedError)
@@ -217,6 +238,11 @@ if __name__ == '__main__':
     #add_coordinates('Data/ctd_files/processed2nc','Data/ctd_files/meta/TB20181210_meta.csv')
     #save_ascii2nc('Data/Skagerak/SK20181210/SK20181210_CTD/SK20181210_Processed_data', read_func=read_ascii)
     #gridd_all('Data/ctd_files/processed2nc/Trygve')
+    add_coordinates('Data/ctd_files/processed2nc/reprocessed/tb2','Data/ctd_files/meta/TB20181211_meta.csv')
+    # save_ascii2nc('Data/unprocessed_data/reprocessed/trygvre')
+    # read_ascii_new('Data/unprocessed_data/reprocessed/')
+
+    # gridd_all('Data/ctd_files/processed2nc/reprocessed')
 
     # fix_left_out_files('Data/ctd_files/processed2nc/Trygve','TB_20181211_cal_down.nc',11.543796,58.319344)
     # fix_left_out_files('Data/ctd_files/processed2nc/Trygve','TB_2018121cal_down.nc',11.332095, 58.250534)
