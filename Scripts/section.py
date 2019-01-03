@@ -10,6 +10,7 @@ from scipy.interpolate import griddata
 from cartopy.io import shapereader
 import cartopy.crs as ccrs
 from cartopy.mpl.ticker import LongitudeFormatter, LatitudeFormatter
+import xarray as xr
 
 plt.style.use('seaborn')
 rcParams['text.usetex'] = True
@@ -37,6 +38,47 @@ def sec_show(coord, depth, data, axe, cmap='viridis', coord_type='lon'):
     # printing scale with positive depth
     #axe.set_yticklabels(np.abs([int(i) for i in axe.get_yticks()]))
     return cb
+
+def sec_show_dens(coord, depth, dens, data, axe, cmap='viridis', coord_type='lon'):
+    """
+    plot data on the axe, mix between imshow and contour
+    data reordered to plot against density instead of depth
+    return the colorbar, so user can add a label
+    """
+    depth = - np.abs(depth)
+         # to be sure that depth is negative
+    print(dens.shape)
+
+    densSort=dens[7,:]
+    ind=np.argsort(densSort)
+    densSorted=(densSort[ind]-1000)
+    data_along_dens=data[:,ind]
+    print(np.nanmax(densSorted))
+
+
+
+    im = NonUniformImage(axe, interpolation='nearest', \
+                         extent=(np.nanmin(coord), np.nanmax(coord), \
+                                 np.nanmin(densSorted), np.nanmax(densSorted)), \
+                         cmap=cmap,origin='upper')
+
+
+    # we need to reverse order of array so everything goes increasing
+    im.set_data(coord, densSorted, data_along_dens.T)
+    axe.images.append(im)
+    axe.set_xlim(np.nanmin(coord), np.nanmax(coord))
+    axe.set_ylim(np.nanmin(densSorted), np.nanmax(densSorted))
+    # axe.set_ylim(axe.get_ylim()[::-1])
+    # plt.gca().invert_yaxis()
+    axe.set_ylabel('Density (kg/m3)')
+    axe.set_xlabel(coord_type+u' ($^{\circ}$ N/E)')
+
+    # adding colorbar
+    cb = plt.colorbar(im,ax=axe)
+    # printing scale with positive depth
+    #axe.set_yticklabels(np.abs([int(i) for i in axe.get_yticks()]))
+    return cb
+
 
 def compute_surface_layer(var,depth,ref_depth=5,threshold=0.6):
     """
@@ -85,21 +127,22 @@ def plot_sec(datadir, filenames, desc='', coord_type='lon', N=None):
     pdens= np.array(pdens)
     
     #sl = np.array([compute_surface_layer(x,depth) for x in temp])
-    fig,ax = plt.subplots(2,2, sharey=True)
-    cb_temp = sec_show(coord, depth, temp, ax[0,0], coord_type=coord_type, cmap='jet')
+    fig,ax = plt.subplots(2,2, sharey=False)
+    cb_temp = sec_show_dens(coord, depth, pdens, temp, ax[0,0], coord_type=coord_type, cmap='jet')
+
     cb_temp.set_label(u'Temperature ($^{\circ}C$)')
     
     ax[0,1].plot(temp.T,depth)
     ax[0,1].set_xlabel(u'Temperature ($^{\circ}C$)')
-    cb_sal = sec_show(coord, depth, sal, ax[1,0], coord_type=coord_type, cmap='viridis_r')
+    cb_sal = sec_show_dens(coord, depth,pdens,sal, ax[1,0], coord_type=coord_type, cmap='viridis_r')
     cb_sal.set_label('Salinity (psu)')
     ax[1,1].plot(sal.T,depth)
     ax[1,1].set_xlabel('Salinity (psu)')
     test=fig.suptitle(desc)
     test.set_fontsize(test.get_fontsize()+3)
     fig.tight_layout(rect=[0, 0.03, 1, 0.95])
-    fig.savefig('Figures/Transect/transect_{}.pdf'.format(N))
-    fig.savefig('Figures/Transect/transect_{}.png'.format(N))
+    fig.savefig('Figures/Transect/transect_density{}.pdf'.format(N))
+    fig.savefig('Figures/Transect/transect_density{}.png'.format(N))
     plt.show()
     #plt.plot(sl)
     #plt.show()
@@ -153,13 +196,10 @@ def plot_surface(datadir, surf_depth=3):
     # #define axes
     axe = plt.axes(projection=ccrs.PlateCarree(central_longitude=11))
     axe.set_extent([11.2, 11.8, 58.1, 58.5],ccrs.PlateCarree())
-<<<<<<< HEAD
-    cf = axe.contourf(grid_lon, grid_lat, \
-                      grid_temp, cmap='jet', transform=ccrs.PlateCarree(), levels=20)
-=======
+    # cf = axe.contourf(grid_lon, grid_lat, \
+    #                   grid_temp, cmap='jet', transform=ccrs.PlateCarree(), levels=20)
     cf = axe.pcolormesh(grid_lon, grid_lat, \
                  grid_temp, cmap='viridis', transform=ccrs.PlateCarree())
->>>>>>> cc156df797c70d58e2ce5396e7b3be9075bb6273
     cb=plt.colorbar(cf)
     cb.set_label(u'Potential Temperature ($^{\circ}C$)')
     #axe.scatter(grid_lon.flatten(), grid_lat.flatten(), \
@@ -183,13 +223,8 @@ def plot_surface(datadir, surf_depth=3):
     # #define axes
     axe = plt.axes(projection=ccrs.PlateCarree(central_longitude=11))
     axe.set_extent([11.2, 11.8, 58.1, 58.5],ccrs.PlateCarree())
-<<<<<<< HEAD
     cf = axe.contourf(grid_lon, grid_lat, \
                       grid_sal, cmap='viridis_r', transform=ccrs.PlateCarree(), levels=20)
-=======
-    cf = axe.pcolormesh(grid_lon, grid_lat, \
-                 grid_sal, cmap='viridis', transform=ccrs.PlateCarree())
->>>>>>> cc156df797c70d58e2ce5396e7b3be9075bb6273
     cb=plt.colorbar(cf)
     cb.set_label(u'Absolute Salinity')
     
@@ -218,7 +253,7 @@ def load_filenames_section(N, sec_datadir='Data/sections'):
     
 if __name__ == '__main__':
     datadir = 'Data/ctd_files/gridded_calibrated_updated'
-    N=1 #section number
+    N=0 #section number
     section_meta = load_filenames_section(N, 'Data/sections')
     plot_sec(datadir, section_meta[1:], desc=section_meta[0], coord_type='lat', N=N)
     #plot_surface(datadir, surf_depth=40)

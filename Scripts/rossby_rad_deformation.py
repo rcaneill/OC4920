@@ -57,15 +57,16 @@ def brunt_vaisala(datadir,filenames,desc=''):
     plt.savefig('Figures/Transect/transect_N.pdf')
     plt.savefig('Figures/Transect/transect_N.png')
     plt.close()
-    return N,depth,lon,lat
+    return N,np.asarray(rho),depth,lon,lat
 
 def rossby_radii(datadir,filenames,desc=''):
-    [N,depth,lon, lat]=brunt_vaisala(datadir,filenames,desc='')
+    [N,rho,depth,lon, lat]=brunt_vaisala(datadir,filenames,desc='')
+    
     #Length scale of rossby radius of deformation 
     def coriolis_acc(lat,omega=0.729*10**-4):
         return 2*omega*np.sin(lat/360.*2*np.pi)
     f=coriolis_acc(np.asarray(lat))
-    Lr=(N*depth[:-1]*-1)/(np.nanmean(f))*0.001
+    Lr=(N[:]*depth[:-1]*-1)/(np.nanmean(f))*0.001
 
     plt.figure()
     xx,yy=np.meshgrid(lon,depth[:-1])
@@ -77,10 +78,61 @@ def rossby_radii(datadir,filenames,desc=''):
     print('min:',np.nanmin(Lr))
     print('mean:',np.nanmean(Lr))
 
+    #compare with width of fjord at this point ~ 3km
+
+    #compute geostropic transport
+    deldens=geos_vel(lon,lat,rho,f)
+
     # np.savetxt('Data/rossby_radius_deformation.txt',np.c_[, b_temp, a_sal, b_sal], \
     #            header="a_temp b_temp a_sal b_sal",comments='')
 
     return Lr
+
+def haversine(lat1, lon1, lat2, lon2):
+    import numpy as np
+    R=6378.137
+    lat1, lon1, lat2, lon2 = map(np.deg2rad, [lat1, lon1, lat2, lon2])
+    dlat = lat2 - lat1
+    dlon = lon2 - lon1
+    a = np.sin(dlat/2)**2 + np.cos(lat1) * np.cos(lat2) * np.sin(dlon/2)**2
+    c = 2 * np.arcsin(np.sqrt(a))
+    total_m = (R * c)*1000
+    return total_m
+
+def geos_vel(lon,lat,dens,f):
+    """
+    computes the geostrophic velocity across a section
+    """
+    dist=haversine(lon[1:],lat[1:],lon[:-1],lat[:-1])
+    dist_ordered=dist.cumsum()/1000
+    dist_r=(np.reshape(np.repeat(dist,119),(4,119)))
+
+    deldens=np.diff(dens[:-1,:])/dist_r
+    
+    ref_dens=1000
+    g=9.8
+
+    geo_vert_shear=-((g/ref_dens)*(deldens))/np.nanmean(f)
+    geo_vel=(np.nancumsum(geo_vert_shear,axis=1))
+    geo_sta=np.nansum(geo_vel*dist_r*1)
+    
+    return (geo_sta/10**6)
+
+# def steric_height():
+#     """
+#     Computes the steric height anomaly along the transect
+#     This is aimed for the along fjord transect
+#     """
+#     alpha=gsw.specvol(sal,temp,depth)
+#     alpha_ref=gsw.specvol(35,0,depth)
+#     alpha_ano=alpha-alpha_ref
+
+def section_along_density_contours():
+    """
+    plots section, but instead of being against depth, against density
+    """
+    
+
 
 
 def load_filenames_section(N, sec_datadir='Data/sections'):
@@ -96,12 +148,14 @@ def load_filenames_section(N, sec_datadir='Data/sections'):
 
     
 if __name__ == '__main__':
+    N=2 #section number
+    section_meta = load_filenames_section(N, 'Data/sections')
     if sys.argv[1] == 'brunt_vaisala':
         datadir = 'Data/ctd_files/gridded_calibrated'
         section_meta = load_filenames_section(0, 'Data/sections')
         brunt_vaisala(datadir, section_meta[1:], desc=section_meta[0])
     if sys.argv[1] == 'rossby_radii':
-        datadir = 'Data/ctd_files/gridded_calibrated'
-        section_meta = load_filenames_section(0, 'Data/sections')
+        datadir = 'Data/ctd_files/gridded_calibrated_updated'
+        section_meta = load_filenames_section(2, 'Data/sections')
         rossby_radii(datadir, section_meta[1:], desc=section_meta[0])
 
