@@ -29,10 +29,30 @@ def grid(func, points, values, grid_lon, grid_lat):
     grid data along regular grid, using function func to
     give weight to the data points as a function of distance
     """
-    return 0
+    grid_var = np.ones(grid_lon.shape) * np.nan
+    for i in range(grid_var.shape[0]):
+        for j in range(grid_var.shape[1]):
+            #print(i,j)
+            lon = grid_lon[i,j]
+            lat = grid_lat[i,j]
+            var_tot = values
+            distances = np.sqrt((lon-points[:,0])**2 + (lat-points[:,1])**2)
+            weights = [func(i) for i in distances]
+            if np.sum(weights) != 0:
+                grid_var[i,j] = np.average(values, weights=weights)
+    return grid_var
 
-def bump(dist, l):
-    return -1/l**2 * (dist-l)*(dist+l)
+def bump(dist, l=0.015):
+    if np.abs(dist)<l:
+        return -1/l**2 * (dist-l)*(dist+l)
+    else:
+        return 0
+
+def exp_bump(dist,l=0.05):
+    if np.abs(dist)<l:
+        return np.exp(-dist/l) - np.exp(-l)
+    else:
+        return 0
         
 def plot_var(values, lon, lat, nx=200,ny=200,coastBool=True, cb_label=None, \
              cmap='viridis', **kwargs):
@@ -54,11 +74,11 @@ def plot_var(values, lon, lat, nx=200,ny=200,coastBool=True, cb_label=None, \
     values = np.array(values)[~NAN]
     lon = np.array(lon)[~NAN]
     lat = np.array(lat)[~NAN]
-    print('Removing {} values / {} that are NaN'.format(np.sum(NAN), len(NAN)))
     # compute gridding of data
     grid_lon, grid_lat = np.mgrid[11.2:11.8:nx*1j, 58.1:58.5:ny*1j]
-    points = [[i,j] for (i,j) in zip(lon,lat)]
-    grid_temp = griddata(points, values, (grid_lon, grid_lat), method='linear')
+    points = np.array([[i,j] for (i,j) in zip(lon,lat)])
+    #grid_temp = griddata(points, values, (grid_lon, grid_lat), method='linear')
+    grid_temp = grid(bump, points, values, grid_lon, grid_lat)
     # #define axes
     axe = plt.axes(projection=ccrs.PlateCarree(central_longitude=11))
     axe.set_extent([11.2, 11.8, 58.1, 58.5],ccrs.PlateCarree())
@@ -72,12 +92,22 @@ def plot_var(values, lon, lat, nx=200,ny=200,coastBool=True, cb_label=None, \
     gl.ylabels_right=False
     if coastBool:
         plot_map(axe)
-    return axe
+    return (axe, cb)
 
-def layer(datadir):
+def layer(datadir, lay=0, showBool=False):
     """
     Plot map of layers
+
+    lay is the layer, can be
+    0 'surface'
+    1 'bottom of thermocline'
+    2 'bottom of warm water'
+    3 'bottom of lower thermocline'
     """
+    lay_names = ['surface', \
+                 'bottom of thermocline', \
+                 'bottom of warm water', \
+                 'bottom of lower thermocline']
     depth = []
     temp = []
     lon = []
@@ -96,17 +126,26 @@ def layer(datadir):
     temp = np.array(temp)
     lon = np.array(lon)
     lat = np.array(lat)
-    goodFlag = flag==1
+    goodFlag = (flag==1)
     #plt.plot(depth[:,2], 'o')
     #plt.show()
-    axe = plot_var(depth[:,2][goodFlag[:,2]], lon[goodFlag[:,2]], lat[goodFlag[:,2]], nx=500, ny=500, cmap='jet', levels=20)
-    axe.scatter(lon[goodFlag[:,2]], lat[goodFlag[:,2]], c=depth[:,2][goodFlag[:,2]], cmap='jet',transform=ccrs.PlateCarree())
-    plt.show()
-    plt.plot(depth[:,2][goodFlag[:,2]]-depth[:,1][goodFlag[:,2]],'o')
-    print(np.nanmean(depth[:,2][goodFlag[:,2]]-depth[:,1][goodFlag[:,2]]))
-    print(np.nanstd(depth[:,2][goodFlag[:,2]]-depth[:,1][goodFlag[:,2]]))
-    plt.show()
+    (axe, cb) = plot_var(depth[:,lay][goodFlag[:,lay]], lon[goodFlag[:,lay]], \
+                         lat[goodFlag[:,lay]], nx=500, ny=500, cmap='jet', levels=20)
+    plt.title(lay_names[lay])
+    cb.set_label('Depth (m)')
+    plt.savefig('Figures/Layers/layer_{}.pdf'.format(lay_names[lay].replace(' ','_')))
+    plt.savefig('Figures/Layers/layer_{}.png'.format(lay_names[lay].replace(' ','_')))
+    if showBool:
+        axe.scatter(lon[goodFlag[:,lay]], lat[goodFlag[:,lay]], \
+                    c=depth[:,lay][goodFlag[:,lay]], cmap='jet',transform=ccrs.PlateCarree())
+        plt.show()
+    plt.close()
+    #plt.plot(depth[:,2][goodFlag[:,2]]-depth[:,1][goodFlag[:,2]],'o')
+    #print(np.nanmean(depth[:,2][goodFlag[:,2]]-depth[:,1][goodFlag[:,2]]))
+    #print(np.nanstd(depth[:,2][goodFlag[:,2]]-depth[:,1][goodFlag[:,2]]))
+    #plt.show()
     
 
 if __name__ == '__main__':
-    layer('Data/ctd_files/fitted')
+    for i in range(4):
+        layer('Data/ctd_files/fitted',lay=i)
