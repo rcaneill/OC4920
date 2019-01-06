@@ -26,6 +26,9 @@ def sec_show(coord, depth, data, axe, cmap='viridis', coord_type='lon'):
                                  np.nanmin(depth), np.nanmax(depth)), \
                          cmap=cmap)
     # we need to reverse order of array so everything goes increasing
+    # xx,yy=np.meshgrid(coord,depth)
+    # contours = plt.contour(xx,yy, data.T, 3, colors='black')
+    # plt.clabel(contours, inline=True, fontsize=8)
     im.set_data(coord, depth[::-1], data.T[::-1,:])
     axe.images.append(im)
     axe.set_xlim(np.nanmin(coord), np.nanmax(coord))
@@ -49,9 +52,9 @@ def sec_show_dens(coord, depth, dens, data, axe, cmap='viridis', coord_type='lon
          # to be sure that depth is negative
     print(dens.shape)
 
-    densSort=dens[7,:]
+    densSort=dens[6,:]*-1
     ind=np.argsort(densSort)
-    densSorted=(densSort[ind]-1000)
+    densSorted=(densSort[ind]+1000)
     data_along_dens=data[:,ind]
     print(np.nanmax(densSorted))
 
@@ -59,24 +62,24 @@ def sec_show_dens(coord, depth, dens, data, axe, cmap='viridis', coord_type='lon
 
     im = NonUniformImage(axe, interpolation='nearest', \
                          extent=(np.nanmin(coord), np.nanmax(coord), \
-                                 np.nanmin(densSorted), np.nanmax(densSorted)), \
+                                 np.nanmax(densSorted), np.nanmin(densSorted)), \
                          cmap=cmap,origin='upper')
 
 
     # we need to reverse order of array so everything goes increasing
+
     im.set_data(coord, densSorted, data_along_dens.T)
     axe.images.append(im)
     axe.set_xlim(np.nanmin(coord), np.nanmax(coord))
     axe.set_ylim(np.nanmin(densSorted), np.nanmax(densSorted))
-    # axe.set_ylim(axe.get_ylim()[::-1])
-    # plt.gca().invert_yaxis()
+
     axe.set_ylabel('Density (kg/m3)')
     axe.set_xlabel(coord_type+u' ($^{\circ}$ N/E)')
 
     # adding colorbar
     cb = plt.colorbar(im,ax=axe)
     # printing scale with positive depth
-    #axe.set_yticklabels(np.abs([int(i) for i in axe.get_yticks()]))
+    axe.set_yticklabels(np.abs([int(i) for i in axe.get_yticks()]))
     return cb
 
 
@@ -128,21 +131,27 @@ def plot_sec(datadir, filenames, desc='', coord_type='lon', N=None):
     
     #sl = np.array([compute_surface_layer(x,depth) for x in temp])
     fig,ax = plt.subplots(2,2, sharey=False)
+ 
     cb_temp = sec_show_dens(coord, depth, pdens, temp, ax[0,0], coord_type=coord_type, cmap='jet')
 
     cb_temp.set_label(u'Temperature ($^{\circ}C$)')
     
     ax[0,1].plot(temp.T,depth)
     ax[0,1].set_xlabel(u'Temperature ($^{\circ}C$)')
+    ax[0,1].set_xlabel('Depth (m)')
+
     cb_sal = sec_show_dens(coord, depth,pdens,sal, ax[1,0], coord_type=coord_type, cmap='viridis_r')
     cb_sal.set_label('Salinity (psu)')
+
     ax[1,1].plot(sal.T,depth)
     ax[1,1].set_xlabel('Salinity (psu)')
+    ax[1,1].set_ylabel('Depth (m)')
+
     test=fig.suptitle(desc)
     test.set_fontsize(test.get_fontsize()+3)
     fig.tight_layout(rect=[0, 0.03, 1, 0.95])
-    fig.savefig('Figures/Transect/transect_density{}.pdf'.format(N))
-    fig.savefig('Figures/Transect/transect_density{}.png'.format(N))
+    # fig.savefig('Figures/Transect/transect_density{}.pdf'.format(N))
+    # fig.savefig('Figures/Transect/transect_density{}.png'.format(N))
     plt.show()
     #plt.plot(sl)
     #plt.show()
