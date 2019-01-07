@@ -11,6 +11,8 @@ from cartopy.io import shapereader
 import cartopy.crs as ccrs
 from cartopy.mpl.ticker import LongitudeFormatter, LatitudeFormatter
 import xarray as xr
+import cmocean.cm as cmo
+
 
 plt.style.use('seaborn')
 rcParams['text.usetex'] = True
@@ -37,9 +39,9 @@ def sec_show(coord, depth, data, axe, cmap='viridis', coord_type='lon'):
     axe.set_xlabel(coord_type+u' ($^{\circ}$ N/E)')
 
     # adding colorbar
-    cb = plt.colorbar(im,ax=axe)
+    cb = plt.colorbar(im,ax=axe,extend='both')
     # printing scale with positive depth
-    #axe.set_yticklabels(np.abs([int(i) for i in axe.get_yticks()]))
+    axe.set_yticklabels(np.abs([int(i) for i in axe.get_yticks()]))
     return cb
 
 def sec_show_dens(coord, depth, dens, data, axe, cmap='viridis', coord_type='lon'):
@@ -77,7 +79,7 @@ def sec_show_dens(coord, depth, dens, data, axe, cmap='viridis', coord_type='lon
     axe.set_xlabel(coord_type+u' ($^{\circ}$ N/E)')
 
     # adding colorbar
-    cb = plt.colorbar(im,ax=axe)
+    cb = plt.colorbar(im,ax=axe,extend='both')
     # printing scale with positive depth
     axe.set_yticklabels(np.abs([int(i) for i in axe.get_yticks()]))
     return cb
@@ -110,6 +112,7 @@ def plot_sec(datadir, filenames, desc='', coord_type='lon', N=None):
     sal = []
     depth = []
     pdens = []
+    oxy=[]
     for i in filenames:
         #print(i)
         d = xr.open_dataset(os.path.join(datadir, i))
@@ -118,6 +121,8 @@ def plot_sec(datadir, filenames, desc='', coord_type='lon', N=None):
         temp.append(d.TEMP.values)
         sal.append(d.PSAL.values)
         pdens.append(gsw.rho(d.PSAL.values,d.TEMP.values,d.DEPTH.values))
+        oxy.append(d.oxy_calibrated.values)
+
     depth = -np.abs(d.DEPTH.values)
     if coord_type == 'lon':
         coord = lon
@@ -128,30 +133,42 @@ def plot_sec(datadir, filenames, desc='', coord_type='lon', N=None):
     temp = np.array(temp)
     sal = np.array(sal)
     pdens= np.array(pdens)
+    oxy=np.array(oxy)
     
     #sl = np.array([compute_surface_layer(x,depth) for x in temp])
-    fig,ax = plt.subplots(2,2, sharey=False)
+    fig,ax = plt.subplots(3,2, sharey=False)
  
-    cb_temp = sec_show_dens(coord, depth, pdens, temp, ax[0,0], coord_type=coord_type, cmap='jet')
-
+    # cb_temp = sec_show_dens(coord, depth, pdens, temp, ax[0,0], coord_type=coord_type, cmap='jet')
+    cb_temp = sec_show(coord, depth, temp, ax[0,0], coord_type=coord_type, cmap=cmo.thermal)
     cb_temp.set_label(u'Temperature ($^{\circ}C$)')
-    
+
     ax[0,1].plot(temp.T,depth)
-    ax[0,1].set_xlabel(u'Temperature ($^{\circ}C$)')
-    ax[0,1].set_xlabel('Depth (m)')
 
-    cb_sal = sec_show_dens(coord, depth,pdens,sal, ax[1,0], coord_type=coord_type, cmap='viridis_r')
+    ax[0,1].set_xlabel(u'Oxygen (ml/l)')
+    ax[0,1].set_ylabel('Depth (m)')
+
+    cb_sal = sec_show(coord, depth,sal, ax[1,0], coord_type=coord_type, cmap=cmo.haline)
     cb_sal.set_label('Salinity (psu)')
-
+    # cb_sal.set_clim(15,36)
     ax[1,1].plot(sal.T,depth)
     ax[1,1].set_xlabel('Salinity (psu)')
     ax[1,1].set_ylabel('Depth (m)')
 
+    cb_oxy = sec_show(coord, depth, oxy, ax[2,0], coord_type=coord_type, cmap=cmo.oxy)
+
+    cb_oxy.set_label(u'Oxygen (ml/l)')
+
+    ax[2,1].plot(oxy.T,depth)
+
+    ax[2,1].set_xlabel(u'Oxygen (ml/l)')
+    ax[2,1].set_ylabel('Depth (m)')
+
+
     test=fig.suptitle(desc)
     test.set_fontsize(test.get_fontsize()+3)
     fig.tight_layout(rect=[0, 0.03, 1, 0.95])
-    # fig.savefig('Figures/Transect/transect_density{}.pdf'.format(N))
-    # fig.savefig('Figures/Transect/transect_density{}.png'.format(N))
+    fig.savefig('Figures/Transect/transect_oxygen{}.pdf'.format(N))
+    fig.savefig('Figures/Transect/transect_oxygen{}.png'.format(N))
     plt.show()
     #plt.plot(sl)
     #plt.show()
@@ -261,7 +278,12 @@ def load_filenames_section(N, sec_datadir='Data/sections'):
                       dtype=str, delimiter='\n')
     
 if __name__ == '__main__':
-    datadir = 'Data/ctd_files/gridded_calibrated_updated'
+    # datadir = 'Data/ctd_files/gridded_calibrated_updated'
+    # N=0 #section number
+    # section_meta = load_filenames_section(N, 'Data/sections')
+    # plot_sec(datadir, section_meta[1:], desc=section_meta[0], coord_type='lat', N=N)
+    #plot_surface(datadir, surf_depth=40)
+    datadir = 'Data/ctd_files/gridded_calibrated_updated/oxygen_step2'
     N=0 #section number
     section_meta = load_filenames_section(N, 'Data/sections')
     plot_sec(datadir, section_meta[1:], desc=section_meta[0], coord_type='lat', N=N)
