@@ -4,44 +4,44 @@ The top-level auxiliary file: report.aux
 The style file: ../Biblio/agufull08.bst
 Database file #1: ../Biblio/biblio.bib
 Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
-You've used 1 entry,
+You've used 3 entries,
             3076 wiz_defined-function locations,
-            1076 strings with 9523 characters,
-and the built_in function-call counts, 1286 in all, are:
-= -- 166
-> -- 22
-< -- 1
-+ -- 15
-- -- 7
-* -- 70
-:= -- 107
-add.period$ -- 1
-call.type$ -- 1
-change.case$ -- 5
-chr.to.int$ -- 2
-cite$ -- 1
-duplicate$ -- 146
-empty$ -- 65
-format.name$ -- 11
-if$ -- 255
+            1091 strings with 9866 characters,
+and the built_in function-call counts, 3284 in all, are:
+= -- 418
+> -- 55
+< -- 3
++ -- 36
+- -- 16
+* -- 179
+:= -- 274
+add.period$ -- 3
+call.type$ -- 3
+change.case$ -- 14
+chr.to.int$ -- 4
+cite$ -- 3
+duplicate$ -- 379
+empty$ -- 180
+format.name$ -- 26
+if$ -- 661
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 9
-newline$ -- 10
-num.names$ -- 4
-pop$ -- 40
+missing$ -- 26
+newline$ -- 16
+num.names$ -- 12
+pop$ -- 107
 preamble$ -- 1
-purify$ -- 4
+purify$ -- 11
 quote$ -- 0
-skip$ -- 101
+skip$ -- 248
 stack$ -- 0
-substring$ -- 69
-swap$ -- 139
+substring$ -- 171
+swap$ -- 352
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 9
+type$ -- 27
 warning$ -- 0
-while$ -- 5
+while$ -- 15
 width$ -- 0
-write$ -- 18
+write$ -- 42

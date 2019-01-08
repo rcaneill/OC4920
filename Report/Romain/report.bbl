@@ -1,14 +1,25 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{3}
 \providecommand{\natexlab}[1]{#1}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi:\discretionary{}{}{}#1}\else
   \providecommand{\doi}{doi:\discretionary{}{}{}\begingroup
   \urlstyle{rm}\Url}\fi
 
+\bibitem[{\textit{Arneborg}(2004)}]{arneborg2003}
+Arneborg, L. (2004), Turnover times for the water above sill level in gullmar
+  fjord, \textit{Continental Shelf Research}, \textit{24}(4), 443 -- 460,
+  \doi{https://doi.org/10.1016/j.csr.2003.12.005}.
+
 \bibitem[{\textit{Björk and Nordberg}(2003)}]{bjork2003}
 Björk, G., and K.~Nordberg (2003), Upwelling along the swedish west coast
   during the 20th century, \textit{Continental Shelf Research},
   \textit{23}(11), 1143 -- 1159,
   \doi{https://doi.org/10.1016/S0278-4343(03)00081-5}.
+
+\bibitem[{\textit{Gustafsson and Stigebrandt}(1996)}]{gustafsson1996}
+Gustafsson, B., and A.~Stigebrandt (1996), Dynamics of the
+  freshwater-influenced surface layers in the skagerrak, \textit{Journal of Sea
+  Research}, \textit{35}(1), 39 -- 53,
+  \doi{https://doi.org/10.1016/S1385-1101(96)90733-9}.
 
 \end{thebibliography}
