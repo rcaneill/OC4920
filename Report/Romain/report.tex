@@ -3,7 +3,7 @@
 \input{HeaderFiles/includes}
 \input{HeaderFiles/macros}
 
-\graphicspath{{../../Figures/}} %Position of figures, pictures, etc
+\graphicspath{{Figures/}} %Position of figures, pictures, etc
 
 % definition de l'entete et du pied de page
 \pagestyle{fancy}
@@ -18,19 +18,18 @@
 % Pas d'en-tete ni de pied pour la premiere page
 \thispagestyle{empty}
 
-\includegraphics[height=1.9cm]{cow} \hfill
-\includegraphics[height=1.9cm]{cow} \hfill
-\includegraphics[height=1.9cm]{cow} \hfill
-\includegraphics[height=1.9cm]{cow} \hfill
-\includegraphics[height=1.9cm]{cow}
-
-\vspace{0.5cm}
-
-\begin{tabularx}{\textwidth}{@{} l X l @{} }
-{\sc Physical Oceanography} & &  \\
-{\it Göteborgs universitet} & & Romain Caneill\\
-{\it Institutionen för marina vetenskaper} & & PhD Student
-\end{tabularx}
+\begin{minipage}{0.4\paperwidth}
+  {\sc Physical Oceanography} \\
+{\it Göteborgs universitet}\\
+{\it Institutionen för marina vetenskaper}
+\end{minipage}
+\begin{minipage}{0.3\paperwidth}
+  \includegraphics[height=2.9cm]{gu}
+\end{minipage}
+\begin{minipage}{0.2\paperwidth}
+  Romain Caneill\\
+  PhD Student
+\end{minipage}
 
 \begin{center}
 \vspace{.3cm}
@@ -74,12 +73,28 @@
 TODO
 
 \section{Materials and methods}
+\subsection{Presentation of the field work and data acquisition}
 
-TODO
+field work 10-11 of December 2018
+
+on board of 2 ships: Skagerrak and Trygve
+
+\subsection{Data processing}
+\subsubsection{Cleaning and calibration}
+\paragraph{Reprocessing data, potential temp, absolute sal}
+\paragraph{Gridding every meter 1-120 m depth}
+
+\subsubsection{Data assimilation / creating new metrics}
+\paragraph{Find some}
+\paragraph{Turner angle TODO conpute}
+\paragraph{Geostrophy TODO compute}
+\paragraph{Profil fitting and layers}
+\paragraph{No sub-mesoscale heat fluxes because no mixed layer}
 
 \section{Results}
 
-TODO
+\paragraph{T-S diagram}
+we recognize Skagerrak and Kategt water \citep{bjork2003}
 
 \section{Discussion}
 
@@ -90,8 +105,8 @@ TODO
 TODO
 \newpage
 
-\bibliographystyle{Biblio/agufull08}
-\bibliography{Biblio/biblio}
+\bibliographystyle{../Biblio/agufull08}
+\bibliography{../Biblio/biblio}
 
 \newpage
 
