@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.1.8)  8 JAN 2019 19:20
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.1.8)  9 JAN 2019 18:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -24,12 +24,20 @@ File: size12.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 \bibindent=\dimen102
 )
 (./HeaderFiles/includes.tex
+(/usr/share/texlive/texmf-dist/tex/latex/paralist/paralist.sty
+Package: paralist 2017/01/22 v2.7 Extended list environments
+\pltopsep=\skip43
+\plpartopsep=\skip44
+\plitemsep=\skip45
+\plparsep=\skip46
+\pl@lab=\toks14
+)
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
 
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
-\KV@toks@=\toks14
+\KV@toks@=\toks15
 )
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2017/06/25 v1.2c Standard LaTeX Graphics (DPC,SPQR)
@@ -110,7 +118,7 @@ e
 (/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
 \lst@mode=\count87
 \lst@gtempboxa=\box26
-\lst@token=\toks15
+\lst@token=\toks16
 \lst@length=\count88
 \lst@currlwidth=\dimen105
 \lst@column=\count89
@@ -134,7 +142,7 @@ Package: listings 2015/06/04 1.6 (Carsten Heinz)
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2017/09/02 v2.17a AMS math features
-\@mathmargin=\skip43
+\@mathmargin=\skip47
 
 For additional information on amsmath, use the `?' option.
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
@@ -142,7 +150,7 @@ Package: amstext 2000/06/29 v2.01 AMS text
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
-\@emptytoks=\toks16
+\@emptytoks=\toks17
 \ex@=\dimen109
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
@@ -172,21 +180,21 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 713.
 \dotsspace@=\muskip10
 \c@parentequation=\count102
 \dspbrk@lvl=\count103
-\tag@help=\toks17
+\tag@help=\toks18
 \row@=\count104
 \column@=\count105
 \maxfields@=\count106
-\andhelp@=\toks18
+\andhelp@=\toks19
 \eqnshift@=\dimen112
 \alignsep@=\dimen113
 \tagshift@=\dimen114
 \tagwidth@=\dimen115
 \totwidth@=\dimen116
 \lineht@=\dimen117
-\@envbody=\toks19
-\multlinegap=\skip44
-\multlinetaggap=\skip45
-\mathdisplay@stack=\toks20
+\@envbody=\toks20
+\multlinegap=\skip48
+\multlinetaggap=\skip49
+\mathdisplay@stack=\toks21
 LaTeX Info: Redefining \[ on input line 2817.
 LaTeX Info: Redefining \] on input line 2818.
 )
@@ -214,8 +222,8 @@ Package: multicol 2017/04/11 v1.8q multicolumn formatting (FMi)
 \page@free=\dimen120
 \premulticols=\dimen121
 \postmulticols=\dimen122
-\multicolsep=\skip46
-\multicolbaselineskip=\skip47
+\multicolsep=\skip50
+\multicolbaselineskip=\skip51
 \partial@page=\box31
 \last@line=\box32
 \maxbalancingoverflow=\dimen123
@@ -273,8 +281,8 @@ Package: subcaption 2016/05/22 v1.1-161 Sub-captions (AR)
 )
 (/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2015/03/17 v1.2c Input encoding file
-\inpenc@prehook=\toks21
-\inpenc@posthook=\toks22
+\inpenc@prehook=\toks22
+\inpenc@posthook=\toks23
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def
 File: utf8.def 2017/01/28 v1.1t UTF-8 support for inputenc
@@ -621,8 +629,8 @@ File: babel.def 2018/02/14 3.18 Babel common definitions
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/natbib/natbib.sty
 Package: natbib 2010/09/13 8.31b (PWD, AO)
-\bibhang=\skip48
-\bibsep=\skip49
+\bibhang=\skip52
+\bibsep=\skip53
 LaTeX Info: Redefining \cite on input line 694.
 \c@NAT@ctr=\count121
 )
@@ -633,9 +641,9 @@ Package: tabularx 2016/02/03 v2.11 `tabularx' package (DPC)
 Package: array 2016/10/06 v2.4d Tabular extension package (FMi)
 \col@sep=\dimen135
 \extrarowheight=\dimen136
-\NC@list=\toks23
-\extratabsurround=\skip50
-\backup@length=\skip51
+\NC@list=\toks24
+\extratabsurround=\skip54
+\backup@length=\skip55
 )
 \TX@col@width=\dimen137
 \TX@old@table=\dimen138
@@ -643,7 +651,7 @@ Package: array 2016/10/06 v2.4d Tabular extension package (FMi)
 \TX@target=\dimen140
 \TX@delta=\dimen141
 \TX@cols=\count122
-\TX@ftn=\toks24
+\TX@ftn=\toks25
 )
 (/usr/share/texlive/texmf-dist/tex/latex/psfrag/psfrag.sty
 Package: psfrag 1998/04/11 v3.04 PSfrag (MCG)
@@ -675,12 +683,12 @@ Package: expl3 2018/02/21 L3 programming layer (code)
 \l_tmpb_dim=\dimen145
 \g_tmpa_dim=\dimen146
 \g_tmpb_dim=\dimen147
-\c_zero_skip=\skip52
-\c_max_skip=\skip53
-\l_tmpa_skip=\skip54
-\l_tmpb_skip=\skip55
-\g_tmpa_skip=\skip56
-\g_tmpb_skip=\skip57
+\c_zero_skip=\skip56
+\c_max_skip=\skip57
+\l_tmpa_skip=\skip58
+\l_tmpb_skip=\skip59
+\g_tmpa_skip=\skip60
+\g_tmpb_skip=\skip61
 \c_zero_muskip=\muskip11
 \c_max_muskip=\muskip12
 \l_tmpa_muskip=\muskip13
@@ -840,8 +848,8 @@ Package: l3keys2e 2018/02/21 LaTeX2e option processing using LaTeX3 keys
 \l__siunitx_unit_prefix_base_int=\count294
 \l__siunitx_unit_prefix_gram_int=\count295
 \l__siunitx_number_product_int=\count296
-\c__siunitx_one_fill_skip=\skip58
-\l__siunitx_table_unit_align_skip=\skip59
+\c__siunitx_one_fill_skip=\skip62
+\l__siunitx_table_unit_align_skip=\skip63
 \l__siunitx_table_exponent_dim=\dimen176
 \l__siunitx_table_integer_dim=\dimen177
 \l__siunitx_table_mantissa_dim=\dimen178
@@ -855,8 +863,8 @@ Package: l3keys2e 2018/02/21 LaTeX2e option processing using LaTeX3 keys
 \l__siunitx_table_post_box=\box76
 \l__siunitx_table_mantissa_box=\box77
 \l__siunitx_table_result_box=\box78
-\l__siunitx_table_number_align_skip=\skip60
-\l__siunitx_table_text_align_skip=\skip61
+\l__siunitx_table_number_align_skip=\skip64
+\l__siunitx_table_text_align_skip=\skip65
 .................................................
 . LaTeX info: "xparse/define-command"
 . 
@@ -2046,20 +2054,20 @@ Package: rerunfilecheck 2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 82.
 )
-\Hy@SectionHShift=\skip62
+\Hy@SectionHShift=\skip66
 )
 (/usr/share/texlive/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
 Package: fancyhdr 2017/06/30 v3.9a Extensive control of page headers and footer
 s
-\f@nch@headwidth=\skip63
-\f@nch@O@elh=\skip64
-\f@nch@O@erh=\skip65
-\f@nch@O@olh=\skip66
-\f@nch@O@orh=\skip67
-\f@nch@O@elf=\skip68
-\f@nch@O@erf=\skip69
-\f@nch@O@olf=\skip70
-\f@nch@O@orf=\skip71
+\f@nch@headwidth=\skip67
+\f@nch@O@elh=\skip68
+\f@nch@O@erh=\skip69
+\f@nch@O@olh=\skip70
+\f@nch@O@orh=\skip71
+\f@nch@O@elf=\skip72
+\f@nch@O@erf=\skip73
+\f@nch@O@olf=\skip74
+\f@nch@O@orf=\skip75
 )
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2015/06/04 1.6 listings language file
@@ -2089,12 +2097,12 @@ LaTeX Font Info:    ... okay on input line 14.
 \scratchbox=\box79
 \nofMPsegments=\count308
 \nofMParguments=\count309
-\everyMPshowfont=\toks25
+\everyMPshowfont=\toks26
 \MPscratchCnt=\count310
 \MPscratchDim=\dimen190
 \MPnumerator=\count311
 \makeMPintoPDFobject=\count312
-\everyMPtoPDFconversion=\toks26
+\everyMPtoPDFconversion=\toks27
 )
 \c@lstlisting=\count313
 Package caption Info: Begin \AtBeginDocument code.
@@ -2212,7 +2220,7 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 14.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 \c__siunitx_mathtt_int=\count316
-<Figures/gu.png, id=40, 169.63374pt x 174.6525pt>
+<Figures/gu.png, id=44, 169.63374pt x 174.6525pt>
 File: Figures/gu.png Graphic file (type png)
 <use Figures/gu.png>
 Package pdftex.def Info: Figures/gu.png  used on input line 27.
@@ -2236,61 +2244,69 @@ been already used, duplicate ignored
                    \relax 
 l.69 \newpage
               [1]
-<Figures/ts_conv.pdf, id=73, 462.52798pt x 346.89601pt>
-File: Figures/ts_conv.pdf Graphic file (type pdf)
-<use Figures/ts_conv.pdf>
-Package pdftex.def Info: Figures/ts_conv.pdf  used on input line 108.
-(pdftex.def)             Requested size: 338.5863pt x 253.95184pt.
- [2] (./report.bbl) [3 <./Figures/ts_conv.pdf>]
-<Figures/profileTot.pdf, id=129, 578.16pt x 397.485pt>
-File: Figures/profileTot.pdf Graphic file (type pdf)
-<use Figures/profileTot.pdf>
-Package pdftex.def Info: Figures/profileTot.pdf  used on input line 156.
-(pdftex.def)             Requested size: 145.11052pt x 99.75917pt.
-<Figures/stations.pdf, id=130, 462.52798pt x 346.89601pt>
+<Figures/stations.pdf, id=74, 542.025pt x 180.675pt>
 File: Figures/stations.pdf Graphic file (type pdf)
 <use Figures/stations.pdf>
-Package pdftex.def Info: Figures/stations.pdf  used on input line 157.
-(pdftex.def)             Requested size: 145.11052pt x 108.83348pt.
-<Figures/synoptic_conditions.pdf, id=131, 578.16pt x 578.16pt>
+Package pdftex.def Info: Figures/stations.pdf  used on input line 93.
+(pdftex.def)             Requested size: 542.02367pt x 180.67455pt.
+
+Overfull \hbox (58.32683pt too wide) in paragraph at lines 93--94
+ [][] 
+ []
+
+[2 <./Figures/stations.pdf>]
+<Figures/explainProfFit.pdf, id=109, 361.35pt x 289.08pt>
+File: Figures/explainProfFit.pdf Graphic file (type pdf)
+<use Figures/explainProfFit.pdf>
+Package pdftex.def Info: Figures/explainProfFit.pdf  used on input line 138.
+(pdftex.def)             Requested size: 361.34912pt x 289.07928pt.
+ [3 <./Figures/explainProfFit.pdf>]
+<Figures/ts_conv.pdf, id=147, 462.52798pt x 346.89601pt>
+File: Figures/ts_conv.pdf Graphic file (type pdf)
+<use Figures/ts_conv.pdf>
+Package pdftex.def Info: Figures/ts_conv.pdf  used on input line 161.
+(pdftex.def)             Requested size: 338.5863pt x 253.95184pt.
+ [4 <./Figures/ts_conv.pdf>] (./report.bbl) [5]
+<Figures/profileTot.pdf, id=188, 578.16pt x 397.485pt>
+File: Figures/profileTot.pdf Graphic file (type pdf)
+<use Figures/profileTot.pdf>
+Package pdftex.def Info: Figures/profileTot.pdf  used on input line 228.
+(pdftex.def)             Requested size: 145.11052pt x 99.75917pt.
+<Figures/synoptic_conditions.pdf, id=189, 578.16pt x 578.16pt>
 File: Figures/synoptic_conditions.pdf Graphic file (type pdf)
 <use Figures/synoptic_conditions.pdf>
-Package pdftex.def Info: Figures/synoptic_conditions.pdf  used on input line 15
-8.
+Package pdftex.def Info: Figures/synoptic_conditions.pdf  used on input line 22
+9.
 (pdftex.def)             Requested size: 145.11052pt x 145.10425pt.
-<Figures/sal_20181210.pdf, id=132, 578.16pt x 397.485pt>
+<Figures/sal_20181210.pdf, id=190, 578.16pt x 397.485pt>
 File: Figures/sal_20181210.pdf Graphic file (type pdf)
 <use Figures/sal_20181210.pdf>
-Package pdftex.def Info: Figures/sal_20181210.pdf  used on input line 159.
+Package pdftex.def Info: Figures/sal_20181210.pdf  used on input line 230.
 (pdftex.def)             Requested size: 145.11052pt x 99.75917pt.
-<Figures/layer_bottom_of_thermocline.pdf, id=133, 578.16pt x 397.485pt>
+<Figures/layer_bottom_of_thermocline.pdf, id=191, 578.16pt x 397.485pt>
 File: Figures/layer_bottom_of_thermocline.pdf Graphic file (type pdf)
 <use Figures/layer_bottom_of_thermocline.pdf>
 Package pdftex.def Info: Figures/layer_bottom_of_thermocline.pdf  used on input
- line 160.
+ line 231.
 (pdftex.def)             Requested size: 145.11052pt x 99.75917pt.
-<Figures/layer_bottom_of_warm_water.pdf, id=134, 578.16pt x 397.485pt>
+<Figures/layer_bottom_of_warm_water.pdf, id=192, 578.16pt x 397.485pt>
 File: Figures/layer_bottom_of_warm_water.pdf Graphic file (type pdf)
 <use Figures/layer_bottom_of_warm_water.pdf>
 Package pdftex.def Info: Figures/layer_bottom_of_warm_water.pdf  used on input 
-line 161.
+line 232.
 (pdftex.def)             Requested size: 145.11052pt x 99.75917pt.
-<Figures/transect_0.pdf, id=135, 578.16pt x 397.485pt>
+<Figures/transect_0.pdf, id=193, 578.16pt x 397.485pt>
 File: Figures/transect_0.pdf Graphic file (type pdf)
 <use Figures/transect_0.pdf>
-Package pdftex.def Info: Figures/transect_0.pdf  used on input line 162.
+Package pdftex.def Info: Figures/transect_0.pdf  used on input line 233.
 (pdftex.def)             Requested size: 145.11052pt x 99.75917pt.
-<Figures/transect_2.pdf, id=136, 578.16pt x 397.485pt>
+<Figures/transect_2.pdf, id=194, 578.16pt x 397.485pt>
 File: Figures/transect_2.pdf Graphic file (type pdf)
 <use Figures/transect_2.pdf>
-Package pdftex.def Info: Figures/transect_2.pdf  used on input line 163.
+Package pdftex.def Info: Figures/transect_2.pdf  used on input line 234.
 (pdftex.def)             Requested size: 145.11052pt x 99.75917pt.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 166.
- [4 <./Figures/profileTot.pdf> <./Figures/stations.pdf
-
-pdfTeX warning: pdflatex (file ./Figures/stations.pdf): PDF inclusion: multiple
- pdfs with page group included in a single page
-> <./Figures/synoptic_conditions.pdf
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 237.
+ [6 <./Figures/profileTot.pdf> <./Figures/synoptic_conditions.pdf
 
 pdfTeX warning: pdflatex (file ./Figures/synoptic_conditions.pdf): PDF inclusio
 n: multiple pdfs with page group included in a single page
@@ -2315,22 +2331,22 @@ le pdfs with page group included in a single page
 pdfTeX warning: pdflatex (file ./Figures/transect_2.pdf): PDF inclusion: multip
 le pdfs with page group included in a single page
 >]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 166.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 237.
  (./report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 166.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 166.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 237.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 237.
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: A6E713FF2D823BD2CD9819257B4266CB;581.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 166.
+(rerunfilecheck)             Checksum: D7A37A46527E211CB9BCEEDF347889F7;648.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 237.
  ) 
 Here is how much of TeX's memory you used:
- 21398 strings out of 494847
- 390584 string characters out of 6179081
- 480578 words of memory out of 5000000
- 24451 multiletter control sequences out of 15000+600000
+ 21548 strings out of 494847
+ 392767 string characters out of 6179081
+ 483607 words of memory out of 5000000
+ 24585 multiletter control sequences out of 15000+600000
  545996 words of font info for 59 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
- 44i,11n,43p,10436b,735s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 44i,12n,43p,10436b,737s stack positions out of 5000i,500n,10000p,200000b,80000s
  </home/romain/.texlive2017/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.60
 0pk> </home/romain/.texlive2017/texmf-var/fonts/pk/ljfour/jknappen/ec/eccc0800.
 600pk> </home/romain/.texlive2017/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx120
@@ -2346,11 +2362,12 @@ s/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
 mr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.p
 fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></u
 sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
-Output written on report.pdf (5 pages, 1849996 bytes).
+re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
+Output written on report.pdf (7 pages, 1936427 bytes).
 PDF statistics:
- 600 PDF objects out of 1000 (max. 8388607)
- 297 compressed objects within 3 object streams
- 34 named destinations out of 1000 (max. 500000)
- 123 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 660 PDF objects out of 1000 (max. 8388607)
+ 340 compressed objects within 4 object streams
+ 45 named destinations out of 1000 (max. 500000)
+ 136 words of extra memory for PDF output out of 10000 (max. 10000000)
 

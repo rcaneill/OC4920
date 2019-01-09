@@ -8,6 +8,7 @@ from load_data import load_nc
 import os, sys
 import pandas as pd
 import cartopy.crs as ccrs
+import cartopy.feature as cfeature
 from cartopy.mpl.ticker import LongitudeFormatter, LatitudeFormatter
 from cartopy.io import shapereader
 import cmocean as cm
@@ -137,7 +138,7 @@ def ts(datadir):
     # plt.show()
 
     
-def stations(datadir):
+def stations(datadir, report=False):
     """
     plot station locations
     """
@@ -151,24 +152,50 @@ def stations(datadir):
     dfS=xr.open_dataset(datadir+'ctd_files/meta/meta_SK.nc')
 
     #define axes
-    ax = plt.axes(projection=ccrs.PlateCarree(central_longitude=11))
+    if report:
+        fig,axes = plt.subplots(1,2, figsize=(7.5,2.5), subplot_kw={'projection': ccrs.PlateCarree()})
+        ax = axes[1]
+        ax0 = axes[0]
+        ax0.set_extent([5.5, 15.5, 53.3, 59.8],ccrs.PlateCarree())
+        gl=ax0.gridlines(crs=ccrs.PlateCarree(),draw_labels=True,alpha=0.2,linestyle='--',zorder=4)
+        gl.xlabels_top=False
+        gl.ylabels_right=False
+        feature = cfeature.NaturalEarthFeature(name='coastline', category='physical',
+                                               scale='50m',
+                                               edgecolor='#000000', facecolor='#AAAAAA')
+        ax0.add_feature(feature)
+        ax0.scatter([11.5],[58.25], transform=ccrs.PlateCarree(), s=10,zorder=4)
+        ax0.set_title('Position of the Gullman Fjord')
+    else:
+        fig = plt.figure(figsize=(4,3))
+        ax = plt.axes(projection=ccrs.PlateCarree(central_longitude=11))
+        fig.add_axes(ax)
     ax.set_extent([11.2, 11.8, 58.1, 58.5],ccrs.PlateCarree())
     geometries = [i for i in coast.geometries()]
     for geometry in geometries:
         ax.add_geometries([geometry], ccrs.PlateCarree(), facecolor='lightgray', \
                           edgecolor='black',zorder=2)
     levels=np.linspace(-140,0,8)
-#    etopo.Band1.plot.contourf(ax=ax,levels=levels,transform=ccrs.PlateCarree(),zorder=0,cbar_kwargs={'label':'Bathymetry (m)'})
-    etopo.Band1.plot.pcolormesh(ax=ax,vmin=-60,vmax=20,transform=ccrs.PlateCarree(), \
-                                cmap=cm.cm.solar,zorder=0, \
-                                cbar_kwargs={'label':'Bathymetry (m)','fraction':0.035})
-    
+    #    etopo.Band1.plot.contourf(ax=ax,levels=levels,transform=ccrs.PlateCarree(),zorder=0,cbar_kwargs={'label':'Bathymetry (m)'})
+    if not report:
+        etopo.Band1.plot.pcolormesh(ax=ax,vmin=-60,vmax=20,transform=ccrs.PlateCarree(), \
+                                    cmap=cm.cm.solar,zorder=0, \
+                                    cbar_kwargs={'label':'Bathymetry (m)','fraction':0.035})
+    if report:
+        c='g'
+    else:
+        c='w'
     gl=ax.gridlines(crs=ccrs.PlateCarree(),draw_labels=True,alpha=0.2,zorder=1)
-    ax.scatter(dfT1.lon,dfT1.lat,s=5,c='w',transform=ccrs.PlateCarree())
-    ax.scatter(dfT2.lon,dfT2.lat,s=5,c='w',transform=ccrs.PlateCarree())
-    ax.scatter(dfS.lon,dfS.lat,s=5,c='w',transform=ccrs.PlateCarree())
+    ax.scatter(dfT1.lon,dfT1.lat,s=5,c=c,transform=ccrs.PlateCarree())
+    ax.scatter(dfT2.lon,dfT2.lat,s=5,c=c,transform=ccrs.PlateCarree())
+    ax.scatter(dfS.lon,dfS.lat,s=5,c=c,transform=ccrs.PlateCarree())
     gl.xlabels_top=False
     gl.ylabels_right=False
+    ax.set_title('Position of the cast stations')
+    if report:
+        # computing figures for the report
+        plt.savefig('Figures/ForReport/stations.pdf')
+        return
     plt.savefig('Figures/Raw/stations.png')
     plt.savefig('Figures/Raw/stations.pdf')
     # add labels with the cast names

@@ -79,7 +79,25 @@ field work 10-11 of December 2018
 
 on board of 2 ships: Skagerrak and Trygve
 
+CTD casts with T, S, lat, lon, Oxygen, Niskin bottles for oxygen calib.
+
+Figure~\ref{fig:stations}
+
+very good spatial coverage
+
+also moorings, with CTD at a acertain depth, recording T and S variations (did not
+gave a lot of informations)
+
+\begin{figure}
+  \centering
+  \includegraphics{stations}
+  \caption{\label{fig:stations}Stations of CTD casts.}
+\end{figure}
+
 \subsection{Data processing}
+We will refer to potential temperature as temperature, saying
+explicitly to in situ temperature if necessary.
+Idem for absolute salinity, we say salinity.
 \subsubsection{Cleaning and calibration}
 \paragraph{Reprocessing data, potential temp, absolute sal}
 \paragraph{Gridding every meter 1-120 m depth}
@@ -89,7 +107,42 @@ on board of 2 ships: Skagerrak and Trygve
 \paragraph{Turner angle TODO conpute}
 \paragraph{Geostrophy TODO compute}
 \paragraph{Profil fitting and layers}
-Add a plot with the fit on a profile
+Temperature profiles in the fjord all look very similar, with
+\begin{inparaenum}
+\item an upper thermocline;
+\item a warm water mass;
+\item a lower thermocline;
+\item the lowest layer where temperature is approximatively constant.
+\end{inparaenum}
+It is not easy to compute the depth of these layer by using a threshold (on the
+value or on the gradient) due to the irregularities of the temperature.
+Inspired by the work of \cite{pauthenet2017}, we decided to approximate
+the profiles with a function and then extraxt the layers informations from the
+functions properties. As the studied profiles have all the same shapes,
+we used a mutli-linear fit, fitting the 4 layers.
+The parameters of the fitted function are the depths and the temperatures
+of the interface between each layers. We considered that for the lowest layer,
+the fitted temperature will be a constant. An {\it a priori} model was set
+for these 8 parameters, with values set by eye to be a good candidate.
+Table~\ref{tab:apriori} in Appendix presents the parameters. The least squares
+approximation has been used to find the best parameters.
+For the profiles that are not deep enough, only the part where data are present
+has been used for the least squares method. The {\it a priori} model
+has been set for the lower part, with a confidance flag set to 0.
+Figure~\ref{fig:fit} presents two examples of profiles: one where the 4 layers
+are present and one where the fjord was not deep enough, so only
+the upper layer is fitted.
+
+\begin{figure}
+  \centering
+  \includegraphics{{explainProfFit}}
+  \caption{\label{fig:fit}Profile fitting with a multi-linear function.
+    The measured profiles are plotted in green, the fitted functions in blue,
+    and the red crosses represent depth and temperature at the interfaces
+    between the different layers. On the right plot, the fit corresponds to the
+    {\it a priori} model for the two lowest interfaces.}
+\end{figure}
+
 \paragraph{No sub-mesoscale heat fluxes because no mixed layer}
 
 \section{Results}
@@ -128,6 +181,8 @@ What is happening here?
 
 TODO
 
+fitting of the profile, using spline could be better. but here maybe not necessary. 
+
 \section{Conclusion}
 
 See what is the context\\
@@ -146,15 +201,31 @@ What is the conclusion
 \appendix
 \setcounter{figure}{0}
 
+\section{Complementary data and figures}
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{|l|c|r|}
+    \hline
+    Depth (m) & Temperature ($\degree$C) & Comment \\
+    \hline
+    0 & 5 & Surface\\
+    20 & 10 & Bottom of the upper thermocline / top of the warm water\\
+    60 & 9 & Bottom of the warm water / top of the lower thermocline\\
+    80 & 7 & Bottom of the lower thermocline / top of the lowest layer\\
+    \hline
+  \end{tabular}
+  \caption{\label{tab:apriori}Values of the {\it a priori} model for the multi-linear fit.}
+\end{table}
+
 TODO
 
 ALL THE FIGURES I WANT TO PUT ON THE REPORT
 
 For all profiles, put 2 different color for offshore and fjord
-\begin{figure}
+\begin{figure}[h]
   \centering
   \includegraphics[width=.3\textwidth]{profileTot}
-  \includegraphics[width=.3\textwidth]{stations}
   \includegraphics[width=.3\textwidth]{synoptic_conditions}
   \includegraphics[width=.3\textwidth]{{sal_20181210}}
   \includegraphics[width=.3\textwidth]{{layer_bottom_of_thermocline}}
