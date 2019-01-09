@@ -75,49 +75,72 @@ TODO find references about fjords, skagerrak
 \section{Materials and methods}
 \subsection{Presentation of the field work and data acquisition}
 
-field work 10-11 of December 2018
+This report focuses on a field work that has been conducted on December 2018, the
+10th and 11th, as part of the course OC4920 of the University of Gothenburg.
+Two days have been spent on two ships, the Skagerrak and the Trygve.
+Both ships had fully equipped CTD, with temperature, salinity, and oxygen concentration
+sensors. Some other variables have been recorded but not discussed on this
+report. Niskins bottle have been used for the oxygen calibration on board of
+the Skagerrak.
 
-on board of 2 ships: Skagerrak and Trygve
-
-CTD casts with T, S, lat, lon, Oxygen, Niskin bottles for oxygen calib.
-
-Figure~\ref{fig:stations}
-
-very good spatial coverage
-
-also moorings, with CTD at a acertain depth, recording T and S variations (did not
-gave a lot of informations)
+We got more than 50 casts, covering the fjord with a very good spatial coverage.
+We also made 3 mooring measurements, setting the CTD at a certain depth
+for 30 minutes, recording the temporal variations instead of the
+spatial variations.
+Figure~\ref{fig:stations} presents the position of the Gullman Fjord, on the western
+coast of Sweden, as well as the position of the CTD casts.
 
 \begin{figure}
   \centering
   \includegraphics{stations}
-  \caption{\label{fig:stations}Stations of CTD casts.}
+  \caption{\label{fig:stations}Situation of the Gullman Fjord (red dot) and position
+    of the CTD casts (green dots).}
 \end{figure}
 
 \subsection{Data processing}
-We will refer to potential temperature as temperature, saying
-explicitly to in situ temperature if necessary.
-Idem for absolute salinity, we say salinity.
-\subsubsection{Cleaning and calibration}
-\paragraph{Reprocessing data, potential temp, absolute sal}
-\paragraph{Gridding every meter 1-120 m depth}
+For a better readability, we will refer to potential temperature as temperature
+and to absolute salinity as salinity.
+If needed, we will explicitly use the term {\it in situ} to refer to
+measured temperature and salinity.
 
-\subsubsection{Data assimilation / creating new metrics}
-\paragraph{Find some}
-\paragraph{Turner angle TODO conpute}
-\paragraph{Geostrophy TODO compute}
-\paragraph{Profil fitting and layers}
+To ensure coherence in the whole dataset and between the two ships,
+all the data have been regridded on a 1 meter grid, from 0 to 119 meters depth.
+Depths without any measurement points have been filled with NaN.
+
+\paragraph{Processing}
+Using the library provided by TEOS-10 \citep{gsw}, {\it in situ} temperatures and practical
+salinities have been converted to potential temperature and absolute salinity.
+Potential density anomaly has also been derived.
+
+\paragraph{Calibration}
+One cast has been conducted at the same position with the two ships each day,
+so that all the measured variables can be calibrated between the two datasets.
+The Skagerrak data have been chosen as reference data, because of a more
+recent recalibration of the CTD sensors than the Trygve sensors.
+After a linear regression between Trygve and Skagerrak calibration profiles
+under the thermocline, the coefficients have been used to recalibrate
+Trygve profiles for each day.
+See Table~\ref{tab:calib} for the used coefficients.
+
+
+\subsection{Turner angle}
+One way to estimate the role of the salinity and the temperature on the stratification
+is to use the Turner angle.
+\citep{ruddick1983, johnson2012}
+
+\subsection{Geostrophy TODO compute}
+\subsection{Profile fitting and layers}
 Temperature profiles in the fjord all look very similar, with
 \begin{inparaenum}
 \item an upper thermocline;
 \item a warm water mass;
 \item a lower thermocline;
-\item the lowest layer where temperature is approximatively constant.
+\item the lowest layer where temperature is approximately constant.
 \end{inparaenum}
 It is not easy to compute the depth of these layer by using a threshold (on the
 value or on the gradient) due to the irregularities of the temperature.
 Inspired by the work of \cite{pauthenet2017}, we decided to approximate
-the profiles with a function and then extraxt the layers informations from the
+the profiles with a function and then extract the layers information from the
 functions properties. As the studied profiles have all the same shapes,
 we used a mutli-linear fit, fitting the 4 layers.
 The parameters of the fitted function are the depths and the temperatures
@@ -128,7 +151,7 @@ Table~\ref{tab:apriori} in Appendix presents the parameters. The least squares
 approximation has been used to find the best parameters.
 For the profiles that are not deep enough, only the part where data are present
 has been used for the least squares method. The {\it a priori} model
-has been set for the lower part, with a confidance flag set to 0.
+has been set for the lower part, with a confidence flag set to 0.
 Figure~\ref{fig:fit} presents two examples of profiles: one where the 4 layers
 are present and one where the fjord was not deep enough, so only
 the upper layer is fitted.
@@ -158,7 +181,7 @@ Skagerrak salinity between 33 (surface) to 35 (100m depth)
 
 \begin{figure}
   \centering
-  \includegraphics[width=.7\textwidth]{ts_conv}
+  \includegraphics{ts}
   \caption{\label{fig:ts}T-S diagram}
 \end{figure}
 
@@ -169,7 +192,11 @@ distribution
 \paragraph{strong halocline}
 
 \paragraph{Turner angle}
-What is happening here?
+\begin{figure}
+  \centering
+  \includegraphics{turner}
+  \caption{\label{fig:turner}Turner angle as a function of depth.}
+\end{figure}
 
 \paragraph{Geostrophy}
 What is happening here?
@@ -216,6 +243,34 @@ What is the conclusion
     \hline
   \end{tabular}
   \caption{\label{tab:apriori}Values of the {\it a priori} model for the multi-linear fit.}
+\end{table}
+
+\begin{table}[h]
+  \centering
+  Temperature\\
+  \begin{tabular}{|l|c|c|}
+    \hline
+    Date & $a_T$ & $b_T$ \\
+    \hline
+    2018-12-10 & 0.9938598212928323461 & 0.07856246515108189499\\
+    2018-12-11 & 1.006636216123387273  & -0.09514920786826941423\\
+    \hline
+  \end{tabular}
+  
+  \vspace{.5cm}
+  Salinity\\
+  \begin{tabular}{|l|c|c|}
+    \hline
+    Date & $a_S$ & $a_S$ \\
+    \hline
+    2018-12-10 & 0.8453445700814513630 & 5.276859099581269419\\
+    2018-12-11 & 0.8190729895351881451 & 6.231978296168669829\\
+    \hline
+  \end{tabular}
+  \caption{\label{tab:calib}Regression coefficients, the calibration has the following
+    shape:
+    ${X_{Trygve} = a_X \cdot X_{Skagerrak} + b_X}$, with $X$
+    the temperature or the salinity.}
 \end{table}
 
 TODO

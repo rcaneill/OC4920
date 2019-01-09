@@ -53,7 +53,9 @@ if __name__ == '__main__':
 
     # create hard link of the figures to report figures
     all_fig = ['ForReport/explainProfFit.pdf', \
-               'ForReport/stations.pdf']
+               'ForReport/stations.pdf', \
+               'ForReport/ts.pdf', \
+               'ForReport/turner.pdf']
     for i in all_fig:
         if os.path.basename(i) in os.listdir('Report/Romain/Figures'):
             os.remove(os.path.join('Report/Romain/Figures',os.path.basename(i)))

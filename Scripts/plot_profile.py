@@ -124,15 +124,16 @@ def ts(datadir):
 
     dens=dens-1000.
     # print(dens)
-    scatt = plt.scatter(sal,temp,c=depth,s=3,cmap='viridis_r')
+    fig,ax = plt.subplots(1,1,figsize=(4,4))
+    scatt = ax.scatter(sal,temp,c=depth,s=3,cmap='viridis_r')
     cb = plt.colorbar(scatt)
     cb.set_label('Depth (m)')
-    CS = plt.contour(si,ti,dens, linestyles='dashed', colors='Gray',alpha=0.6)
-    plt.clabel(CS, fontsize=12, inline=1, fmt='%1.0f') # Label every second level
+    CS = ax.contour(si,ti,dens, linestyles='dashed', colors='Gray',alpha=0.6)
+    ax.clabel(CS, fontsize=12, inline=1, fmt='%1.0f') # Label every second level
     
-    
-    plt.xlabel('Absolute salinity (psu)')
-    plt.ylabel(u'Temperature ($^{\circ}$C)')
+    ax.set_xlabel('Absolute salinity (psu)')
+    ax.set_ylabel(u'Temperature ($^{\circ}$C)')
+    plt.savefig('Figures/ForReport/ts.pdf')
     plt.savefig('Figures/Raw/ts_conv_baltic.png')
     plt.savefig('Figures/Raw/ts_conv_baltic.pdf')
     # plt.show()
@@ -153,7 +154,7 @@ def stations(datadir, report=False):
 
     #define axes
     if report:
-        fig,axes = plt.subplots(1,2, figsize=(7.5,2.5), subplot_kw={'projection': ccrs.PlateCarree()})
+        fig,axes = plt.subplots(1,2, figsize=(7,2.5), subplot_kw={'projection': ccrs.PlateCarree()})
         ax = axes[1]
         ax0 = axes[0]
         ax0.set_extent([5.5, 15.5, 53.3, 59.8],ccrs.PlateCarree())
@@ -164,7 +165,7 @@ def stations(datadir, report=False):
                                                scale='50m',
                                                edgecolor='#000000', facecolor='#AAAAAA')
         ax0.add_feature(feature)
-        ax0.scatter([11.5],[58.25], transform=ccrs.PlateCarree(), s=10,zorder=4)
+        ax0.scatter([11.5],[58.25], transform=ccrs.PlateCarree(), s=15,zorder=4, c='r')
         ax0.set_title('Position of the Gullman Fjord')
     else:
         fig = plt.figure(figsize=(4,3))
@@ -173,7 +174,7 @@ def stations(datadir, report=False):
     ax.set_extent([11.2, 11.8, 58.1, 58.5],ccrs.PlateCarree())
     geometries = [i for i in coast.geometries()]
     for geometry in geometries:
-        ax.add_geometries([geometry], ccrs.PlateCarree(), facecolor='lightgray', \
+        ax.add_geometries([geometry], ccrs.PlateCarree(), facecolor='#AAAAAA', \
                           edgecolor='black',zorder=2)
     levels=np.linspace(-140,0,8)
     #    etopo.Band1.plot.contourf(ax=ax,levels=levels,transform=ccrs.PlateCarree(),zorder=0,cbar_kwargs={'label':'Bathymetry (m)'})
@@ -185,7 +186,7 @@ def stations(datadir, report=False):
         c='g'
     else:
         c='w'
-    gl=ax.gridlines(crs=ccrs.PlateCarree(),draw_labels=True,alpha=0.2,zorder=1)
+    gl=ax.gridlines(crs=ccrs.PlateCarree(),draw_labels=True,alpha=0.2,zorder=10)
     ax.scatter(dfT1.lon,dfT1.lat,s=5,c=c,transform=ccrs.PlateCarree())
     ax.scatter(dfT2.lon,dfT2.lat,s=5,c=c,transform=ccrs.PlateCarree())
     ax.scatter(dfS.lon,dfS.lat,s=5,c=c,transform=ccrs.PlateCarree())

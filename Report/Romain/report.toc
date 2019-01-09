@@ -3,22 +3,19 @@
 \contentsline {section}{\numberline {2}Materials and methods}{2}{section.2}
 \contentsline {subsection}{\numberline {2.1}Presentation of the field work and data acquisition}{2}{subsection.2.1}
 \contentsline {subsection}{\numberline {2.2}Data processing}{2}{subsection.2.2}
-\contentsline {subsubsection}{\numberline {2.2.1}Cleaning and calibration}{2}{subsubsection.2.2.1}
-\contentsline {paragraph}{Reprocessing data, potential temp, absolute sal}{2}{section*.3}
-\contentsline {paragraph}{Gridding every meter 1-120 m depth}{2}{section*.4}
-\contentsline {subsubsection}{\numberline {2.2.2}Data assimilation / creating new metrics}{2}{subsubsection.2.2.2}
-\contentsline {paragraph}{Find some}{2}{section*.5}
-\contentsline {paragraph}{Turner angle TODO conpute}{2}{section*.6}
-\contentsline {paragraph}{Geostrophy TODO compute}{3}{section*.7}
-\contentsline {paragraph}{Profil fitting and layers}{3}{section*.8}
-\contentsline {paragraph}{No sub-mesoscale heat fluxes because no mixed layer}{3}{section*.10}
-\contentsline {section}{\numberline {3}Results}{4}{section.3}
-\contentsline {paragraph}{T-S diagram}{4}{section*.11}
-\contentsline {paragraph}{warm water layer}{4}{section*.13}
-\contentsline {paragraph}{strong halocline}{4}{section*.14}
-\contentsline {paragraph}{Turner angle}{4}{section*.15}
-\contentsline {paragraph}{Geostrophy}{4}{section*.16}
-\contentsline {paragraph}{Upwelling event? Mixing?}{4}{section*.17}
-\contentsline {section}{\numberline {4}Discussion}{4}{section.4}
-\contentsline {section}{\numberline {5}Conclusion}{5}{section.5}
-\contentsline {section}{\numberline {A}Complementary data and figures}{6}{appendix.A}
+\contentsline {paragraph}{Processing}{2}{section*.3}
+\contentsline {paragraph}{Calibration}{3}{section*.4}
+\contentsline {subsection}{\numberline {2.3}Turner angle}{3}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}Geostrophy TODO compute}{3}{subsection.2.4}
+\contentsline {subsection}{\numberline {2.5}Profile fitting and layers}{3}{subsection.2.5}
+\contentsline {paragraph}{No sub-mesoscale heat fluxes because no mixed layer}{3}{section*.6}
+\contentsline {section}{\numberline {3}Results}{3}{section.3}
+\contentsline {paragraph}{T-S diagram}{3}{section*.7}
+\contentsline {paragraph}{warm water layer}{3}{section*.9}
+\contentsline {paragraph}{strong halocline}{3}{section*.10}
+\contentsline {paragraph}{Turner angle}{3}{figure.caption.12}
+\contentsline {paragraph}{Geostrophy}{7}{section*.13}
+\contentsline {paragraph}{Upwelling event? Mixing?}{7}{section*.14}
+\contentsline {section}{\numberline {4}Discussion}{7}{section.4}
+\contentsline {section}{\numberline {5}Conclusion}{7}{section.5}
+\contentsline {section}{\numberline {A}Complementary data and figures}{8}{appendix.A}

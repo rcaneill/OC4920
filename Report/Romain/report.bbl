@@ -1,4 +1,4 @@
-\begin{thebibliography}{4}
+\begin{thebibliography}{7}
 \providecommand{\natexlab}[1]{#1}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi:\discretionary{}{}{}#1}\else
@@ -22,11 +22,28 @@ Gustafsson, B., and A.~Stigebrandt (1996), Dynamics of the
   Research}, \textit{35}(1), 39 -- 53,
   \doi{https://doi.org/10.1016/S1385-1101(96)90733-9}.
 
+\bibitem[{\textit{Johnson et~al.}(2012)\textit{Johnson, Schmidtko, and
+  Lyman}}]{johnson2012}
+Johnson, G.~C., S.~Schmidtko, and J.~M. Lyman (2012), Relative contributions of
+  temperature and salinity to seasonal mixed layer density changes and
+  horizontal density gradients, \textit{Journal of Geophysical Research:
+  Oceans}, \textit{117}(C4), \doi{10.1029/2011JC007651}.
+
+\bibitem[{\textit{McDougall and Barker}(2011)}]{gsw}
+McDougall, T., and P.~Barker (2011), Getting started with teos-10 and the gibbs
+  seawater (gsw)oceanographic toolbox, \textit{SCOR/IAPSO WG}, \textit{127},
+  1--28.
+
 \bibitem[{\textit{Pauthenet et~al.}(2017)\textit{Pauthenet, Roquet, Madec, and
   Nerini}}]{pauthenet2017}
 Pauthenet, E., F.~Roquet, G.~Madec, and D.~Nerini (2017), A linear
   decomposition of the southern ocean thermohaline structure, \textit{Journal
   of Physical Oceanography}, \textit{47}(1), 29--47,
   \doi{10.1175/JPO-D-16-0083.1}.
+
+\bibitem[{\textit{{Ruddick}}(1983)}]{ruddick1983}
+{Ruddick}, B. (1983), {A practical indicator of the stability of the water
+  column to double-diffusive activity}, \textit{Deep Sea Research A},
+  \textit{30}, 1105--1107, \doi{10.1016/0198-0149(83)90063-8}.
 
 \end{thebibliography}
