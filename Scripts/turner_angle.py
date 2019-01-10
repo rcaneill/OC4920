@@ -4,6 +4,13 @@ import xarray as xr
 import os
 import gsw
 from math import atan2, degrees
+from matplotlib import rcParams
+
+plt.style.use('seaborn')
+rcParams['text.usetex'] = True
+
+
+
 
 def turner_angle(gT, gS, alpha, beta):
     """
@@ -50,9 +57,9 @@ if __name__ == '__main__':
     plt.plot([0,120],[-90,-90],'k')
     
     plt.plot([0,0],[-180,180],'r')
-    plt.plot([20,20],[-180,180],'r')
-    plt.plot([60,60],[-180,180],'r')
-    plt.plot([80,80],[-180,180],'r')
+    plt.plot([11.8,11.8],[-180,180],'r')
+    plt.plot([60.2,60.2],[-180,180],'r')
+    plt.plot([75.3,75.3],[-180,180],'r')
     plt.savefig('Figures/ForReport/turner.pdf')
     plt.show()
     

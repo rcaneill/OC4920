@@ -72,8 +72,22 @@
 
 TODO find references about fjords, skagerrak
 
+
+Two typical water masses are present along the western coast of Sweden
+\citep{bjork2003,gustafsson1996}.
+One water masse is composed by fresh water coming from the Batic sea through the Kattegat.
+Its salinity is situated between 15/20 and 25.
+The second one comes from Atlantic water and is largely present in the Skagerrak
+and has a salinity of about 33 at the surface and 35 at 100 meters depth.
+
+The water in the Gullman fjord is mainly composed of these
+Kattegat and Skagerrak waters \citep{arneborg2003}, limit of
+salinity 28 between them.
+
 \section{Materials and methods}
 \subsection{Presentation of the field work and data acquisition}
+
+TODO bad weather: from high sea to fjord
 
 This report focuses on a field work that has been conducted on December 2018, the
 10th and 11th, as part of the course OC4920 of the University of Gothenburg.
@@ -125,10 +139,25 @@ See Table~\ref{tab:calib} for the used coefficients.
 
 \subsection{Turner angle}
 One way to estimate the role of the salinity and the temperature on the stratification
-is to use the Turner angle.
-\citep{ruddick1983, johnson2012}
+is to use the Turner angle $Tu$ \citep{ruddick1983, johnson2012}:
+\[Tu = atan2(\alpha \partial_z T + \beta \partial_z S,
+\alpha \partial_z T - \beta \partial_z S),\]
+with $\alpha$ the thermal expansion, $\beta$ the haline contraction,
+$\partial_z T$ the vertical gradient of the temperature,
+$\partial_z S$ the vertical gradient of the salinity,
+and $atan2$ the four-quadrants inverse tangent.
+If $Tu = 45\degree$ the temperature controls totaly the density changes,
+if $Tu = -45\degree$ the salinity controls totaly the density changes,
+at $0 \degree$ the temperature and the salinity control both equally
+the density changes.
+If $|Tu| > 45\degree$ the temperature and the salinity are working
+one against the other, with total compensation if $|Tu| = 90$.
 
-\subsection{Geostrophy TODO compute}
+The Turner angle has been computed at every depth for each profile,
+using values of $\alpha$ and $\beta$ given by the TEOS-10 library.
+
+
+%\subsection{Geostrophy TODO compute}
 \subsection{Profile fitting and layers}
 Temperature profiles in the fjord all look very similar, with
 \begin{inparaenum}
@@ -166,49 +195,96 @@ the upper layer is fitted.
     {\it a priori} model for the two lowest interfaces.}
 \end{figure}
 
-\paragraph{No sub-mesoscale heat fluxes because no mixed layer}
-
 \section{Results}
+%\paragraph{T and S profiles}
+%\begin{figure}
+%  \centering
+%  \includegraphics{profileTot}
+%  \caption{\label{fig:proftot}Temperature and salinity profiles for all the casts.}
+%\end{figure}
 
-\paragraph{T-S diagram}
-see figure \ref{fig:ts}
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{prof_offshore}
+  \includegraphics[width=\textwidth]{prof_fjord}
+  \caption{\label{fig:profex}Example of two profiles, offshore on the top and in
+    the Gullman fjord on the bottom.
+    These profiles are very representative of all the measured profiles.
+    The emperature is in blue, the salinity is in red and the density anomaly
+  is in green.}
+  
+\end{figure}
+The offshore transect and the casts inside the fjord have different shapes
+(Figure~\ref{fig:profex}).
+A mixed layer of few meters is present offshore.
+The salinity is around 29 at the surface of the offshore profile, increasing
+along a sharp halocline to more than 34. The salinity is here representative
+of Skagerrak water.
+The temperature follows the same kind of shape: roughly constant
+in the mixed layer and then increasing.
+The density is increasing under the mixed layer, even if the temperature
+increases, it is not sufficient to compensate the large variation
+of the salinity, leading to a density controlled by the salinity here.
 
-we recognize Skagerrak and Kattegat water \citep{bjork2003,gustafsson1996}
+On the opposite, in the very calm
+conditions of the fjord, no mixed layer is visible.
+An upper layer of 10 to 20 meters controlled by a strong halocline
+lies over a warm water mass, where density seems to follow the shape of
+the salinity. The salinity changes a little bit in this warm water and in the lower layers,
+but keeps values over 34 when the temperature variates from 10 $\degree$C
+to 9.5 $\degree$C at the bottom of the warm water to reach a little
+more than 6.5 $\degree$ at the bottom.
+Despite a slight decrease of the salinity after 60 meters, the density
+seems to be controlled by the temperature variations of the lower thermocline.
 
-Kattegat salinity 15/20(depending on the source)-25
-
-Skagerrak salinity between 33 (surface) to 35 (100m depth)
+%\paragraph{T-S diagram}
+The 28 salinity limit in the fjord profiles is in the middle
+of the upper cline. \cite{arneborg2003} present an upper layer (around 10 meter
+depth) of Kattegat water in the fjord during the summer, under which a halocline
+and the Skagerrak water are present. The depth of the halocline is strongly related
+to the inflow or outflow of water in the fjord.
+Even if the Kattegat water seems to be present at the surface (Figure~\ref{fig:ts}),
+the main part of the water is Skagerrak water. The upper cline
+is visible on Figure~\ref{fig:ts}, as the mixing between the Kattegat (yellow points)
+and the Skagerrak upper water (yellow/green points).
+The salinity and the temperature of the bottom stagnant layer
+have very little spatial variation.
 
 \begin{figure}
   \centering
   \includegraphics{ts}
-  \caption{\label{fig:ts}T-S diagram}
+  \caption{\label{fig:ts}T-S diagram regroupping all profiles. The color
+    of points represents the depth.}
 \end{figure}
 
 \paragraph{warm water layer}
 warm water in the fjord, see mean depth, std depth, mean T and S, see spatial
 distribution
 
-\paragraph{strong halocline}
-
 \paragraph{Turner angle}
 \begin{figure}
   \centering
   \includegraphics{turner}
-  \caption{\label{fig:turner}Turner angle as a function of depth.}
+  \caption{\label{fig:turner}Turner angle as a function of depth.
+    Black lines have been drawed to delimit the area where the temperature
+    is the principal actor ($0<Tu<90$)
+    and the area where the salinity controls the density changes ($-90<Tu<0$).
+    The red lines represent the mean interface between the different water layers.}
 \end{figure}
 
 \paragraph{Geostrophy}
 What is happening here?
 
 \paragraph{Upwelling event? Mixing?}
-\citep{arneborg2003}
+\citep{arneborg2003,bjork2003}
 
 \section{Discussion}
 
 TODO
 
 fitting of the profile, using spline could be better. but here maybe not necessary. 
+
+Opening work: sub-mesoscale heat fluxes because no mixed layer, geostrophy
 
 \section{Conclusion}
 
@@ -280,7 +356,6 @@ ALL THE FIGURES I WANT TO PUT ON THE REPORT
 For all profiles, put 2 different color for offshore and fjord
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.3\textwidth]{profileTot}
   \includegraphics[width=.3\textwidth]{synoptic_conditions}
   \includegraphics[width=.3\textwidth]{{sal_20181210}}
   \includegraphics[width=.3\textwidth]{{layer_bottom_of_thermocline}}

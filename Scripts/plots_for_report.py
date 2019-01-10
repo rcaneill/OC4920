@@ -37,9 +37,32 @@ def prof_fit():
     plt.tight_layout()
     plt.savefig('Figures/ForReport/explainProfFit.pdf')
     plt.close()
+
+def layer_stat(datadir):
+    """
+    Computes stats about the layers
+    """
+    d = []
+    v = []
+    flag = []
+    for filename in os.listdir(datadir):
+        data = xr.open_dataset(os.path.join(datadir,filename))
+        d.append(data.layer_d)
+        v.append(data.layer_v)
+        flag.append(data.layer_flag)
+    d = np.array(d)
+    v = np.array(v)
+    flag = np.array(flag)
+    d[flag==0] = np.nan
+    v[flag==0] = np.nan
+    print('Mean depth',np.nanmean(d,axis=0))
+    print('Std depth',np.nanstd(d,axis=0))
+    print('Mean temp',np.nanmean(v,axis=0))
+    print('Std temp',np.nanstd(v,axis=0))
+    print('Number of values for each depth', np.sum(flag==1,axis=0))
     
 if __name__ == '__main__':
-    argument = sys.argv[1]
+    argument = sys.argv[-1]
     if argument == 'prof_fit':
         # plot the fitted profile
         prof_fit()
@@ -51,6 +74,9 @@ if __name__ == '__main__':
         # plot skagerrak
         plot_sk()
 
+    if argument == 'layers':
+        layer_stat(datadir='Data/ctd_files/fitted')
+        
     # create hard link of the figures to report figures
     all_fig = ['ForReport/explainProfFit.pdf', \
                'ForReport/stations.pdf', \

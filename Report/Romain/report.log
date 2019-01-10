@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.1.8)  9 JAN 2019 22:01
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.1.8)  10 JAN 2019 02:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2220,7 +2220,7 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 14.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 \c__siunitx_mathtt_int=\count316
-<Figures/gu.png, id=48, 169.63374pt x 174.6525pt>
+<Figures/gu.png, id=44, 169.63374pt x 174.6525pt>
 File: Figures/gu.png Graphic file (type png)
 <use Figures/gu.png>
 Package pdftex.def Info: Figures/gu.png  used on input line 27.
@@ -2244,86 +2244,97 @@ been already used, duplicate ignored
                    \relax 
 l.69 \newpage
               [1]
-<Figures/stations.pdf, id=79, 505.89pt x 180.675pt>
+<Figures/stations.pdf, id=80, 505.89pt x 180.675pt>
 File: Figures/stations.pdf Graphic file (type pdf)
 <use Figures/stations.pdf>
-Package pdftex.def Info: Figures/stations.pdf  used on input line 95.
+Package pdftex.def Info: Figures/stations.pdf  used on input line 109.
 (pdftex.def)             Requested size: 505.88875pt x 180.67455pt.
 
-Overfull \hbox (22.19191pt too wide) in paragraph at lines 95--97
+Overfull \hbox (22.19191pt too wide) in paragraph at lines 109--111
  [][] 
  []
 
 [2 <./Figures/stations.pdf>]
-<Figures/explainProfFit.pdf, id=119, 361.35pt x 289.08pt>
+<Figures/explainProfFit.pdf, id=122, 361.35pt x 289.08pt>
 File: Figures/explainProfFit.pdf Graphic file (type pdf)
 <use Figures/explainProfFit.pdf>
-Package pdftex.def Info: Figures/explainProfFit.pdf  used on input line 161.
+Package pdftex.def Info: Figures/explainProfFit.pdf  used on input line 190.
 (pdftex.def)             Requested size: 361.34912pt x 289.07928pt.
-<Figures/ts.pdf, id=125, 361.35pt x 361.35pt>
+<Figures/prof_offshore.png, id=123, 578.16pt x 397.485pt>
+File: Figures/prof_offshore.png Graphic file (type png)
+<use Figures/prof_offshore.png>
+Package pdftex.def Info: Figures/prof_offshore.png  used on input line 208.
+(pdftex.def)             Requested size: 483.69684pt x 332.53867pt.
+<Figures/prof_fjord.pdf, id=125, 578.16pt x 397.485pt>
+File: Figures/prof_fjord.pdf Graphic file (type pdf)
+<use Figures/prof_fjord.pdf>
+Package pdftex.def Info: Figures/prof_fjord.pdf  used on input line 209.
+(pdftex.def)             Requested size: 483.69684pt x 332.53867pt.
+
+
+LaTeX Warning: Float too large for page by 8.25842pt on input line 216.
+
+[3] [4 <./Figures/explainProfFit.pdf>]
+<Figures/ts.pdf, id=176, 361.35pt x 361.35pt>
 File: Figures/ts.pdf Graphic file (type pdf)
 <use Figures/ts.pdf>
-Package pdftex.def Info: Figures/ts.pdf  used on input line 184.
+Package pdftex.def Info: Figures/ts.pdf  used on input line 255.
 (pdftex.def)             Requested size: 361.34912pt x 361.34912pt.
-<Figures/turner.pdf, id=126, 462.52798pt x 346.89601pt>
+<Figures/turner.pdf, id=177, 578.16pt x 397.485pt>
 File: Figures/turner.pdf Graphic file (type pdf)
 <use Figures/turner.pdf>
-Package pdftex.def Info: Figures/turner.pdf  used on input line 197.
-(pdftex.def)             Requested size: 462.52684pt x 346.89516pt.
- [3] [4 <./Figures/explainProfFit.pdf>] [5 <./Figures/ts.pdf>] [6 <./Figures/tu
-rner.pdf>] (./report.bbl) [7]
-Underfull \hbox (badness 10000) in paragraph at lines 273--273
+Package pdftex.def Info: Figures/turner.pdf  used on input line 267.
+(pdftex.def)             Requested size: 578.15858pt x 397.48402pt.
+
+Overfull \hbox (94.46175pt too wide) in paragraph at lines 267--272
+ [][] 
+ []
+
+(./report.bbl [5] [6 <./Figures/prof_offshore.png> <./Figures/prof_fjord.pdf>]
+[7 <./Figures/ts.pdf>] [8 <./Figures/turner.pdf>]) [9]
+Underfull \hbox (badness 10000) in paragraph at lines 349--349
 []\T1/cmr/m/n/12 Table 2: |[]Re-gres-sion co-ef-fi-cients, the cal-i-bra-tion h
 as the fol-low-ing shape:
  []
 
-<Figures/profileTot.pdf, id=282, 578.16pt x 397.485pt>
-File: Figures/profileTot.pdf Graphic file (type pdf)
-<use Figures/profileTot.pdf>
-Package pdftex.def Info: Figures/profileTot.pdf  used on input line 283.
-(pdftex.def)             Requested size: 145.11052pt x 99.75917pt.
-<Figures/synoptic_conditions.pdf, id=283, 578.16pt x 578.16pt>
+<Figures/synoptic_conditions.pdf, id=322, 578.16pt x 578.16pt>
 File: Figures/synoptic_conditions.pdf Graphic file (type pdf)
 <use Figures/synoptic_conditions.pdf>
-Package pdftex.def Info: Figures/synoptic_conditions.pdf  used on input line 28
-4.
+Package pdftex.def Info: Figures/synoptic_conditions.pdf  used on input line 35
+9.
 (pdftex.def)             Requested size: 145.11052pt x 145.10425pt.
-<Figures/sal_20181210.pdf, id=284, 578.16pt x 397.485pt>
+<Figures/sal_20181210.pdf, id=323, 578.16pt x 397.485pt>
 File: Figures/sal_20181210.pdf Graphic file (type pdf)
 <use Figures/sal_20181210.pdf>
-Package pdftex.def Info: Figures/sal_20181210.pdf  used on input line 285.
+Package pdftex.def Info: Figures/sal_20181210.pdf  used on input line 360.
 (pdftex.def)             Requested size: 145.11052pt x 99.75917pt.
-<Figures/layer_bottom_of_thermocline.pdf, id=285, 578.16pt x 397.485pt>
+<Figures/layer_bottom_of_thermocline.pdf, id=324, 578.16pt x 397.485pt>
 File: Figures/layer_bottom_of_thermocline.pdf Graphic file (type pdf)
 <use Figures/layer_bottom_of_thermocline.pdf>
 Package pdftex.def Info: Figures/layer_bottom_of_thermocline.pdf  used on input
- line 286.
+ line 361.
 (pdftex.def)             Requested size: 145.11052pt x 99.75917pt.
-<Figures/layer_bottom_of_warm_water.pdf, id=286, 578.16pt x 397.485pt>
+<Figures/layer_bottom_of_warm_water.pdf, id=325, 578.16pt x 397.485pt>
 File: Figures/layer_bottom_of_warm_water.pdf Graphic file (type pdf)
 <use Figures/layer_bottom_of_warm_water.pdf>
 Package pdftex.def Info: Figures/layer_bottom_of_warm_water.pdf  used on input 
-line 287.
+line 362.
 (pdftex.def)             Requested size: 145.11052pt x 99.75917pt.
-<Figures/transect_0.pdf, id=287, 578.16pt x 397.485pt>
+<Figures/transect_0.pdf, id=326, 578.16pt x 397.485pt>
 File: Figures/transect_0.pdf Graphic file (type pdf)
 <use Figures/transect_0.pdf>
-Package pdftex.def Info: Figures/transect_0.pdf  used on input line 288.
+Package pdftex.def Info: Figures/transect_0.pdf  used on input line 363.
 (pdftex.def)             Requested size: 145.11052pt x 99.75917pt.
-<Figures/transect_2.pdf, id=288, 578.16pt x 397.485pt>
+<Figures/transect_2.pdf, id=327, 578.16pt x 397.485pt>
 File: Figures/transect_2.pdf Graphic file (type pdf)
 <use Figures/transect_2.pdf>
-Package pdftex.def Info: Figures/transect_2.pdf  used on input line 289.
+Package pdftex.def Info: Figures/transect_2.pdf  used on input line 364.
 (pdftex.def)             Requested size: 145.11052pt x 99.75917pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 292.
-[8] [9 <./Figures/profileTot.pdf> <./Figures/synoptic_conditions.pdf
-
-pdfTeX warning: pdflatex (file ./Figures/synoptic_conditions.pdf): PDF inclusio
-n: multiple pdfs with page group included in a single page
-> <./Figures/sal_20181210.pdf
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 367.
+[10] [11 <./Figures/synoptic_conditions.pdf> <./Figures/sal_20181210.pdf
 
 pdfTeX warning: pdflatex (file ./Figures/sal_20181210.pdf): PDF inclusion: mult
 iple pdfs with page group included in a single page
@@ -2344,22 +2355,22 @@ le pdfs with page group included in a single page
 pdfTeX warning: pdflatex (file ./Figures/transect_2.pdf): PDF inclusion: multip
 le pdfs with page group included in a single page
 >]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 292.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 367.
  (./report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 292.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 292.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 367.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 367.
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 0C05A0F274428C9B0E92EBB2060DFF13;675.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 292.
+(rerunfilecheck)             Checksum: 2BDA94B6673D4FC80524E7BF4AAACE7E;602.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 367.
  ) 
 Here is how much of TeX's memory you used:
- 21570 strings out of 494847
- 393094 string characters out of 6179081
+ 21574 strings out of 494847
+ 393210 string characters out of 6179081
  485607 words of memory out of 5000000
- 24601 multiletter control sequences out of 15000+600000
+ 24605 multiletter control sequences out of 15000+600000
  545996 words of font info for 59 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
- 44i,11n,43p,10436b,739s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 44i,11n,43p,10436b,843s stack positions out of 5000i,500n,10000p,200000b,80000s
  </home/romain/.texlive2017/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.60
 0pk> </home/romain/.texlive2017/texmf-var/fonts/pk/ljfour/jknappen/ec/eccc0800.
 600pk> </home/romain/.texlive2017/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx120
@@ -2372,18 +2383,20 @@ ec/ecrm1200.600pk> </home/romain/.texlive2017/texmf-var/fonts/pk/ljfour/jknappe
 n/ec/ecti1200.600pk> </home/romain/.texlive2017/texmf-var/fonts/pk/ljfour/jknap
 pen/ec/eccc1200.600pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
 s/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.p
-fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share
-/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on report.pdf (10 pages, 2046080 bytes).
+mmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmss12.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmsy8.pfb>
+Output written on report.pdf (12 pages, 2098115 bytes).
 PDF statistics:
- 782 PDF objects out of 1000 (max. 8388607)
- 380 compressed objects within 4 object streams
- 50 named destinations out of 1000 (max. 500000)
- 149 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 796 PDF objects out of 1000 (max. 8388607)
+ 404 compressed objects within 5 object streams
+ 49 named destinations out of 1000 (max. 500000)
+ 146 words of extra memory for PDF output out of 10000 (max. 10000000)
 
