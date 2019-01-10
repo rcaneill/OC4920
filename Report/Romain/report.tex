@@ -70,11 +70,38 @@
 
 \section{\label{sec_intro}Introduction}
 
-TODO find references about fjords, skagerrak
+\paragraph{main question}
+
+TODO
+
+How Skagerrak and Kattegat water masses influence
+the Gullman fjord water?
+
+What can we say about the stratification?
 
 
-Two typical water masses are present along the western coast of Sweden
-\citep{bjork2003,gustafsson1996}.
+\paragraph{context}
+
+The Baltic sea connects to the Atlantic through the Skagerrak,
+a strait situated between Norway, Denmark and Sweden.
+Inbetween Sweden and Denmark lies the Kattegat sea area,
+linked to the Baltic water.
+The Skagerrak is an area of multiple currents and
+bith spatial and temporal salinity variations.
+These water heterogeneousity has a main impact on
+the primary production, that is influenced by the nutrient
+supply, the oxygen concentration, or the wind main direction (e.g.
+\cite{lindhal1998,dahl1992,andersson1993}).
+The reason is that water coming from the Baltic sea
+is fresh and lies over the salty Atlantic water.
+The position of the different masses depends a lot on
+the meteorological and oeanographical conditions,
+especially at the surface, where a sharp front
+between fresh and salty water has a variable position
+\citep{gustafsson1996}.
+
+
+Two typical water masses are present along the western coast of Sweden.
 One water masse is composed by fresh water coming from the Batic sea through the Kattegat.
 Its salinity is situated between 15/20 and 25.
 The second one comes from Atlantic water and is largely present in the Skagerrak
@@ -83,6 +110,10 @@ and has a salinity of about 33 at the surface and 35 at 100 meters depth.
 The water in the Gullman fjord is mainly composed of these
 Kattegat and Skagerrak waters \citep{arneborg2003}, limit of
 salinity 28 between them.
+
+Synoptic conditions: uppwelling
+
+\paragraph{Plan}
 
 \section{Materials and methods}
 \subsection{Presentation of the field work and data acquisition}
@@ -121,7 +152,7 @@ To ensure coherence in the whole dataset and between the two ships,
 all the data have been regridded on a 1 meter grid, from 0 to 119 meters depth.
 Depths without any measurement points have been filled with NaN.
 
-\paragraph{Processing}
+\paragraph{Conversion following TEOS-10}
 Using the library provided by TEOS-10 \citep{gsw}, {\it in situ} temperatures and practical
 salinities have been converted to potential temperature and absolute salinity.
 Potential density anomaly has also been derived.
@@ -152,6 +183,8 @@ at $0 \degree$ the temperature and the salinity control both equally
 the density changes.
 If $|Tu| > 45\degree$ the temperature and the salinity are working
 one against the other, with total compensation if $|Tu| = 90$.
+If  $|Tu| > 90$, the stratification is unstable, which is not the case in
+our study.
 
 The Turner angle has been computed at every depth for each profile,
 using values of $\alpha$ and $\beta$ given by the TEOS-10 library.
@@ -185,7 +218,7 @@ Figure~\ref{fig:fit} presents two examples of profiles: one where the 4 layers
 are present and one where the fjord was not deep enough, so only
 the upper layer is fitted.
 
-\begin{figure}
+\begin{figure}[h]
   \centering
   \includegraphics{{explainProfFit}}
   \caption{\label{fig:fit}Profile fitting with a multi-linear function.
@@ -212,7 +245,6 @@ the upper layer is fitted.
     These profiles are very representative of all the measured profiles.
     The emperature is in blue, the salinity is in red and the density anomaly
   is in green.}
-  
 \end{figure}
 The offshore transect and the casts inside the fjord have different shapes
 (Figure~\ref{fig:profex}).
@@ -231,9 +263,9 @@ conditions of the fjord, no mixed layer is visible.
 An upper layer of 10 to 20 meters controlled by a strong halocline
 lies over a warm water mass, where density seems to follow the shape of
 the salinity. The salinity changes a little bit in this warm water and in the lower layers,
-but keeps values over 34 when the temperature variates from 10 $\degree$C
-to 9.5 $\degree$C at the bottom of the warm water to reach a little
-more than 6.5 $\degree$ at the bottom.
+but keeps values over 34 when the temperature variates from 10\,$\degree$C
+to 9.5\,$\degree$C at the bottom of the warm water to reach a little
+more than 6.5\,$\degree$C at the bottom.
 Despite a slight decrease of the salinity after 60 meters, the density
 seems to be controlled by the temperature variations of the lower thermocline.
 
@@ -250,43 +282,91 @@ and the Skagerrak upper water (yellow/green points).
 The salinity and the temperature of the bottom stagnant layer
 have very little spatial variation.
 
-\begin{figure}
+\begin{figure}[h]
   \centering
   \includegraphics{ts}
   \caption{\label{fig:ts}T-S diagram regroupping all profiles. The color
-    of points represents the depth.}
+    of points represents the depth.
+    The dashed lines are the lines of constant density anomalies in kg/m$^3$.}
 \end{figure}
 
-\paragraph{warm water layer}
-warm water in the fjord, see mean depth, std depth, mean T and S, see spatial
-distribution
-
-\paragraph{Turner angle}
-\begin{figure}
+%\paragraph{Turner angle}
+\begin{figure}[h]
   \centering
   \includegraphics{turner}
   \caption{\label{fig:turner}Turner angle as a function of depth.
-    Black lines have been drawed to delimit the area where the temperature
-    is the principal actor ($0<Tu<90$)
-    and the area where the salinity controls the density changes ($-90<Tu<0$).
-    The red lines represent the mean interface between the different water layers.}
+    Colors have been used to delimit the area where the temperature
+    is the principal actor ($0<Tu<90$, green)
+    and the area where the salinity controls the density changes ($-90<Tu<0$, blue).
+    The red lines represent the mean position of the interfaces between the
+    different water layers.}
 \end{figure}
+By a visual analyze, it has been seen that both the temperature and the salinity can control
+the stratification, depending on the depth. This result is confirmed by the
+Turner angle. To help the analyze, mean depth for each
+fitted interface have been plotted in red in Figure~\ref{fig:turner}.
+In the upper halocline, the Turner angle is indicating that the salinity
+is almost totaly controlling the stratification, with a little opposite
+effect of the temperature ($Tu_{mean} \simeq -48.5\degree$, $Tu_{std} \simeq 11.5\degree$).
+This is consistant with the strong halocline that acts to densify the
+water and the temperature augmentation that lightens the water.\\
+On the second layer (warm water) the temperature decreases slightly,
+while the salinity continues to increase.
+$Tu$ is mainly situated between $-45\degree$ and $0\degree$
+($Tu_{mean} \simeq -33.0\degree$,
+$Tu_{std} \simeq 25.7\degree$), meaning that
+the salinity and the temperature have the same effect on the stratification,
+but the salinity still has the main impact.\\
+The warm layer has a completely different behaviour:
+$Tu_{mean} \simeq 48.4\degree$, $Tu_{std} \simeq 14.1\degree$.
+The temperature is now the main actor of the stratification.\\
+From 60 to 110\,m, the Turner angle decreases starting at an almost
+only temperature controlled stratification to an almost only salinity controlled
+stratification. This is due to the fact that the temperature decreases
+on the lower thermocline but does not variate a lot at the bottom
+of the stagnant water mass.
 
-\paragraph{Geostrophy}
-What is happening here?
+%\paragraph{Layers properties}
+\begin{figure}[h]
+  \centering
+  \includegraphics{layers}
+  \caption{\label{fig:layers}Temperature and depth of the fitted interfaces
+    between the water layer. The distance is expressed using an arbitrary unit,
+    0 meaning near Kristineberg and 1 near the end of the fjord.}
+\end{figure}
+The interfaces between each water layers have been computed using
+the temperature variations as described previously.
+The temperature at the top of the warm water
+increases from the beginning to the end of the fjord (Figure~\ref{fig:layers}) when
+the temperature at the bottomn of the warm water
+decreases slightly from the beginning to the end of the fjord.
+The thickness of the warm water is minimum at the beginning of the fjord (42.6\,m),
+maximum at the end of the fjord (57,3\,m), with a mean thickness of 47,6\,m
+(standart deviation of 3.7\,m).
+The spatial variations of the warm water boundaries depth can be
+well seen on
+Figure~\ref{fig:transect} and Figure~\ref{fig:layer_map}, on the Appendix.
 
-\paragraph{Upwelling event? Mixing?}
-\citep{arneborg2003,bjork2003}
 
-\section{Discussion}
+\section{Discussion and conclusions}
 
-TODO
 
-fitting of the profile, using spline could be better. but here maybe not necessary. 
+Common uppwelling event in december \citep{bjork2003},
+agree with wind direction.
+Top of the upper halocline near surface, upwelling \citep{arneborg2003}.
+
+Temperature is following a seasonal cycle ion the first tens of meters.
+Salinity controls strati up to about 60\,m: Kattegat water always over Skagerrak
+water.
+
+On the turner angle, visible that the constant T fit fopr the bottom layer is
+not correct.
+
+fitting of the profile, using spline could be better. but here maybe not necessary.
+Using turner angle top separate the different layer can also be used for bottom
+of warm water
 
 Opening work: sub-mesoscale heat fluxes because no mixed layer, geostrophy
-
-\section{Conclusion}
 
 See what is the context\\
 What we did\\
@@ -302,9 +382,8 @@ What is the conclusion
 
 %\renewcommand\thefigure{\thesection.\arabic{figure}}
 \appendix
-\setcounter{figure}{0}
 
-\section{Complementary data and figures}
+\section{Appendix}
 
 \begin{table}[h]
   \centering
@@ -349,19 +428,20 @@ What is the conclusion
     the temperature or the salinity.}
 \end{table}
 
-TODO
-
-ALL THE FIGURES I WANT TO PUT ON THE REPORT
-
-For all profiles, put 2 different color for offshore and fjord
-\begin{figure}[h]
+\begin{figure}
   \centering
-  \includegraphics[width=.3\textwidth]{synoptic_conditions}
-  \includegraphics[width=.3\textwidth]{{sal_20181210}}
-  \includegraphics[width=.3\textwidth]{{layer_bottom_of_thermocline}}
-  \includegraphics[width=.3\textwidth]{{layer_bottom_of_warm_water}}
-  \includegraphics[width=.3\textwidth]{{transect_0}}
-  \includegraphics[width=.3\textwidth]{{transect_2}}
+  \includegraphics{transect}\\
+  \caption{\label{fig:transect}Transect of the temperature along the fjord.
+    The top of the warm water is deeper at the beginning of the fjord than
+    at the end. On the contrary, the bottom of the warm water is deeper at the
+    end of the fjord, leading to a thinner warm layer at the beginning
+  of the fjord.}
 \end{figure}
-
+\begin{figure}
+  \centering
+  \includegraphics{{layer_bottom_of_thermocline}}
+  \includegraphics{{layer_bottom_of_warm_water}}
+  \caption{\label{fig:layer_map}Map of the depth of the top and the bottom of the warm water.}
+  
+\end{figure}
 \end{document}

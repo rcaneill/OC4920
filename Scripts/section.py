@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import Colormap
 import gsw
-from matplotlib import rcParams
+from matplotlib import rcParams, rc
 import os, sys
 import pandas as pd
 from matplotlib.image import NonUniformImage
@@ -13,9 +13,10 @@ from cartopy.mpl.ticker import LongitudeFormatter, LatitudeFormatter
 import xarray as xr
 import cmocean.cm as cmo
 
-
 plt.style.use('seaborn')
 rcParams['text.usetex'] = True
+rc('font', **{'family': 'serif', 'serif': ['Computer Modern']})
+rc('text', usetex=True)
 
 def sec_show(coord, depth, data, axe, cmap='viridis', coord_type='lon'):
     """
@@ -36,7 +37,7 @@ def sec_show(coord, depth, data, axe, cmap='viridis', coord_type='lon'):
     axe.set_xlim(np.nanmin(coord), np.nanmax(coord))
     axe.set_ylim(np.nanmin(depth), np.nanmax(depth))
     axe.set_ylabel('Depth (m)')
-    axe.set_xlabel(coord_type+u' ($^{\circ}$ N/E)')
+    axe.set_xlabel(coord_type+u' ($^{\circ}$ E)')
 
     # adding colorbar
     cb = plt.colorbar(im,ax=axe,extend='both')
@@ -173,6 +174,41 @@ def plot_sec(datadir, filenames, desc='', coord_type='lon', N=None):
     #plt.plot(sl)
     #plt.show()
 
+def plot_sec_report(datadir, filenames):
+    """
+    Plot a section.
+
+    Coord must be increasing between the data
+    
+    filenames is an array containing names of all data that will be plotted
+    desc : description of the section
+    coord : 'lat' or 'lon' coordinate along which we do the transect
+    N : number of the section
+    """
+    lon = []
+    lat = []
+    temp = []
+    sal = []
+    depth = []
+    pdens = []
+    oxy=[]
+    for i in filenames:
+        #print(i)
+        d = xr.open_dataset(os.path.join(datadir, i))
+        lat.append(np.nanmean(d.lat.values))
+        lon.append(np.nanmean(d.lon.values))
+        temp.append(d.ptemp.values)
+    depth = -np.abs(d.DEPTH.values)
+    coord = lon
+    temp = np.array(temp)
+    fig,ax = plt.subplots(1,1, figsize=(5,4))
+    cb_temp = sec_show(coord, depth, temp, ax, coord_type='Longitude', cmap=cmo.thermal)
+    cb_temp.set_label(u'Temperature ($^{\circ}C$)')
+    ax.set_title('Temperature transect along the fjord')
+    fig.tight_layout()
+    fig.savefig('Figures/ForReport/transect.pdf')
+    plt.show()
+    
 def first_non_nan(array):
     """
     return first non nan element of an array
@@ -283,8 +319,9 @@ if __name__ == '__main__':
     # section_meta = load_filenames_section(N, 'Data/sections')
     # plot_sec(datadir, section_meta[1:], desc=section_meta[0], coord_type='lat', N=N)
     #plot_surface(datadir, surf_depth=40)
-    datadir = 'Data/ctd_files/gridded_calibrated_updated/oxygen_step2'
+    datadir = 'Data/ctd_files/gridded_calibrated_updated'
     N=0 #section number
     section_meta = load_filenames_section(N, 'Data/sections')
-    plot_sec(datadir, section_meta[1:], desc=section_meta[0], coord_type='lat', N=N)
+    #plot_sec(datadir, section_meta[1:], desc=section_meta[0], coord_type='lat', N=N)
+    plot_sec_report(datadir, load_filenames_section(0, 'Data/sections')[1:])
     #plot_surface(datadir, surf_depth=40)

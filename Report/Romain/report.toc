@@ -1,17 +1,15 @@
 \babel@toc {english}{}
 \contentsline {section}{\numberline {1}Introduction}{2}{section.1}
+\contentsline {paragraph}{main question}{2}{section*.2}
+\contentsline {paragraph}{context}{2}{section*.3}
+\contentsline {paragraph}{Plan}{2}{section*.4}
 \contentsline {section}{\numberline {2}Materials and methods}{2}{section.2}
 \contentsline {subsection}{\numberline {2.1}Presentation of the field work and data acquisition}{2}{subsection.2.1}
 \contentsline {subsection}{\numberline {2.2}Data processing}{2}{subsection.2.2}
-\contentsline {paragraph}{Processing}{3}{section*.3}
-\contentsline {paragraph}{Calibration}{3}{section*.4}
+\contentsline {paragraph}{Conversion following TEOS-10}{3}{section*.6}
+\contentsline {paragraph}{Calibration}{3}{section*.7}
 \contentsline {subsection}{\numberline {2.3}Turner angle}{3}{subsection.2.3}
-\contentsline {subsection}{\numberline {2.4}Profile fitting and layers}{3}{subsection.2.4}
-\contentsline {section}{\numberline {3}Results}{5}{section.3}
-\contentsline {paragraph}{warm water layer}{5}{section*.8}
-\contentsline {paragraph}{Turner angle}{5}{figure.caption.10}
-\contentsline {paragraph}{Geostrophy}{5}{section*.11}
-\contentsline {paragraph}{Upwelling event? Mixing?}{5}{section*.12}
-\contentsline {section}{\numberline {4}Discussion}{5}{section.4}
-\contentsline {section}{\numberline {5}Conclusion}{5}{section.5}
-\contentsline {section}{\numberline {A}Complementary data and figures}{10}{appendix.A}
+\contentsline {subsection}{\numberline {2.4}Profile fitting and layers}{4}{subsection.2.4}
+\contentsline {section}{\numberline {3}Results}{4}{section.3}
+\contentsline {section}{\numberline {4}Discussion and conclusions}{8}{section.4}
+\contentsline {section}{\numberline {A}Appendix}{10}{appendix.A}

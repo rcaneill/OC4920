@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import Colormap
 import xarray as xr
-from matplotlib import rcParams, cm
+from matplotlib import rcParams, cm, rc
 import os, sys
 import pandas as pd
 from matplotlib.image import NonUniformImage
@@ -13,6 +13,8 @@ from cartopy.mpl.ticker import LongitudeFormatter, LatitudeFormatter
 
 plt.style.use('seaborn')
 rcParams['text.usetex'] = True
+rc('font', **{'family': 'serif', 'serif': ['Computer Modern']})
+rc('text', usetex=True)
 
 def plot_map(axe):
     """
@@ -80,7 +82,9 @@ def plot_var(values, lon, lat, nx=200,ny=200,coastBool=True, cb_label=None, \
     #grid_temp = griddata(points, values, (grid_lon, grid_lat), method='linear')
     grid_temp = grid(bump, points, values, grid_lon, grid_lat)
     # #define axes
+    fig = plt.figure(figsize=(6,4))
     axe = plt.axes(projection=ccrs.PlateCarree(central_longitude=11))
+    fig.add_axes(axe)
     axe.set_extent([11.2, 11.8, 58.1, 58.5],ccrs.PlateCarree())
     cf = axe.contourf(grid_lon, grid_lat, \
                       grid_temp, cmap=cmap, transform=ccrs.PlateCarree(), **kwargs)
@@ -114,7 +118,7 @@ def layer(datadir, lay=0, showBool=False):
     lat = []
     flag = []
     for filename in os.listdir(datadir):
-        #print(i)
+        print(i, filename)
         d = xr.open_dataset(os.path.join(datadir,filename))
         lon.append(np.nanmean(d.lon.values))
         lat.append(np.nanmean(d.lat.values))
@@ -131,7 +135,7 @@ def layer(datadir, lay=0, showBool=False):
     #plt.show()
     (axe, cb) = plot_var(depth[:,lay][goodFlag[:,lay]], lon[goodFlag[:,lay]], \
                          lat[goodFlag[:,lay]], nx=500, ny=500, cmap='jet', levels=20)
-    plt.title(lay_names[lay])
+    axe.set_title(lay_names[lay])
     cb.set_label('Depth (m)')
     plt.savefig('Figures/Layers/layer_{}.pdf'.format(lay_names[lay].replace(' ','_')))
     plt.savefig('Figures/Layers/layer_{}.png'.format(lay_names[lay].replace(' ','_')))

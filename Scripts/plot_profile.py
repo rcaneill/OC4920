@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import Colormap
 import xarray as xr
 import gsw
-from matplotlib import rcParams
+from matplotlib import rcParams, rc
 from load_data import load_nc
 import os, sys
 import pandas as pd
@@ -15,6 +15,8 @@ import cmocean as cm
 
 #plt.style.use('seaborn')
 rcParams['text.usetex'] = True
+rc('font', **{'family': 'serif', 'serif': ['Computer Modern']})
+rc('text', usetex=True)
 
 
 def prof(filename):
@@ -100,7 +102,6 @@ def ts(datadir):
     sal=np.asarray(sal)
     depth=np.asarray(depth)
 
-
     #### Generate density contours
     smin = np.nanmin(sal) - (0.01 * np.nanmin(sal))
     smax = np.nanmax(sal) + (0.01 * np.nanmax(sal))
@@ -124,7 +125,8 @@ def ts(datadir):
 
     dens=dens-1000.
     # print(dens)
-    fig,ax = plt.subplots(1,1,figsize=(4,4))
+    fig,ax = plt.subplots(1,1,figsize=(5,5))
+    ax.scatter(sal,temp,c='k',s=5,marker='o')
     scatt = ax.scatter(sal,temp,c=depth,s=3,cmap='viridis_r')
     cb = plt.colorbar(scatt)
     cb.set_label('Depth (m)')
