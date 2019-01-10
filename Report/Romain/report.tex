@@ -7,7 +7,7 @@
 
 % definition de l'entete et du pied de page
 \pagestyle{fancy}
-\fancyhead[L]{\scriptsize \textsc{Field work: blabla TODO}}
+\fancyhead[L]{\scriptsize \textsc{Field work: analyze of the Gullmar Fjord}}
 \fancyhead[R]{\scriptsize \textsc{Romain Caneill}}
 \fancyfoot[C]{ \thepage}
 
@@ -37,7 +37,8 @@
 \rule[5pt]{10cm}{0.5pt}
 \vspace{10pt}
 
-\textbf{\Large Find a title.}
+\textbf{\Large Study of the stratification on the Gullmar fjord through CTD casts
+  acquired during a two-days field campaign in December 2018.}
 \vspace{8pt}
 
 \rule{10cm}{0.5pt}
@@ -45,13 +46,34 @@
 \vspace{.3cm}
 
 \parbox{15cm}{\small
-\textbf{Abstract}: \it TODO
+  \textbf{Abstract}: \it
+  %context
+  The stratification of the ocean is a key element to understand the biological
+  and physical processes that occur on it.
+  The fresh Baltic Sea water and the salty Atlantic Ocean water meet
+  in the Skagerrak strait, between the Danish, the Norwegian and the
+  Swedish coasts.
+  These two water masses are found on the Gullmar fjord, on the Swedish
+  west coast.
+  %question
+  The interaction between these two water masses has been studied.
+  %what we did
+  More than 50 CTD casts have been acquired during two consecutive days,
+  in the fjord except for few of them, allowing a comparison of the
+  offshore conditions. The Turner angle, that represents how much the temperature
+  and the salinity control the stratification, and layers interfaces depths
+  has been implemented and computed along the transects.
+  %what we found / conclusion
+  It has been showed that the stratification is mainly leaded by the salinity,
+  due to the high differences between the Skagerrak and the Kattegat water types,
+  leading the water column almost insensitive to the seasonal variations
+  of the upper layers temperature.
 } %fin de la commande \parbox du resume
 
 \vspace{0.5cm}
 
 \parbox{15cm}{
-\textbf{Keywords}: \it CTD, Field work, TODO
+\textbf{Keywords}: \it CTD, Field work, stratification, Skagerrak, Kattegat
 } %fin de la commande \parbox des mots clefs
 
 \end{center}
@@ -70,58 +92,74 @@
 
 \section{\label{sec_intro}Introduction}
 
-\paragraph{main question}
+%\paragraph{main question}
+The stratification of the ocean comes from the density increase with depth.
+The density is driven by the temperature and the salinity at a fixed pressure.
+Temperature and salinity can act together in the same way,
+can have opposite effects on density and sometime compensate.
+The stratification plays an important role in blocking or
+promoting the transport of quantities (e.g. nutrients, oxygen, heat)
+between the different water masses.
+The mixing can be enhanced by some properties of the water,
+like the cabbeling, referring to the densification during mixing
+\citep{klocker2010}. The stratification and its variations
+play a main role on the temporal evolution of the temperature
+and salinity profiles.
+This study focuses on the Gullmar fjord, in Sweden, and on
+the presence of different water masses on this area.
 
-TODO
 
-How Skagerrak and Kattegat water masses influence
-the Gullman fjord water?
-
-What can we say about the stratification?
-
-
-\paragraph{context}
-
+%\paragraph{context}
 The Baltic sea connects to the Atlantic through the Skagerrak,
 a strait situated between Norway, Denmark and Sweden.
-Inbetween Sweden and Denmark lies the Kattegat sea area,
+In-between Sweden and Denmark lies the Kattegat sea area,
 linked to the Baltic water.
-The Skagerrak is an area of multiple currents and
-bith spatial and temporal salinity variations.
-These water heterogeneousity has a main impact on
+The Skagerrak is an area of multiple currents with
+both spatial and temporal salinity variations.
+These water heterogeneity has a main impact on
 the primary production, that is influenced by the nutrient
 supply, the oxygen concentration, or the wind main direction (e.g.
 \cite{lindhal1998,dahl1992,andersson1993}).
-The reason is that water coming from the Baltic sea
-is fresh and lies over the salty Atlantic water.
-The position of the different masses depends a lot on
-the meteorological and oeanographical conditions,
-especially at the surface, where a sharp front
-between fresh and salty water has a variable position
-\citep{gustafsson1996}.
-
-
+\\
 Two typical water masses are present along the western coast of Sweden.
-One water masse is composed by fresh water coming from the Batic sea through the Kattegat.
+One water mass is composed by fresh water coming from the Baltic sea through the Kattegat.
 Its salinity is situated between 15/20 and 25.
 The second one comes from Atlantic water and is largely present in the Skagerrak
 and has a salinity of about 33 at the surface and 35 at 100 meters depth.
+The salinity of 28 is a good separation between the two
+water masses \citep{arneborg2003}.
+The position of the Skagerrak and the Kattegat water masses depends on
+the meteorological and oceanographical conditions.
+At the surface, a sharp front between these two masses is present
+but its position evolves from days to days
+\citep{gustafsson1996}.
+\\
+The Gullmar fjord is a threshold fjord situated on the west coast of Sweden.
+The depth of the sill is 45\,m and its maximum depth of 125\,m is reached
+is the middle of the fjord.
+The water in the Gullmar fjord is mainly composed of the
+Kattegat and Skagerrak waters \citep{arneborg2003}.
+Two consecutive days of CTD casts have been conducted in December 2018
+in the Gullmar fjord. The main wind came from north-northeast, one can
+expect upwelling conditions through the Ekman pumping \citep{danielssen1997}.
 
-The water in the Gullman fjord is mainly composed of these
-Kattegat and Skagerrak waters \citep{arneborg2003}, limit of
-salinity 28 between them.
+%\paragraph{Plan}
+Temperature and salinity casts will be used to study the stability
+of the profiles, as well as the origin of there shape.
+The next section presents the measured data, the processing
+that have been conducting and the derived metrics, as the Turner angle and
+a multi-linear fitting of the temperature profile to extract interfaces
+information. The results are then described,
+discussed and concluded.
 
-Synoptic conditions: uppwelling
-
-\paragraph{Plan}
 
 \section{Materials and methods}
 \subsection{Presentation of the field work and data acquisition}
 
-TODO bad weather: from high sea to fjord
-
 This report focuses on a field work that has been conducted on December 2018, the
 10th and 11th, as part of the course OC4920 of the University of Gothenburg.
+Due to a bad weather on the 10th, the plan has evolves from a study of the
+Skagerrak / Kattegat front to a study of the Gullmar fjord.
 Two days have been spent on two ships, the Skagerrak and the Trygve.
 Both ships had fully equipped CTD, with temperature, salinity, and oxygen concentration
 sensors. Some other variables have been recorded but not discussed on this
@@ -132,15 +170,21 @@ We got more than 50 casts, covering the fjord with a very good spatial coverage.
 We also made 3 mooring measurements, setting the CTD at a certain depth
 for 30 minutes, recording the temporal variations instead of the
 spatial variations.
-Figure~\ref{fig:stations} presents the position of the Gullman Fjord, on the western
+Figure~\ref{fig:stations} presents the position of the Gullmar Fjord, on the western
 coast of Sweden, as well as the position of the CTD casts.
 
 \begin{figure}
   \centering
   \includegraphics{stations}
-  \caption{\label{fig:stations}Situation of the Gullman Fjord (red dot) and position
+  \caption{\label{fig:stations}Situation of the Gullmar Fjord (red dot) and position
     of the CTD casts (green dots).}
 \end{figure}
+
+Almost no work has been conducted during this study about
+sub-mesoscale heat fluxes equivalent or about geostrophy,
+mainly due to a lack of time.
+The change of the field work because of the weather made me
+focus on other physical processes.
 
 \subsection{Data processing}
 For a better readability, we will refer to potential temperature as temperature
@@ -241,7 +285,7 @@ the upper layer is fitted.
   \includegraphics[width=\textwidth]{prof_offshore}
   \includegraphics[width=\textwidth]{prof_fjord}
   \caption{\label{fig:profex}Example of two profiles, offshore on the top and in
-    the Gullman fjord on the bottom.
+    the Gullmar fjord on the bottom.
     These profiles are very representative of all the measured profiles.
     The emperature is in blue, the salinity is in red and the density anomaly
   is in green.}
@@ -271,7 +315,7 @@ seems to be controlled by the temperature variations of the lower thermocline.
 
 %\paragraph{T-S diagram}
 The 28 salinity limit in the fjord profiles is in the middle
-of the upper cline. \cite{arneborg2003} present an upper layer (around 10 meter
+of the upper cline. \cite{arneborg2003} presents an upper layer (around 10 meter
 depth) of Kattegat water in the fjord during the summer, under which a halocline
 and the Skagerrak water are present. The depth of the halocline is strongly related
 to the inflow or outflow of water in the fjord.
@@ -324,7 +368,12 @@ From 60 to 110\,m, the Turner angle decreases starting at an almost
 only temperature controlled stratification to an almost only salinity controlled
 stratification. This is due to the fact that the temperature decreases
 on the lower thermocline but does not variate a lot at the bottom
-of the stagnant water mass.
+of the stagnant water mass.\\
+The stratification is mainly controlled by the salinity
+and the the fjord would be classified as a Beta ocean
+\citep{carmack2007}, but here this is the result of a strong halocline
+which is a very different cause than the small sensibility of the density
+to temperature at low temperature.
 
 %\paragraph{Layers properties}
 \begin{figure}[h]
@@ -347,33 +396,84 @@ The spatial variations of the warm water boundaries depth can be
 well seen on
 Figure~\ref{fig:transect} and Figure~\ref{fig:layer_map}, on the Appendix.
 
-
+\clearpage
 \section{Discussion and conclusions}
 
+Upwelling event are common in december \citep{bjork2003}, which agrees with
+the wind direction present during the field work.
+The top of the upper halocline is near to the surface,
+signature of an upwelling and an inflow of Skagerrak warm water
+in the fjord.
+Despite this, the shape of the warm water would let imagine an outflow of
+the warm water: the thickness is not coherent with an inflow
+from the mouth of the fjord. This would need more attention,
+particularly in term of internal waves and precise current velocities
+to confirm or refute this remark.
 
-Common uppwelling event in december \citep{bjork2003},
-agree with wind direction.
-Top of the upper halocline near surface, upwelling \citep{arneborg2003}.
+The strong differences between the Skagerrak and the Kattegat water salinities
+is at the origin of the salinity controlled density at the interface between
+these two water types. The surface water (at least up to more than 30\,m)
+temperature is following a seasonal cycle, from more than 15\,$\degree$C
+at 5\,m during the summer to few degrees in the winter \citep{bjork2003}.
+The strong thermocline is not sufficient to inverse the stratification
+and then lead to a mixing of the two water masses.
+The Turner angle only becomes positive under about 60\,m,
+where the water is not subject anymore to the seasonal temperature cycle in
+a non mixing environment.
+The low salinity of the Baltic sea leads to a stratification controlled
+by the temperature only at some depth where the temporal variations
+of the temperature and the salinity are low.
+This conduct to a three stable layered fjord: the Kattegat water lying
+over Skagerrak water, and a stagnant mass is present at the bottom.
+During the summer, the upper part of the water column is heated,
+leading to a decreasing of the density of the surface layer, strengthening
+the stratification.
 
-Temperature is following a seasonal cycle ion the first tens of meters.
-Salinity controls strati up to about 60\,m: Kattegat water always over Skagerrak
-water.
+% further work
+The fitting of the profile with a mutli-linear funtion has been executed
+for reasons of simplicity and leaded to good enough efficiency.
+Using splines could give better fits, but the gain of accuracy could
+be to the detriment of physical sense and the interfaces postion ease.
+A mixed layer need to be added
+if present on the data, but here also a linear fit has a physical sense, because
+of homogeneity of the properties in the mixed layer.
+The Turner angle can also be used to separate the different layers,
+especially for the bottom of the warm water where the stratification becomes
+governed by the temperature changes.
+This would lead to better estimation of the thickness of the layers.
+Associating the profile fitting with mooring data could also
+be usefull to study internal waves.
 
-On the turner angle, visible that the constant T fit fopr the bottom layer is
-not correct.
 
-fitting of the profile, using spline could be better. but here maybe not necessary.
-Using turner angle top separate the different layer can also be used for bottom
-of warm water
 
-Opening work: sub-mesoscale heat fluxes because no mixed layer, geostrophy
+%See what is the context
+%Sk and Kat water, strong sal difference
+The Gullmar fjord is situated in a coastal region where two main water
+types are present: the salty Skagerrak water and the fresh Kattegat one,
+that come from the Baltic sea.
+%What we wanted to prove
+%what is happening in term of water masses?
+Skagerrak warm water comes inside the fjord, especially during upwelling events.
+The average turnover time of these warm water is 40 days \citep{arneborg2003}.
+%What we did
+%a lot
+The study of the processes that lead to a strong stratification as well as
+the analyze of the layer properties has been conducted with data acquired
+durinf a two-days field campaign.
+%What we showed/saw
+%stable
+The main result is that the stratification is very stable, mainly leaded
+by the salinity, not because a cold temperature but because of
+very high salinity variations.
+%What is the conclusion
+%-> stable, shape will not change
+The temperature variations induced by the seasonal cycle are not strong
+enough to counterbalance the halocline. The shape of the profiles,
+coming from the intrinsic properties of the Baltic sea and the Atlantic
+ocean are not suspect to major changes, except for interfaces depth variations.
 
-See what is the context\\
-What we did\\
-What we showed/saw\\
-What is the conclusion
-
-%\newpage
+\clearpage
+\newpage
 
 \bibliographystyle{../Biblio/agufull08}
 \bibliography{../Biblio/biblio}

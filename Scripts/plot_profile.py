@@ -168,7 +168,7 @@ def stations(datadir, report=False):
                                                edgecolor='#000000', facecolor='#AAAAAA')
         ax0.add_feature(feature)
         ax0.scatter([11.5],[58.25], transform=ccrs.PlateCarree(), s=15,zorder=4, c='r')
-        ax0.set_title('Position of the Gullman Fjord')
+        ax0.set_title('Position of the Gullmar Fjord')
     else:
         fig = plt.figure(figsize=(4,3))
         ax = plt.axes(projection=ccrs.PlateCarree(central_longitude=11))

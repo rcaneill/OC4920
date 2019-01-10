@@ -1,4 +1,4 @@
-\begin{thebibliography}{10}
+\begin{thebibliography}{13}
 \providecommand{\natexlab}[1]{#1}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi:\discretionary{}{}{}#1}\else
@@ -22,9 +22,24 @@ Björk, G., and K.~Nordberg (2003), Upwelling along the swedish west coast
   \textit{23}(11), 1143 -- 1159,
   \doi{https://doi.org/10.1016/S0278-4343(03)00081-5}.
 
+\bibitem[{\textit{Carmack}(2007)}]{carmack2007}
+Carmack, E.~C. (2007), The alpha/beta ocean distinction: A perspective on
+  freshwater fluxes, convection, nutrients and productivity in high-latitude
+  seas, \textit{Deep Sea Research Part II: Topical Studies in Oceanography},
+  \textit{54}(23), 2578 -- 2598,
+  \doi{https://doi.org/10.1016/j.dsr2.2007.08.018}, effects of Climate
+  Variability on Sub-Arctic Marine Ecosystems.
+
 \bibitem[{\textit{Dahl and Danielssen}(1992)}]{dahl1992}
 Dahl, E., and D.~S. Danielssen (1992), Long-term observations of oxygen in the
   skagerrak, in \textit{ICES Mar Sci Symp}, vol. 195, pp. 455--461.
+
+\bibitem[{\textit{Danielssen et~al.}(1997)\textit{Danielssen, Edler, Fonselius,
+  Hernroth, Ostrowski, Svendsen, and Talpsepp}}]{danielssen1997}
+Danielssen, D.~S., L.~Edler, S.~Fonselius, L.~Hernroth, M.~Ostrowski,
+  E.~Svendsen, and L.~Talpsepp (1997), Oceanographic variability in the
+  skagerrak and northern kattegat, may–june, 1990, \textit{ICES Journal of
+  Marine Science}, \textit{54}(5), 753--773, \doi{10.1006/jmsc.1996.0210}.
 
 \bibitem[{\textit{Gustafsson and Stigebrandt}(1996)}]{gustafsson1996}
 Gustafsson, B., and A.~Stigebrandt (1996), Dynamics of the
@@ -38,6 +53,12 @@ Johnson, G.~C., S.~Schmidtko, and J.~M. Lyman (2012), Relative contributions of
   temperature and salinity to seasonal mixed layer density changes and
   horizontal density gradients, \textit{Journal of Geophysical Research:
   Oceans}, \textit{117}(C4), \doi{10.1029/2011JC007651}.
+
+\bibitem[{\textit{Klocker and McDougall}(2010)}]{klocker2010}
+Klocker, A., and T.~J. McDougall (2010), Influence of the nonlinear equation of
+  state on global estimates of dianeutral advection and diffusion,
+  \textit{Journal of Physical Oceanography}, \textit{40}(8), 1690--1709,
+  \doi{10.1175/2010JPO4303.1}.
 
 \bibitem[{\textit{Lindahl et~al.}(1998)\textit{Lindahl, Belgrano, Davidsson,
   and Hernroth}}]{lindhal1998}
